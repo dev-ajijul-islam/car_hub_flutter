@@ -1,12 +1,18 @@
+import 'package:car_hub/ui/screens/auth/reset_email_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_up_screen.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
   static String name = "sign-in";
 
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +69,7 @@ class SignInScreen extends StatelessWidget {
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.grey,
                           ),
-                          onPressed: () {},
+                          onPressed: _onTapForgetPasswordButton,
                           child: Text("Forget password"),
                         ),
                       ),
@@ -133,5 +139,9 @@ class SignInScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _onTapForgetPasswordButton(){
+    Navigator.pushNamed(context, ResetEmailScreen.name);
   }
 }

@@ -1,12 +1,18 @@
+import 'package:car_hub/ui/screens/auth/reset_email_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_in_screen.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
   static String name = "sign-up";
 
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +69,7 @@ class SignUpScreen extends StatelessWidget {
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.grey,
                           ),
-                          onPressed: () {},
+                          onPressed: _onTapForgetPasswordButton,
                           child: Text("Forget password"),
                         ),
                       ),
@@ -115,23 +121,28 @@ class SignUpScreen extends StatelessWidget {
                     text: "Don't have and account ?",
                     children: [
                       TextSpan(
-                          style: TextStyle(
-                            color: ColorScheme.of(context).primary,
-                          ),
-                          text: "Sign in",
-                          recognizer: TapGestureRecognizer()..onTap = (){
+                        style: TextStyle(
+                          color: ColorScheme.of(context).primary,
+                        ),
+                        text: "Sign in",
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
                             Navigator.pushNamed(context, SignInScreen.name);
-                          }
+                          },
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 20,)
+                SizedBox(height: 20),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  _onTapForgetPasswordButton(){
+    Navigator.pushNamed(context, ResetEmailScreen.name);
   }
 }
