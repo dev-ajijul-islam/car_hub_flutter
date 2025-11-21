@@ -1,3 +1,4 @@
+import 'package:car_hub/ui/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class LanguageSelectScreen extends StatefulWidget {
@@ -56,7 +57,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
                 ),
               ],
             ),
-            FilledButton(onPressed: () {}, child: Text("Continue")),
+            FilledButton(onPressed: _onTapContinueButton, child: Text("Continue")),
           ],
         ),
       ),
@@ -98,5 +99,11 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
         ],
       ),
     );
+  }
+
+
+
+  void _onTapContinueButton(){
+    Navigator.pushNamed(context, WelcomeScreen.name);
   }
 }

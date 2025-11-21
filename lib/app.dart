@@ -1,5 +1,6 @@
 import 'package:car_hub/ui/screens/language_select_screen.dart';
 import 'package:car_hub/ui/screens/splash_screen.dart';
+import 'package:car_hub/ui/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class CarHub extends StatelessWidget {
@@ -20,12 +21,20 @@ class CarHub extends StatelessWidget {
             minimumSize: Size(MediaQuery.of(context).size.width, 40),
           ),
         ),
+        textTheme: TextTheme(
+          bodyLarge: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w700
+          )
+        )
       ),
+
 
       //routes
       routes: {
         SplashScreen.name: (_) => SplashScreen(),
         LanguageSelectScreen.name: (_) => LanguageSelectScreen(),
+        WelcomeScreen.name : (_) => WelcomeScreen()
       },
       initialRoute: SplashScreen.name,
     );
