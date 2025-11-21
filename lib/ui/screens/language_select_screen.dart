@@ -29,7 +29,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
                 Center(
                   child: Text(
                     "Choose your language",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                    style: TextTheme.of(context).titleLarge
                   ),
                 ),
                 Center(

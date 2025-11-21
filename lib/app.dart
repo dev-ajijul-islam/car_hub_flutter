@@ -1,3 +1,5 @@
+import 'package:car_hub/ui/screens/auth/sign_in_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_up_screen.dart';
 import 'package:car_hub/ui/screens/language_select_screen.dart';
 import 'package:car_hub/ui/screens/splash_screen.dart';
 import 'package:car_hub/ui/screens/welcome_screen.dart';
@@ -8,10 +10,11 @@ class CarHub extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color primary = Color(0xFF930405);
     return MaterialApp(
       theme: ThemeData(
         colorScheme: ColorScheme.light(
-          primary: Color(0xFF930405),
+          primary: primary,
           onPrimary: Colors.white,
           surface: Colors.grey.shade100,
           onSurface: Colors.black87,
@@ -22,19 +25,36 @@ class CarHub extends StatelessWidget {
           ),
         ),
         textTheme: TextTheme(
-          bodyLarge: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w700
-          )
-        )
-      ),
+          titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+        ),
 
+        inputDecorationTheme: InputDecorationThemeData(
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(100),
+            borderSide: BorderSide(color: primary),
+          ),
+          prefixIconColor: Colors.grey,
+          suffixIconColor: Colors.grey,
+          filled: true,
+          fillColor: Colors.white,
+          hintStyle: TextStyle(
+            fontSize: 14,
+            color: Colors.grey,
+            fontWeight: FontWeight.w400,
+            height: 0,
+          ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
+        ),
+      ),
 
       //routes
       routes: {
         SplashScreen.name: (_) => SplashScreen(),
         LanguageSelectScreen.name: (_) => LanguageSelectScreen(),
-        WelcomeScreen.name : (_) => WelcomeScreen()
+        WelcomeScreen.name: (_) => WelcomeScreen(),
+        SignInScreen.name: (_) => SignInScreen(),
+        SignUpScreen.name : (_) => SignUpScreen()
       },
       initialRoute: SplashScreen.name,
     );
