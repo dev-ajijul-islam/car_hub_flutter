@@ -1,5 +1,5 @@
-import 'package:car_hub/ui/screens/auth/reset_email_screen.dart';
-import 'package:car_hub/ui/screens/auth/sign_up_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_in/reset_email_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

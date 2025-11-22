@@ -1,5 +1,6 @@
-import 'package:car_hub/ui/screens/auth/reset_email_screen.dart';
-import 'package:car_hub/ui/screens/auth/sign_in_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_in/reset_email_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_up/email_verification_screen.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -24,7 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               spacing: 10,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 Align(
                   alignment: Alignment.topRight,
                   child: TextButton(onPressed: () {}, child: Text("Skip")),
@@ -41,6 +43,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 5,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text("Full name"),
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.person_outline),
+                          hintText: "Enter your full name",
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text("Email"),
@@ -73,7 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Text("Forget password"),
                         ),
                       ),
-                      FilledButton(onPressed: () {}, child: Text("Sign in")),
+                      FilledButton(onPressed: _onTapSignUpButton, child: Text("Sign up")),
                       SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -142,7 +154,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  _onTapForgetPasswordButton(){
+  _onTapSignUpButton(){
+    Navigator.pushNamed(context, EmailVerificationScreen.name);
+  }
+
+  _onTapForgetPasswordButton() {
     Navigator.pushNamed(context, ResetEmailScreen.name);
   }
 }

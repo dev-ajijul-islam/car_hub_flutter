@@ -1,4 +1,4 @@
-import 'package:car_hub/ui/screens/auth/pin_verification_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_in/pin_verification_screen.dart';
 import 'package:flutter/material.dart';
 
 class ResetEmailScreen extends StatefulWidget {

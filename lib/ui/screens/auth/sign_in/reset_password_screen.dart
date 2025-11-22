@@ -1,9 +1,15 @@
+import 'package:car_hub/ui/screens/auth/sign_in/reset_password_success.dart';
 import 'package:flutter/material.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
+class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});
   static String name = "rsest_password";
 
+  @override
+  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
+}
+
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,11 +59,15 @@ class ResetPasswordScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              FilledButton(onPressed: () {}, child: Text("Continue")),
+              FilledButton(onPressed: _onTapContinue, child: Text("Continue")),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _onTapContinue(){
+    Navigator.pushNamed(context, ResetPasswordSuccess.name);
   }
 }

@@ -1,11 +1,15 @@
-import 'package:car_hub/ui/screens/auth/pin_verification_screen.dart';
-import 'package:car_hub/ui/screens/auth/reset_email_screen.dart';
-import 'package:car_hub/ui/screens/auth/reset_password_screen.dart';
-import 'package:car_hub/ui/screens/auth/sign_in_screen.dart';
-import 'package:car_hub/ui/screens/auth/sign_up_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_in/pin_verification_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_in/reset_email_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_in/reset_password_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_in/reset_password_success.dart';
+import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_up/email_verification_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_up/sign_up_success_screen.dart';
+import 'package:car_hub/ui/screens/welcome_screen.dart';
 import 'package:car_hub/ui/screens/language_select_screen.dart';
 import 'package:car_hub/ui/screens/splash_screen.dart';
-import 'package:car_hub/ui/screens/welcome_screen.dart';
+
 import 'package:flutter/material.dart';
 
 class CarHub extends StatelessWidget {
@@ -61,7 +65,10 @@ class CarHub extends StatelessWidget {
         SignUpScreen.name : (_) => SignUpScreen(),
         ResetEmailScreen.name : (_) => ResetEmailScreen(),
         PinVerificationScreen.name : (_) => PinVerificationScreen(),
-        ResetPasswordScreen.name : (_) => ResetPasswordScreen()
+        ResetPasswordScreen.name : (_) => ResetPasswordScreen(),
+        ResetPasswordSuccess.name : (_) => ResetPasswordSuccess(),
+        EmailVerificationScreen.name : (_) => EmailVerificationScreen(),
+        SignUpSuccessScreen.name : (_)=> SignUpSuccessScreen()
       },
       initialRoute: SplashScreen.name,
     );

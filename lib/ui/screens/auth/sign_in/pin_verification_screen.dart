@@ -1,4 +1,4 @@
-import 'package:car_hub/ui/screens/auth/reset_password_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_in/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -57,7 +57,27 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                     ),
                   ],
                 ),
-                FilledButton(onPressed: _onTapVerifyButton, child: Text("Verify")),
+                Column(
+                  children: [
+                    FilledButton(onPressed: _onTapVerifyButton, child: Text("Verify")),
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: "Did'nt recive a code ? ",
+                        style: TextTheme.of(context).bodyMedium,
+                        children: [
+                          TextSpan(
+                            text: "Resend Code",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: ColorScheme.of(context).primary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
