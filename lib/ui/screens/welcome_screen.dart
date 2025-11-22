@@ -27,15 +27,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         alignment: Alignment.topCenter,
         children: [
           SvgPicture.asset(fit: BoxFit.fill, AssetsFilePaths.svgWelcomeBg),
-          Positioned(
-            top: 30,
-            right: 30,
-            child: TextButton(
-              style: TextButton.styleFrom(foregroundColor: Colors.white),
-              onPressed: onTapSkipButton,
-              child: Text("Skip"),
-            ),
-          ),
           SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -134,13 +125,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
           ),
+          Positioned(
+            top: 30,
+            right: 30,
+            child: TextButton(
+              style: TextButton.styleFrom(foregroundColor: Colors.white),
+              onPressed: onTapSkipButton,
+              child: Text("Skip"),
+            ),
+          ),
         ],
       ),
     );
   }
 
   onTapSkipButton(){
-
+    Navigator.pushNamed(context, SignInScreen.name);
   }
 
   onTapGetStarted(){

@@ -1,3 +1,4 @@
+import 'package:car_hub/ui/screens/auth/profile_setup/set_profile_picture.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/pin_verification_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/reset_email_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/reset_password_screen.dart';
@@ -68,7 +69,8 @@ class CarHub extends StatelessWidget {
         ResetPasswordScreen.name : (_) => ResetPasswordScreen(),
         ResetPasswordSuccess.name : (_) => ResetPasswordSuccess(),
         EmailVerificationScreen.name : (_) => EmailVerificationScreen(),
-        SignUpSuccessScreen.name : (_)=> SignUpSuccessScreen()
+        SignUpSuccessScreen.name : (_)=> SignUpSuccessScreen(),
+        SetProfilePicture.name : (_) => SetProfilePicture()
       },
       initialRoute: SplashScreen.name,
     );
