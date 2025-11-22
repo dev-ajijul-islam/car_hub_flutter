@@ -118,6 +118,6 @@ class _SetProfilePictureState extends State<SetProfilePicture> {
   }
 
   void _onTapAddPhotoButton() {
-    Navigator.pushNamed(context, MainLayout.name);
+    Navigator.pushNamedAndRemoveUntil(context, MainLayout.name,(route) => false,);
   }
 }

@@ -27,13 +27,13 @@ class _MainLayoutState extends State<MainLayout> {
     return Scaffold(
       body: screens[currentScreen],
       bottomNavigationBar: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15,vertical: 20),
-
+        margin: EdgeInsets.only(left: 15,right: 15,bottom: 10,top: 0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(40),
+          borderRadius: BorderRadius.circular(20),
         ),
         clipBehavior: Clip.hardEdge,
         child: BottomNavigationBar(
+          elevation: 5,
           currentIndex: currentScreen,
           onTap: (index){
             setState(() {

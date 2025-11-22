@@ -1,3 +1,4 @@
+import 'package:car_hub/ui/main_layout.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/reset_email_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
@@ -27,7 +28,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 SizedBox(height: 20),
                 Align(
                   alignment: Alignment.topRight,
-                  child: TextButton(onPressed: () {}, child: Text("Skip")),
+                  child: TextButton(onPressed: _onTapSkipButton, child: Text("Skip")),
                 ),
 
                 Text("Sign In", style: TextTheme.of(context).titleLarge),
@@ -73,7 +74,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           child: Text("Forget password"),
                         ),
                       ),
-                      FilledButton(onPressed: () {}, child: Text("Sign in")),
+                      FilledButton(onPressed: _onTapSignInButton, child: Text("Sign in")),
                       SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -125,14 +126,15 @@ class _SignInScreenState extends State<SignInScreen> {
                           color: ColorScheme.of(context).primary,
                         ),
                         text: "Sign up",
-                        recognizer: TapGestureRecognizer()..onTap = (){
-                          Navigator.pushNamed(context, SignUpScreen.name);
-                        }
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamed(context, SignUpScreen.name);
+                          },
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 20,)
+                SizedBox(height: 20),
               ],
             ),
           ),
@@ -141,7 +143,19 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  _onTapForgetPasswordButton(){
+  _onTapSignInButton() {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      MainLayout.name,
+      (route) => false,
+    );
+  }
+
+  _onTapSkipButton(){
+    Navigator.pushNamedAndRemoveUntil(context, MainLayout.name, (predicate)=> false);
+  }
+
+  _onTapForgetPasswordButton() {
     Navigator.pushNamed(context, ResetEmailScreen.name);
   }
 }

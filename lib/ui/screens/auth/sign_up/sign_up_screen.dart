@@ -1,3 +1,4 @@
+import 'package:car_hub/ui/main_layout.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/reset_email_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_up/email_verification_screen.dart';
@@ -29,7 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizedBox(height: 10),
                 Align(
                   alignment: Alignment.topRight,
-                  child: TextButton(onPressed: () {}, child: Text("Skip")),
+                  child: TextButton(onPressed: _onTapSkipButton, child: Text("Skip")),
                 ),
 
                 Text("Sign Up", style: TextTheme.of(context).titleLarge),
@@ -156,6 +157,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   _onTapSignUpButton(){
     Navigator.pushNamed(context, EmailVerificationScreen.name);
+  }
+
+  _onTapSkipButton(){
+    Navigator.pushNamedAndRemoveUntil(context, MainLayout.name, (predicate)=> false);
   }
 
   _onTapForgetPasswordButton() {
