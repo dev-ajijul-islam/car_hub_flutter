@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:car_hub/ui/main_layout.dart';
+import 'package:car_hub/ui/screens/home_screen.dart';
 import 'package:car_hub/ui/widgets/set_profile_bottom_sheet.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +69,10 @@ class _SetProfilePictureState extends State<SetProfilePicture> {
                       ),
                     ],
                   ),
-                  FilledButton(onPressed: () {}, child: Text("Add Picture")),
+                  FilledButton(
+                    onPressed: _onTapAddPhotoButton,
+                    child: Text("Add Picture"),
+                  ),
                 ],
               ),
               Positioned(
@@ -89,6 +94,7 @@ class _SetProfilePictureState extends State<SetProfilePicture> {
       setState(() {
         _image = File(image.path);
       });
+      Navigator.pop(context);
     }
   }
 
@@ -99,6 +105,7 @@ class _SetProfilePictureState extends State<SetProfilePicture> {
       setState(() {
         _image = File(image.path);
       });
+      Navigator.pop(context);
     }
   }
 
@@ -108,5 +115,9 @@ class _SetProfilePictureState extends State<SetProfilePicture> {
       onTapCamera: takeImageFromCamera,
       onTapGallery: takeImageFromGallery,
     );
+  }
+
+  void _onTapAddPhotoButton() {
+    Navigator.pushNamed(context, MainLayout.name);
   }
 }
