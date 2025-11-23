@@ -9,6 +9,7 @@ import 'package:car_hub/ui/screens/auth/sign_up/email_verification_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_up/sign_up_success_screen.dart';
 import 'package:car_hub/ui/screens/home_screen.dart';
+import 'package:car_hub/ui/screens/notifications_screen.dart';
 import 'package:car_hub/ui/screens/search_result_screen.dart';
 import 'package:car_hub/ui/screens/welcome_screen.dart';
 import 'package:car_hub/ui/screens/language_select_screen.dart';
@@ -85,7 +86,8 @@ class CarHub extends StatelessWidget {
         SetProfilePicture.name : (_) => SetProfilePicture(),
         HomeScreen.name : (_) => HomeScreen(),
         MainLayout.name : (_) => MainLayout(),
-        SearchResultScreen.name : (_) => SearchResultScreen()
+        SearchResultScreen.name : (_) => SearchResultScreen(),
+        NotificationsScreen.name : (_)=> NotificationsScreen()
       },
       initialRoute: SplashScreen.name,
     );

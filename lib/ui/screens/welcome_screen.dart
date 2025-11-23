@@ -34,74 +34,76 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           SafeArea(
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  CarouselSlider(
-                    carouselController: _carouselSliderController,
-                    options: CarouselOptions(
-                      enableInfiniteScroll: false,
-                      height: MediaQuery.of(context).size.height - 200,
-                      pageSnapping: true,
-                      viewportFraction: 1,
-                      onPageChanged: (index, reason) => setState(() {
-                        currentIndex = index;
-                      }),
-                    ),
-                    items: sliders.map((i) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              SizedBox(height: 80),
-                              SizedBox(
-                                width: 300,
-                                child: Image.asset(AssetsFilePaths.car1),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Welcome to CarLanda",
-                                      style: TextTheme.of(context).bodyLarge,
-                                    ),
-                                    Text(
-                                      textAlign: TextAlign.center,
-                                      "Your gateway to premium vehicles, delivered from around the world ",
-                                    ),
-                                  ],
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CarouselSlider(
+                      carouselController: _carouselSliderController,
+                      options: CarouselOptions(
+                        enableInfiniteScroll: false,
+                        height: MediaQuery.of(context).size.height - 200,
+                        pageSnapping: true,
+                        viewportFraction: 1,
+                        onPageChanged: (index, reason) => setState(() {
+                          currentIndex = index;
+                        }),
+                      ),
+                      items: sliders.map((i) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                SizedBox(height: 80),
+                                SizedBox(
+                                  width: 300,
+                                  child: Image.asset(AssetsFilePaths.car1),
                                 ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }).toList(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 15,
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Welcome to CarLanda",
+                                        style: TextTheme.of(context).bodyLarge,
+                                      ),
+                                      Text(
+                                        textAlign: TextAlign.center,
+                                        "Your gateway to premium vehicles, delivered from around the world ",
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }).toList(),
                     ),
-                    child: FilledButton(
-                      onPressed: () {
-                        if (currentIndex != sliders.indexOf(sliders.last)) {
-                          _carouselSliderController.nextPage();
-                        } else {
-                          onTapGetStarted();
-                        }
-                      },
-                      child: Text(
-                        (currentIndex == sliders.indexOf(sliders.last)
-                            ? "Get Started"
-                            : "Next"),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 15,
+                      ),
+                      child: FilledButton(
+                        onPressed: () {
+                          if (currentIndex != sliders.indexOf(sliders.last)) {
+                            _carouselSliderController.nextPage();
+                          } else {
+                            onTapGetStarted();
+                          }
+                        },
+                        child: Text(
+                          (currentIndex == sliders.indexOf(sliders.last)
+                              ? "Get Started"
+                              : "Next"),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
