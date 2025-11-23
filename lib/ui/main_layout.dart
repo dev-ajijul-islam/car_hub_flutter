@@ -41,28 +41,34 @@ class _MainLayoutState extends State<MainLayout> {
             });
 
           },
+
           selectedItemColor: ColorScheme.of(context).primary,
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
+              activeIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
               label: "Home",
             ),
             BottomNavigationBarItem(
+              activeIcon: Icon(Icons.directions_car_filled_sharp),
               icon: Icon(Icons.directions_car_sharp),
               label: "View car",
             ),
             BottomNavigationBarItem(
+              activeIcon: Icon(Icons.location_on),
               icon: Icon(Icons.location_on_outlined),
               label: "Track car",
             ),
             BottomNavigationBarItem(
+              activeIcon: Icon(Icons.favorite),
               icon: Icon(Icons.favorite_border_outlined),
               label: "Favorite",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
+              activeIcon: Icon(Icons.person_2),
+              icon: Icon(Icons.person_2_outlined),
               label: "Profile",
             ),
           ],

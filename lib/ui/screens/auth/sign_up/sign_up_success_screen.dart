@@ -10,47 +10,51 @@ class SignUpSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.topCenter,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SvgPicture.asset(AssetsFilePaths.svgCurveRectangle, fit: BoxFit.fill),
-          Positioned(
-            top: 220,
-            child: SvgPicture.asset(width: 120, AssetsFilePaths.svgTickLogo),
+          Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.topCenter,
+            children: [
+              SvgPicture.asset(AssetsFilePaths.svgCurveRectangle, fit: BoxFit.fill),
+              Positioned(
+                top: 220,
+                child: SvgPicture.asset(width: 120, AssetsFilePaths.svgTickLogo),
+              ),
+
+            ],
           ),
           Padding(
             padding: const EdgeInsets.all(20),
-            child: Positioned(
-              top: 500,
-              child: Expanded(
-                child: Column(
-                  spacing: 170,
-                  mainAxisAlignment: MainAxisAlignment.end,
+            child: Column(
+              spacing: 180,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
                   children: [
-                    Column(
-                      children: [
-                        Text(
-                          textAlign: TextAlign.center,
-                          "Congratulation",
-                          style: TextTheme.of(context).titleMedium,
-                        ),
-                        Text(
-                          "You’ve successfully created your account. Let’s get started on your Journey",
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Congratulation",
+                      style: TextTheme.of(context).titleMedium,
                     ),
-
-                    FilledButton(
-                      onPressed: () {
-                        _onTapGoToSignInScreenButton(context);
-                      },
-                      child: Text("Continue"),
+                    Text(
+                      "You’ve successfully created your account. Let’s get started on your Journey",
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-              ),
+
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 20,
+                  child: FilledButton(
+                    onPressed: () {
+                      _onTapGoToSignInScreenButton(context);
+                    },
+                    child: Text("Continue"),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

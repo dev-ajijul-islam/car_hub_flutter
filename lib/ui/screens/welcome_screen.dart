@@ -49,7 +49,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             SizedBox(height: 80),
-                            Positioned.fill(
+                            SizedBox(
+                              width: 300,
                               child: Image.asset(AssetsFilePaths.car1),
                             ),
                             Padding(

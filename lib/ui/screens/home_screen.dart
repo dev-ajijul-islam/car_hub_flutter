@@ -164,7 +164,7 @@ class HomeScreen extends StatelessWidget {
               CarouselSlider(
                 items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((c) {
                   return Card(
-                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    margin: EdgeInsets.symmetric(horizontal: 6,vertical: 5),
                     color: Colors.white,
                     child: Center(
                       child: Column(

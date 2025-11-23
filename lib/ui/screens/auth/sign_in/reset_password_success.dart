@@ -9,38 +9,38 @@ class ResetPasswordSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.topCenter,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SvgPicture.asset(AssetsFilePaths.svgCurveRectangle, fit: BoxFit.fill),
-          Positioned(
-            top: 220,
-            child: SvgPicture.asset(width: 120, AssetsFilePaths.svgTickLogo),
+          Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.topCenter,
+            children: [
+              SvgPicture.asset(AssetsFilePaths.svgCurveRectangle, fit: BoxFit.fill),
+              Positioned(
+                top: 220,
+                child: SvgPicture.asset(width: 120, AssetsFilePaths.svgTickLogo),
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.all(20),
-            child: Positioned(
-              top: 500,
-              child: Expanded(
-                child: Column(
-                  spacing: 170,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      textAlign: TextAlign.center,
-                      "Successfully Reset your \n password",
-                      style: TextTheme.of(context).titleMedium,
-                    ),
-                    FilledButton(
-                      onPressed: () {
-                        _onTapGoToSignInScreenButton(context);
-                      },
-                      child: Text("Go to Sign in screen"),
-                    ),
-                  ],
+            child: Column(
+              spacing: 180,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  textAlign: TextAlign.center,
+                  "Successfully Reset your \n password",
+                  style: TextTheme.of(context).titleMedium,
                 ),
-              ),
+                FilledButton(
+                  onPressed: () {
+                    _onTapGoToSignInScreenButton(context);
+                  },
+                  child: Text("Go to Sign in screen"),
+                ),
+              ],
             ),
           ),
         ],
