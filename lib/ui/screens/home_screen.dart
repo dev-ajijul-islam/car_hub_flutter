@@ -1,14 +1,20 @@
 import 'package:car_hub/ui/widgets/car_card.dart';
 import 'package:car_hub/ui/widgets/help_chat_dialog.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
+import 'package:car_hub/ui/widgets/search_dialog/search_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   static String name = "home-screen";
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,6 +106,7 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextField(
+                  onTap: _onTapSearchField,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search_outlined),
                     hintText: "Search",
@@ -216,5 +223,9 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _onTapSearchField(){
+    searchDialog(context);
   }
 }

@@ -39,6 +39,12 @@ class CarHub extends StatelessWidget {
           titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
         ),
 
+        dropdownMenuTheme: DropdownMenuThemeData(),
+
+        buttonTheme: ButtonThemeData(
+
+        ),
+
         inputDecorationTheme: InputDecorationThemeData(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(100),
