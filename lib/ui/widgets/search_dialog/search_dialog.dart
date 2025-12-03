@@ -4,12 +4,11 @@ import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/material.dart';
 
 void searchDialog(BuildContext context) {
-
-  void onTapFilterButton(){
+  void onTapFilterButton() {
     searchFilter(context);
   }
 
-  void onSubmit(){
+  void onSubmit() {
     Navigator.pushNamed(context, SearchResultScreen.name);
   }
 
@@ -27,7 +26,7 @@ void searchDialog(BuildContext context) {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TextField(
-                  onSubmitted:(value) => onSubmit(),
+                  onSubmitted: (value) => onSubmit(),
                   autofocus: true,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search_outlined),
@@ -39,10 +38,10 @@ void searchDialog(BuildContext context) {
                     ),
                   ),
                 ),
-                SizedBox(height: 15,),
+                SizedBox(height: 15),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Divider(color: Colors.grey,),
+                  child: Divider(color: Colors.grey),
                 ),
                 SizedBox(height: 30),
                 Expanded(

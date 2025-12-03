@@ -1,3 +1,4 @@
+import 'package:car_hub/ui/widgets/delivery_option_dialog.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/material.dart';
 
@@ -178,14 +179,14 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                 "Key Specification",
                 style: TextTheme.of(context).titleMedium,
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: carDetails.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 2.4
+                  childAspectRatio: 2.4,
                 ),
                 itemBuilder: (context, index) {
                   return Column(
@@ -203,7 +204,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const Divider(color: Colors.grey,),
+                      const Divider(color: Colors.grey),
                     ],
                   );
                 },
@@ -212,8 +213,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
               Text(
                 "Experience refined luxury and everyday performance with the 2021 Audi Q5. This premium SUV features a powerful 2.0L turbocharged engine with 261 horsepower and Audi’s signature Quattro all-wheel drive,",
               ),
-              SizedBox(height: 10,),
-              FilledButton(onPressed: () {}, child: Text("Buy Now")),
+              SizedBox(height: 10),
+              FilledButton(onPressed: () {
+                deliveryDialog(context);
+              }, child: Text("Buy Now")),
             ],
           ),
         ),
