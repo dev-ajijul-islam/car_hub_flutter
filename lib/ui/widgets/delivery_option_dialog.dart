@@ -1,7 +1,12 @@
+import 'package:car_hub/ui/screens/booking_cost_calculation.dart';
 import 'package:flutter/material.dart';
 
 void deliveryDialog(BuildContext context) {
   String? deliveryOption = "Luanda";
+
+  void onTapContinueButton(){
+    Navigator.pushNamed(context, BookingCostCalculation.name);
+  }
 
   showDialog(
     context: context,
@@ -61,7 +66,7 @@ void deliveryDialog(BuildContext context) {
                 ),
 
                 SizedBox(height: 10),
-                FilledButton(onPressed: () {}, child: Text("Continue")),
+                FilledButton(onPressed:onTapContinueButton, child: Text("Continue")),
               ],
             ),
           );
@@ -69,4 +74,5 @@ void deliveryDialog(BuildContext context) {
       );
     },
   );
+
 }
