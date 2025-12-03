@@ -1,4 +1,3 @@
-import 'package:car_hub/ui/screens/home/home_screen.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,7 +11,7 @@ void commonDialog(BuildContext context,{required String title,required String su
     context: context,
     builder: (context) {
       return AlertDialog(
-        contentPadding: EdgeInsets.all(50),
+        contentPadding: EdgeInsets.all(20),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           spacing: 10,

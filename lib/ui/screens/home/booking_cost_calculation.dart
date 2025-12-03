@@ -30,11 +30,11 @@ class BookingCostCalculation extends StatelessWidget {
                       children: [
                         Text(
                           "Car price",
-                          style: TextTheme.of(context).titleMedium,
+                          style: TextTheme.of(context).bodyLarge,
                         ),
                         Text(
                           "\$25000",
-                          style: TextTheme.of(context).titleMedium,
+                          style: TextTheme.of(context).bodyLarge,
                         ),
                       ],
                     ),
@@ -43,11 +43,11 @@ class BookingCostCalculation extends StatelessWidget {
                       children: [
                         Text(
                           "Shipping",
-                          style: TextTheme.of(context).titleMedium,
+                          style: TextTheme.of(context).bodyLarge,
                         ),
                         Text(
                           "\$2400",
-                          style: TextTheme.of(context).titleMedium,
+                          style: TextTheme.of(context).bodyLarge,
                         ),
                       ],
                     ),
@@ -57,11 +57,11 @@ class BookingCostCalculation extends StatelessWidget {
                       children: [
                         Text(
                           "Total price",
-                          style: TextTheme.of(context).titleMedium,
+                          style: TextTheme.of(context).bodyLarge,
                         ),
                         Text(
                           "\$27400",
-                          style: TextTheme.of(context).titleMedium,
+                          style: TextTheme.of(context).bodyLarge,
                         ),
                       ],
                     ),

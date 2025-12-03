@@ -1,4 +1,5 @@
 import 'package:car_hub/ui/screens/home/home_screen.dart';
+import 'package:car_hub/ui/screens/view_cars/view_cars.dart';
 import 'package:flutter/material.dart';
 
 class MainLayout extends StatefulWidget {
@@ -14,7 +15,7 @@ class _MainLayoutState extends State<MainLayout> {
 
   List <Widget> screens = [
     HomeScreen(),
-    HomeScreen(),
+    ViewCars(),
     HomeScreen(),
     HomeScreen(),
     HomeScreen(),
@@ -40,11 +41,13 @@ class _MainLayoutState extends State<MainLayout> {
               currentScreen = index;
             });
 
+            print(currentScreen);
           },
 
           selectedItemColor: ColorScheme.of(context).primary,
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
+
           items: [
             BottomNavigationBarItem(
               activeIcon: Icon(Icons.home),

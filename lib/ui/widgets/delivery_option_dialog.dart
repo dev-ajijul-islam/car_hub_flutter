@@ -29,7 +29,7 @@ void deliveryDialog(BuildContext context) {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Delivered to Port of Luanda"),
+                      Text("Delivered to Luanda"),
                       Radio(
                         value: "Luanda",
                         groupValue: deliveryOption,
@@ -37,6 +37,7 @@ void deliveryDialog(BuildContext context) {
                           setState(() {
                             deliveryOption = value.toString();
                           });
+
                         },
                       ),
                     ],
@@ -51,7 +52,7 @@ void deliveryDialog(BuildContext context) {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Delivered to My Doorstep"),
+                      Text("Delivered to Doorstep"),
                       Radio(
                         value: "Doorstep",
                         groupValue: deliveryOption,

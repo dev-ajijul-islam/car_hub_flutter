@@ -44,10 +44,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             });
                           },
                         ),
-                        Text("Pay with Credit or Debit card"),
+                        Text("Pay with Credit card"),
                       ],
                     ),
-                    Image.asset(width: 70, AssetsFilePaths.creditCard),
+                    Image.asset(width: 80, AssetsFilePaths.creditCard),
                   ],
                 ),
               ),
@@ -66,11 +66,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         spacing: 20,
                         children: [
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(
                                 Icons.food_bank_outlined,
-                                size: 40,
+                                size: 30,
                                 color: ColorScheme.of(context).primary,
                               ),
                               Text(
@@ -85,7 +86,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 17,
                               ),
                               children: [
                                 TextSpan(
@@ -101,7 +101,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 17,
                               ),
                               children: [
                                 TextSpan(
@@ -117,7 +116,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 17,
                               ),
                               children: [
                                 TextSpan(
@@ -133,7 +131,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 17,
                               ),
                               children: [
                                 TextSpan(
