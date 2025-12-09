@@ -1,3 +1,4 @@
+import 'package:car_hub/ui/screens/profile/personal_information.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatelessWidget {
@@ -43,22 +44,22 @@ class Profile extends StatelessWidget {
                 Text("devajijulislam@gmail.com"),
               ],
             ),
-            Expanded(
-              child: ListView.separated(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.all(20),
-                itemBuilder: (context, index) {
-                  final item = profileTiles[index];
-                  return ProfileMenuTile(
-                    title: item["title"],
-                    icon: item["icon"],
-                    switchMode: item["title"] == "Notification",
-                  );
-                },
-                separatorBuilder: (context, index) => SizedBox(height: 10),
-                itemCount: profileTiles.length,
-              ),
+
+            ListView.separated(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(20),
+              itemBuilder: (context, index) {
+                final item = profileTiles[index];
+                return ProfileMenuTile(
+                  title: item["title"],
+                  icon: item["icon"],
+                  switchMode: item["title"] == "Notification",
+                  route: item["route"],
+                );
+              },
+              separatorBuilder: (context, index) => SizedBox(height: 10),
+              itemCount: profileTiles.length,
             ),
           ],
         ),
@@ -67,7 +68,11 @@ class Profile extends StatelessWidget {
   }
 
   final List<Map<String, dynamic>> profileTiles = [
-    {"icon": Icons.person_2_outlined, "title": "Personal Information"},
+    {
+      "icon": Icons.person_2_outlined,
+      "title": "Personal Information",
+      "route": PersonalInformation.name,
+    },
     {"icon": Icons.lock_outline_rounded, "title": "Change Password"},
     {"icon": Icons.notifications_outlined, "title": "Notification"},
     {"icon": Icons.directions_car_sharp, "title": "My Bookings Car"},
@@ -82,12 +87,14 @@ class ProfileMenuTile extends StatefulWidget {
   final String title;
   final IconData icon;
   final bool? switchMode;
+  final String? route;
 
   const ProfileMenuTile({
     super.key,
     required this.title,
     required this.icon,
     this.switchMode,
+    this.route,
   });
 
   @override
@@ -99,6 +106,11 @@ class _ProfileMenuTileState extends State<ProfileMenuTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        if (widget.route != null) {
+          Navigator.pushNamed(context, "personal-information");
+        }
+      },
       leading: Icon(widget.icon),
       trailing: (widget.switchMode == true && widget.switchMode != null)
           ? Switch(

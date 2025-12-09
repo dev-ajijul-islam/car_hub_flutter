@@ -43,8 +43,6 @@ class _MainLayoutState extends State<MainLayout> {
             setState(() {
               currentScreen = index;
             });
-
-            print(currentScreen);
           },
 
           selectedItemColor: ColorScheme.of(context).primary,
