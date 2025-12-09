@@ -68,10 +68,12 @@ class _TrackCarCardState extends State<TrackCarCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       spacing: 5,
                       children: [
-                        Row(children: [
-                          Text("Year : 2025"),
-                          Text("Mileage : 1700km"),
-                        ],),
+                        Row(
+                          children: [
+                            Text("Year : 2025"),
+                            Text("Mileage : 1700km"),
+                          ],
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -92,12 +94,38 @@ class _TrackCarCardState extends State<TrackCarCard> {
                         Text("Ras AI Khor, Dubai"),
                       ],
                     ),
-                    FilledButton(onPressed: () {}, child: Text("Track")),
+                    FilledButton(
+                      onPressed: _trackCarDialog,
+                      child: Text("Track"),
+                    ),
                   ],
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  void _trackCarDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10)
+        ),
+        title: Text("Enter code", style: TextTheme.of(context).titleMedium),
+        content: Column(
+          spacing: 10,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              decoration: InputDecoration(hintText: "Enter your tracking code"),
+            ),
+            FilledButton(onPressed: () {}, child: Text("Track your car")),
+          ],
         ),
       ),
     );
