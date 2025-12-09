@@ -1,4 +1,6 @@
+import 'package:car_hub/ui/screens/favorite_screen.dart';
 import 'package:car_hub/ui/screens/home/home_screen.dart';
+import 'package:car_hub/ui/screens/profile/profile.dart';
 import 'package:car_hub/ui/screens/track_car/track_car.dart';
 import 'package:car_hub/ui/screens/view_cars/view_cars.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +20,8 @@ class _MainLayoutState extends State<MainLayout> {
     HomeScreen(),
     ViewCars(),
     TrackCar(),
-    HomeScreen(),
-    HomeScreen(),
+    FavoriteScreen(),
+    Profile(),
   ];
 
   int currentScreen = 0;

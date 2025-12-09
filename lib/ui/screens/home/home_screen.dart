@@ -20,9 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(100)
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
         onPressed: () {
           openChatDialog(context: context);
         },
@@ -61,12 +59,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               spacing: 10,
                               children: [
-                                CircleAvatar(backgroundColor: Colors.white),
+                                CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  backgroundImage: NetworkImage(
+                                    "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/455086251_1029469555479420_7495595057560540792_n.jpg?stp=c0.411.1365.1364a_dst-jpg_s480x480_tt6&_nc_cat=105&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeHG59vjK7oCVF247ccDGzMkfI0X5DlYQtB8jRfkOVhC0H31wd3jNO6Z2zvdgc1g92xM_OuDQXBb5ScSne_0qs9R&_nc_ohc=_u9iSgq4-TEQ7kNvwFS4qsP&_nc_oc=AdnCpeXKetzlzB4vsJ4yiBDfs0l6F89WlDxilWeY8GwA-xqRhBm-0tR1EoTAIK5GuWw&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=bgzSj--_j13pz1yOWe3OjA&oh=00_Afk8fJXUZWEOmLIdsKI86afTO8YhP2EVxVW0XtROLTIiGw&oe=693DD180",
+                                  ),
+                                ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Hello Michel",
+                                      "Hello, Ajijul Islam",
                                       style: TextTheme.of(context).titleMedium
                                           ?.copyWith(
                                             color: Colors.white,
@@ -90,7 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               color: Colors.white,
                               onPressed: () {
-                                Navigator.pushNamed(context, NotificationsScreen.name);
+                                Navigator.pushNamed(
+                                  context,
+                                  NotificationsScreen.name,
+                                );
                               },
                               icon: Icon(Icons.notifications_outlined),
                             ),
@@ -174,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
               CarouselSlider(
                 items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((c) {
                   return Card(
-                    margin: EdgeInsets.symmetric(horizontal: 6,vertical: 5),
+                    margin: EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                     color: Colors.white,
                     child: Center(
                       child: Column(
@@ -220,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 20,)
+              SizedBox(height: 20),
             ],
           ),
         ),
@@ -228,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _onTapSearchField(){
+  _onTapSearchField() {
     searchDialog(context);
   }
 }
