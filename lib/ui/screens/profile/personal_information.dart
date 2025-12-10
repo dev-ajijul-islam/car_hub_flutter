@@ -13,7 +13,6 @@ class PersonalInformation extends StatefulWidget {
 }
 
 class _PersonalInformationState extends State<PersonalInformation> {
-
   XFile? passportIdImage;
   @override
   Widget build(BuildContext context) {
@@ -57,6 +56,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             InkWell(
               onTap: _onTapUploadPassport,
               child: Card(
+                clipBehavior: Clip.hardEdge,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                   side: BorderSide(color: ColorScheme.of(context).primary),
@@ -65,20 +65,25 @@ class _PersonalInformationState extends State<PersonalInformation> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 150,
-                  child: passportIdImage != null ? Image.file(File(passportIdImage!.path))  : Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.photo_size_select_actual_outlined),
-                        Text(
-                          "Click to upload",
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
+                  child: passportIdImage != null
+                      ? Image.file(
+                          File(passportIdImage!.path),
+                          fit: BoxFit.fill,
+                        )
+                      : Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.photo_size_select_actual_outlined),
+                              Text(
+                                "Click to upload",
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
                 ),
               ),
             ),
@@ -93,10 +98,10 @@ class _PersonalInformationState extends State<PersonalInformation> {
     );
   }
 
-  Future<void> _onTapUploadPassport()async{
+  Future<void> _onTapUploadPassport() async {
     ImagePicker picker = ImagePicker();
     final picked = await picker.pickImage(source: ImageSource.camera);
-    if(picked != null){
+    if (picked != null) {
       setState(() {
         passportIdImage = picked;
       });
