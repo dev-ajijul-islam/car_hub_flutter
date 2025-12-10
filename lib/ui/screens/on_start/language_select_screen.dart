@@ -18,9 +18,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
     final args = ModalRoute.of(context)?.settings.arguments;
 
     return Scaffold(
-      appBar: args != null ? AppBar(
-        title: Text("Language"),
-      ) : null,
+      appBar: args != null ? AppBar(title: Text("Language")) : null,
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -63,17 +61,24 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
               ],
             ),
             FilledButton(
-              onPressed: _onTapContinueButton,
-              child: Text(
-                (args != null)
-                    ? "Save"
-                    : "Continue",
-              ),
+              onPressed: () {
+                _onTapContinueButton(args);
+              },
+              child: Text((args != null) ? "Save" : "Continue"),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _onTapContinueButton(args) {
+    if (args != null) {
+      Navigator.pop(context);
+    }else{
+      Navigator.pushNamed(context, WelcomeScreen.name);
+    }
+
   }
 
   Container buildLanguageTile({required String flag, required String value}) {
@@ -111,9 +116,5 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
         ],
       ),
     );
-  }
-
-  void _onTapContinueButton() {
-    Navigator.pushNamed(context, WelcomeScreen.name);
   }
 }

@@ -25,18 +25,31 @@ void searchDialog(BuildContext context) {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                TextField(
-                  onSubmitted: (value) => onSubmit(),
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search_outlined),
-                    hintText: "Search",
-                    suffixIcon: IconButton(
-                      color: ColorScheme.of(context).primary,
-                      onPressed: onTapFilterButton,
-                      icon: Icon(Icons.read_more_outlined, weight: 800),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        onSubmitted: (value) => onSubmit(),
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search_outlined),
+                          hintText: "Search",
+                          suffixIcon: IconButton(
+                            color: ColorScheme.of(context).primary,
+                            onPressed: onTapFilterButton,
+                            icon: Icon(Icons.read_more_outlined, weight: 800),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    IconButton(
+                      color: ColorScheme.of(context).primary,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.close_outlined),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 15),
                 Padding(
