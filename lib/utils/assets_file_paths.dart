@@ -15,4 +15,5 @@ class AssetsFilePaths {
   static String runningCar = "$basePath/running_car.png";
   static String doneSvg = "$basePath/done.svg";
   static String creditCard = "$basePath/credit_card.png";
+  static String carBg = "$basePath/car_bg.png";
 }

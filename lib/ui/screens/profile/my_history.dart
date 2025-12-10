@@ -1,3 +1,4 @@
+import 'package:car_hub/ui/widgets/history_card.dart';
 import 'package:flutter/material.dart';
 
 class MyHistory extends StatefulWidget {
@@ -57,6 +58,24 @@ class _MyHistoryState extends State<MyHistory> {
                 itemCount: historySections.length,
               ),
             ),
+            SizedBox(height: 10,),
+            Expanded(child: ListView(
+              children: [
+                HistoryCard(),
+                HistoryCard(),
+                HistoryCard(),
+                HistoryCard(),
+                HistoryCard(),
+                HistoryCard(),
+                HistoryCard(),
+                HistoryCard(),
+                HistoryCard(),
+                HistoryCard(),
+                HistoryCard(),
+                HistoryCard(),
+                HistoryCard(),
+              ],
+            ))
           ],
         ),
       ),
