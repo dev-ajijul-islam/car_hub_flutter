@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:car_hub/ui/screens/on_start/language_select_screen.dart';
 import 'package:car_hub/ui/screens/profile/change_password.dart';
 import 'package:car_hub/ui/screens/profile/my_bookings.dart';
@@ -6,9 +8,17 @@ import 'package:car_hub/ui/screens/profile/personal_information.dart';
 import 'package:car_hub/ui/screens/profile/terms_and_condition.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
-class Profile extends StatelessWidget {
-  Profile({super.key});
+class Profile extends StatefulWidget {
+  const Profile({super.key});
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  XFile? profileImage;
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +35,25 @@ class Profile extends StatelessWidget {
                   CircleAvatar(
                     radius: 70,
                     backgroundColor: Colors.white,
-                    backgroundImage: NetworkImage(
-                      "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/455086251_1029469555479420_7495595057560540792_n.jpg?stp=c0.411.1365.1364a_dst-jpg_s480x480_tt6&_nc_cat=105&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeHG59vjK7oCVF247ccDGzMkfI0X5DlYQtB8jRfkOVhC0H31wd3jNO6Z2zvdgc1g92xM_OuDQXBb5ScSne_0qs9R&_nc_ohc=_u9iSgq4-TEQ7kNvwFS4qsP&_nc_oc=AdnCpeXKetzlzB4vsJ4yiBDfs0l6F89WlDxilWeY8GwA-xqRhBm-0tR1EoTAIK5GuWw&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=bgzSj--_j13pz1yOWe3OjA&oh=00_Afk8fJXUZWEOmLIdsKI86afTO8YhP2EVxVW0XtROLTIiGw&oe=693DD180",
-                    ),
+                    backgroundImage: profileImage != null
+                        ? FileImage(File(profileImage!.path))
+                        : NetworkImage(
+                            "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/455086251_1029469555479420_7495595057560540792_n.jpg?stp=c0.411.1365.1364a_dst-jpg_s480x480_tt6&_nc_cat=105&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeHG59vjK7oCVF247ccDGzMkfI0X5DlYQtB8jRfkOVhC0H31wd3jNO6Z2zvdgc1g92xM_OuDQXBb5ScSne_0qs9R&_nc_ohc=_u9iSgq4-TEQ7kNvwFS4qsP&_nc_oc=AdnCpeXKetzlzB4vsJ4yiBDfs0l6F89WlDxilWeY8GwA-xqRhBm-0tR1EoTAIK5GuWw&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=bgzSj--_j13pz1yOWe3OjA&oh=00_Afk8fJXUZWEOmLIdsKI86afTO8YhP2EVxVW0XtROLTIiGw&oe=693DD180",
+                          ),
                   ),
+
                   Positioned(
                     bottom: -17,
-                    child: Container(
-                      padding: EdgeInsets.all(3),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(100),
+                    child: GestureDetector(
+                      onTap: _onTapProfilePicture,
+                      child: Container(
+                        padding: EdgeInsets.all(3),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: CircleAvatar(radius: 16, child: Icon(Icons.add)),
                       ),
-                      child: CircleAvatar(radius: 16, child: Icon(Icons.add)),
                     ),
                   ),
                 ],
@@ -107,6 +123,14 @@ class Profile extends StatelessWidget {
     },
     {"icon": Icons.logout_outlined, "title": "Log Out"},
   ];
+
+  Future _onTapProfilePicture() async {
+    ImagePicker picker = ImagePicker();
+    XFile? picked = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      profileImage = picked;
+    });
+  }
 }
 
 class ProfileMenuTile extends StatefulWidget {
