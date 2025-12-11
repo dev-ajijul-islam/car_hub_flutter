@@ -1,5 +1,7 @@
+import 'package:car_hub/providers/language_provider.dart';
 import 'package:car_hub/ui/screens/on_start/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LanguageSelectScreen extends StatefulWidget {
   const LanguageSelectScreen({super.key});
@@ -52,11 +54,13 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
 
                 buildLanguageTile(
                   flag: "https://flagcdn.com/w40/us.png",
-                  value: "English",
+                  value: "en_US",
+                  name: "English"
                 ),
                 buildLanguageTile(
                   flag: "https://flagcdn.com/w40/bd.png",
-                  value: "Bangla",
+                  value: "bn",
+                  name: "Bangla"
                 ),
               ],
             ),
@@ -75,13 +79,12 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
   void _onTapContinueButton(args) {
     if (args != null) {
       Navigator.pop(context);
-    }else{
+    } else {
       Navigator.pushNamed(context, WelcomeScreen.name);
     }
-
   }
 
-  Container buildLanguageTile({required String flag, required String value}) {
+  Container buildLanguageTile({required String flag, required String value,required String name}) {
     bool isSelected = selectedLanguage == value;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -103,15 +106,15 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
         spacing: 10,
         children: [
           Image.network(flag, width: 30, height: 30),
-          Expanded(child: Text(value)),
-          Radio(
-            value: value,
-            groupValue: selectedLanguage,
-            onChanged: (value) {
-              setState(() {
-                selectedLanguage = value.toString();
-              });
-            },
+          Expanded(child: Text(name)),
+          Consumer<LanguageProvider>(
+            builder: (context, state, child) => Radio(
+              value: value,
+              groupValue: state.currentLanguage,
+              onChanged: (value) {
+                state.changeLanguage(context, value);
+              },
+            ),
           ),
         ],
       ),

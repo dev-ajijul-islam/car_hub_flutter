@@ -1,3 +1,4 @@
+import 'package:car_hub/providers/language_provider.dart';
 import 'package:car_hub/ui/main_layout.dart';
 import 'package:car_hub/ui/screens/auth/profile_setup/set_profile_picture.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/pin_verification_screen.dart';
@@ -26,6 +27,7 @@ import 'package:car_hub/ui/screens/profile/terms_and_condition.dart';
 import 'package:car_hub/ui/screens/track_car/tracking_progress.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CarHub extends StatelessWidget {
   const CarHub({super.key});
@@ -33,83 +35,89 @@ class CarHub extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color primary = Color(0xFF930405);
-    return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.light(
-          primary: primary,
-          onPrimary: Colors.white,
-          surface: Colors.grey.shade200,
-          onSurface: Colors.black87,
-        ),
-        filledButtonTheme: FilledButtonThemeData(
-          style: FilledButton.styleFrom(
-            minimumSize: Size(MediaQuery.of(context).size.width, 40),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => LanguageProvider()),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+          colorScheme: ColorScheme.light(
+            primary: primary,
+            onPrimary: Colors.white,
+            surface: Colors.grey.shade200,
+            onSurface: Colors.black87,
+          ),
+          filledButtonTheme: FilledButtonThemeData(
+            style: FilledButton.styleFrom(
+              minimumSize: Size(MediaQuery.of(context).size.width, 40),
+            ),
+          ),
+          textTheme: TextTheme(
+            titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+            titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          ),
+
+          dropdownMenuTheme: DropdownMenuThemeData(),
+
+          buttonTheme: ButtonThemeData(),
+
+          inputDecorationTheme: InputDecorationThemeData(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(100),
+              borderSide: BorderSide(color: primary),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(100),
+              borderSide: BorderSide(color: primary),
+            ),
+            prefixIconColor: Colors.grey,
+            suffixIconColor: Colors.grey,
+            filled: true,
+            fillColor: Colors.white,
+            hintStyle: TextStyle(
+              fontSize: 14,
+              color: Colors.grey,
+              fontWeight: FontWeight.w400,
+              height: 0,
+            ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 0),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(100),
+            ),
           ),
         ),
-        textTheme: TextTheme(
-          titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-          titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-        ),
 
-        dropdownMenuTheme: DropdownMenuThemeData(),
-
-        buttonTheme: ButtonThemeData(
-
-        ),
-
-        inputDecorationTheme: InputDecorationThemeData(
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(100),
-            borderSide: BorderSide(color: primary),
-          ), focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(100),
-            borderSide: BorderSide(color: primary),
-          ),
-          prefixIconColor: Colors.grey,
-          suffixIconColor: Colors.grey,
-          filled: true,
-          fillColor: Colors.white,
-          hintStyle: TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-            fontWeight: FontWeight.w400,
-            height: 0,
-          ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 0),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
-        ),
+        //routes
+        routes: {
+          SplashScreen.name: (_) => SplashScreen(),
+          LanguageSelectScreen.name: (_) => LanguageSelectScreen(),
+          WelcomeScreen.name: (_) => WelcomeScreen(),
+          SignInScreen.name: (_) => SignInScreen(),
+          SignUpScreen.name: (_) => SignUpScreen(),
+          ResetEmailScreen.name: (_) => ResetEmailScreen(),
+          PinVerificationScreen.name: (_) => PinVerificationScreen(),
+          ResetPasswordScreen.name: (_) => ResetPasswordScreen(),
+          ResetPasswordSuccess.name: (_) => ResetPasswordSuccess(),
+          EmailVerificationScreen.name: (_) => EmailVerificationScreen(),
+          SignUpSuccessScreen.name: (_) => SignUpSuccessScreen(),
+          SetProfilePicture.name: (_) => SetProfilePicture(),
+          HomeScreen.name: (_) => HomeScreen(),
+          MainLayout.name: (_) => MainLayout(),
+          SearchResultScreen.name: (_) => SearchResultScreen(),
+          NotificationsScreen.name: (_) => NotificationsScreen(),
+          CarDetailsScreen.name: (_) => CarDetailsScreen(),
+          BookingCostCalculation.name: (_) => BookingCostCalculation(),
+          PaymentScreen.name: (_) => PaymentScreen(),
+          DeliveryInfoScreen.name: (_) => DeliveryInfoScreen(),
+          TrackingProgress.name: (_) => TrackingProgress(),
+          PersonalInformation.name: (_) => PersonalInformation(),
+          ChangePassword.name: (_) => ChangePassword(),
+          MyHistory.name: (_) => MyHistory(),
+          MyBookings.name: (_) => MyBookings(),
+          TermsAndCondition.name: (_) => TermsAndCondition(),
+        },
+        initialRoute: SplashScreen.name,
       ),
-
-      //routes
-      routes: {
-        SplashScreen.name: (_) => SplashScreen(),
-        LanguageSelectScreen.name: (_) => LanguageSelectScreen(),
-        WelcomeScreen.name: (_) => WelcomeScreen(),
-        SignInScreen.name: (_) => SignInScreen(),
-        SignUpScreen.name : (_) => SignUpScreen(),
-        ResetEmailScreen.name : (_) => ResetEmailScreen(),
-        PinVerificationScreen.name : (_) => PinVerificationScreen(),
-        ResetPasswordScreen.name : (_) => ResetPasswordScreen(),
-        ResetPasswordSuccess.name : (_) => ResetPasswordSuccess(),
-        EmailVerificationScreen.name : (_) => EmailVerificationScreen(),
-        SignUpSuccessScreen.name : (_)=> SignUpSuccessScreen(),
-        SetProfilePicture.name : (_) => SetProfilePicture(),
-        HomeScreen.name : (_) => HomeScreen(),
-        MainLayout.name : (_) => MainLayout(),
-        SearchResultScreen.name : (_) => SearchResultScreen(),
-        NotificationsScreen.name : (_)=> NotificationsScreen(),
-        CarDetailsScreen.name : (_)=> CarDetailsScreen(),
-        BookingCostCalculation.name : (_) => BookingCostCalculation(),
-        PaymentScreen.name : (_) => PaymentScreen(),
-        DeliveryInfoScreen.name : (_) => DeliveryInfoScreen(),
-        TrackingProgress.name : (_) => TrackingProgress(),
-        PersonalInformation.name : (_) => PersonalInformation(),
-        ChangePassword.name : (_) => ChangePassword(),
-        MyHistory.name : (_) => MyHistory(),
-        MyBookings.name : (_)=> MyBookings(),
-        TermsAndCondition.name : (_) => TermsAndCondition()
-      },
-      initialRoute: SplashScreen.name,
     );
   }
 }
