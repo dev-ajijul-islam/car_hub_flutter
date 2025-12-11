@@ -1,5 +1,6 @@
 import 'package:car_hub/providers/language_provider.dart';
 import 'package:car_hub/ui/screens/on_start/welcome_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
     final args = ModalRoute.of(context)?.settings.arguments;
 
     return Scaffold(
-      appBar: args != null ? AppBar(title: Text("Language")) : null,
+      appBar: args != null ? AppBar(title: Text("language").tr()) : null,
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -33,22 +34,22 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
                 SizedBox(height: 100),
                 Center(
                   child: Text(
-                    "Choose your language",
+                    "choose_lang_title",
                     style: TextTheme.of(context).titleLarge,
-                  ),
+                  ).tr(),
                 ),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       textAlign: TextAlign.center,
-                      "Select your preferred language to use CarLanda",
+                      "choose_lang_description",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                         color: Colors.grey,
                       ),
-                    ),
+                    ).tr(),
                   ),
                 ),
 
@@ -68,7 +69,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
               onPressed: () {
                 _onTapContinueButton(args);
               },
-              child: Text((args != null) ? "Save" : "Continue"),
+              child: Text((args != null) ? "save".tr() : "continue".tr()),
             ),
           ],
         ),

@@ -25,6 +25,7 @@ import 'package:car_hub/ui/screens/profile/my_history.dart';
 import 'package:car_hub/ui/screens/profile/personal_information.dart';
 import 'package:car_hub/ui/screens/profile/terms_and_condition.dart';
 import 'package:car_hub/ui/screens/track_car/tracking_progress.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,9 @@ class CarHub extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => LanguageProvider()),
       ],
       child: MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         theme: ThemeData(
           colorScheme: ColorScheme.light(
             primary: primary,
