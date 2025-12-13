@@ -1,11 +1,14 @@
+import 'package:car_hub/providers/auth_provider.dart';
 import 'package:car_hub/ui/screens/home/notifications_screen.dart';
 import 'package:car_hub/ui/widgets/car_card.dart';
 import 'package:car_hub/ui/widgets/help_chat_dialog.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:car_hub/ui/widgets/search_dialog/search_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide AuthProvider;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final User? user = context.watch<AuthProvider>().currentUser;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
@@ -61,15 +65,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 CircleAvatar(
                                   backgroundColor: Colors.white,
-                                  backgroundImage: NetworkImage(
-                                    "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/455086251_1029469555479420_7495595057560540792_n.jpg?stp=c0.411.1365.1364a_dst-jpg_s480x480_tt6&_nc_cat=105&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeHG59vjK7oCVF247ccDGzMkfI0X5DlYQtB8jRfkOVhC0H31wd3jNO6Z2zvdgc1g92xM_OuDQXBb5ScSne_0qs9R&_nc_ohc=_u9iSgq4-TEQ7kNvwFS4qsP&_nc_oc=AdnCpeXKetzlzB4vsJ4yiBDfs0l6F89WlDxilWeY8GwA-xqRhBm-0tR1EoTAIK5GuWw&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=bgzSj--_j13pz1yOWe3OjA&oh=00_Afk8fJXUZWEOmLIdsKI86afTO8YhP2EVxVW0XtROLTIiGw&oe=693DD180",
-                                  ),
+                                  backgroundImage: user?.photoURL != null ? NetworkImage(
+                                    user!.photoURL.toString()
+                                  ) : AssetImage(AssetsFilePaths.dummyProfile),
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Hello, Ajijul Islam",
+                                      "Hello, ${user!.displayName}",
                                       style: TextTheme.of(context).titleMedium
                                           ?.copyWith(
                                             color: Colors.white,
