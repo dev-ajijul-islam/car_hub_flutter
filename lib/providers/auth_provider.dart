@@ -1,3 +1,4 @@
+import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
 import 'package:car_hub/ui/widgets/show_snackbar_message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -125,5 +126,21 @@ class AuthProvider extends ChangeNotifier {
         currentUser = user;
       }
     });
+  }
+
+  ///=================================sign out===========================
+
+  Future<void> signOut(BuildContext context) async {
+    try {
+      await _auth.signOut().then((value) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          SignInScreen.name,
+          (route) => false,
+        );
+      });
+    } catch (e) {
+      showSnackbarMessage(context: context, message: "Sign out failed $e");
+    }
   }
 }

@@ -221,7 +221,9 @@ class _ProfileMenuTileState extends State<ProfileMenuTile> {
                     style: FilledButton.styleFrom(
                       minimumSize: Size(double.maxFinite, 40),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<AuthProvider>().signOut(context);
+                    },
                     child: Text("Yes"),
                   ),
                 ),
