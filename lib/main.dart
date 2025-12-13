@@ -1,9 +1,14 @@
 import 'package:car_hub/app.dart';
+import 'package:car_hub/firebase_options.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   await EasyLocalization.ensureInitialized();
 
   runApp(EasyLocalization(

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1089292159336",
+    "project_id": "carlanda-3b43b",
+    "storage_bucket": "carlanda-3b43b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089292159336:android:dd367b44d9d77148f2eedd",
+        "android_client_info": {
+          "package_name": "com.carhub.car_hub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1089292159336-uscvshe51e9n2vvlok68g31nmeum8h91.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carhub.car_hub",
+            "certificate_hash": "121d662949010b9ecafda297bcb6c9146294c001"
+          }
+        },
+        {
+          "client_id": "1089292159336-hil3ca8691g15d65upgv9i7608t68a28.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUsFV61ThSkXLcA16FqFXigfzTLhtytxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1089292159336-hil3ca8691g15d65upgv9i7608t68a28.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1089292159336-7rt28atmq082id40v740hgbnhqerjpf6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.carhub.carHub"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

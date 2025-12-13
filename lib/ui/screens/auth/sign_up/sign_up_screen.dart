@@ -1,10 +1,12 @@
+import 'package:car_hub/providers/auth_provider.dart';
 import 'package:car_hub/ui/main_layout.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/reset_email_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
-import 'package:car_hub/ui/screens/auth/sign_up/email_verification_screen.dart';
+import 'package:car_hub/ui/widgets/loading.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -15,8 +17,28 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool isPasswordVisible = false;
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final bool isLoading = context.select<AuthProvider, bool>(
+      (p) => p.signUpInProgress,
+    );
+
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -27,117 +49,162 @@ class _SignUpScreenState extends State<SignUpScreen> {
               spacing: 10,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
+
                 Align(
                   alignment: Alignment.topRight,
-                  child: TextButton(onPressed: _onTapSkipButton, child: Text("Skip")),
+                  child: TextButton(
+                    onPressed: _onTapSkipButton,
+                    child: const Text("Skip"),
+                  ),
                 ),
 
-                Text("Sign Up", style: TextTheme.of(context).titleLarge),
+                Text("Sign Up", style: Theme.of(context).textTheme.titleLarge),
                 Text(
-                  "Welcome to CarLanda! \n Please enter your details",
-                  style: TextTheme.of(context).bodyMedium,
+                  "Welcome to CarLanda! \nPlease enter your details",
+                  style: Theme.of(context).textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
+
                 Form(
+                  key: _formKey,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 5,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                      const SizedBox(height: 10),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text("Full name"),
                       ),
                       TextFormField(
-                        decoration: InputDecoration(
+                        controller: _nameController,
+                        validator: (value) => value == null || value.isEmpty
+                            ? "Enter name"
+                            : null,
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person_outline),
                           hintText: "Enter your full name",
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text("Email"),
                       ),
                       TextFormField(
-                        decoration: InputDecoration(
+                        controller: _emailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Enter email";
+                          }
+                          if (!value.contains("@")) {
+                            return "Enter valid email";
+                          }
+                          return null;
+                        },
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.mail_outline_rounded),
-                          hintText: "Enter your Email",
+                          hintText: "Enter your email",
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text("Password"),
                       ),
                       TextFormField(
-                        obscureText: true,
+                        controller: _passwordController,
+                        obscureText: !isPasswordVisible,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Enter password";
+                          }
+                          if (value.length < 6) {
+                            return "Password must be at least 6 characters";
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.lock_outline_rounded),
-                          suffixIcon: Icon(Icons.visibility_off_outlined),
-                          hintText: "Enter your Email",
+                          prefixIcon: const Icon(Icons.lock_outline_rounded),
+                          hintText: "Enter your password",
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              isPasswordVisible
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isPasswordVisible = !isPasswordVisible;
+                              });
+                            },
+                          ),
                         ),
                       ),
+
                       Align(
                         alignment: Alignment.topRight,
                         child: TextButton(
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.grey,
-                          ),
                           onPressed: _onTapForgetPasswordButton,
-                          child: Text("Forget password"),
+                          child: const Text(
+                            "Forget password",
+                            style: TextStyle(color: Colors.grey),
+                          ),
                         ),
                       ),
-                      FilledButton(onPressed: _onTapSignUpButton, child: Text("Sign up")),
-                      SizedBox(height: 10),
+
+                      const SizedBox(height: 10),
+                      FilledButton(
+                        onPressed: isLoading ? null : _onTapSignUpButton,
+                        child: isLoading ? Loading() : const Text("Sign up"),
+                      ),
+
+                      const SizedBox(height: 20),
+
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 5,
-                              ),
-                              child: Divider(color: Colors.grey),
-                            ),
+                        children: const [
+                          Expanded(child: Divider()),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            child: Text("Or"),
                           ),
-                          Text("Or"),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 5,
-                              ),
-                              child: Divider(color: Colors.grey),
-                            ),
-                          ),
+                          Expanded(child: Divider()),
                         ],
                       ),
+
+                      const SizedBox(height: 10),
+
                       ElevatedButton(
+                        onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black87,
                         ),
-                        onPressed: () {},
                         child: Row(
-                          spacing: 10,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(AssetsFilePaths.google),
-                            Text("Sign in with google"),
+                            const SizedBox(width: 10),
+                            const Text("Sign in with Google"),
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height / 6),
+
+                const SizedBox(height: 30),
+
                 RichText(
                   text: TextSpan(
-                    style: TextStyle(color: Colors.grey),
-                    text: "Don't have and account ?",
+                    style: const TextStyle(color: Colors.grey),
+                    text: "Already have an account? ",
                     children: [
                       TextSpan(
-                        style: TextStyle(
-                          color: ColorScheme.of(context).primary,
-                        ),
                         text: "Sign in",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             Navigator.pushNamed(context, SignInScreen.name);
@@ -146,7 +213,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -155,15 +223,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  _onTapSignUpButton(){
-    Navigator.pushNamed(context, EmailVerificationScreen.name);
+  Future<void> _onTapSignUpButton() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    final success = await context
+        .read<AuthProvider>()
+        .signUpWithEmailAndPassword(
+          context: context,
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
+
+    if (!mounted) return;
+
+    if (success) {
+      _nameController.clear();
+      _emailController.clear();
+      _passwordController.clear();
+      Navigator.pushNamed(context, SignInScreen.name);
+    }
   }
 
-  _onTapSkipButton(){
-    Navigator.pushNamedAndRemoveUntil(context, MainLayout.name, (predicate)=> false);
+  void _onTapSkipButton() {
+    Navigator.pushNamedAndRemoveUntil(context, MainLayout.name, (_) => false);
   }
 
-  _onTapForgetPasswordButton() {
+  void _onTapForgetPasswordButton() {
     Navigator.pushNamed(context, ResetEmailScreen.name);
   }
 }
