@@ -1,7 +1,9 @@
+import 'package:car_hub/providers/auth_provider.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/reset_password_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_up/sign_up_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});
@@ -14,8 +16,11 @@ class EmailVerificationScreen extends StatefulWidget {
 }
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+
   @override
   Widget build(BuildContext context) {
+    final Map<String,dynamic> args = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
+
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -40,7 +45,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        text: "micheljhon@gmail.com ",
+                        text: "${args["email"]}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: ColorScheme.of(context).primary,

@@ -130,9 +130,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ),
                       FilledButton(
-                        onPressed:(){
-                          loading ? null : _onTapSignInButton(context);
-                        } ,
+                        onPressed:
+                          loading ? null : _onTapSignInButton,
                         child: loading ? Loading() : Text("Sign in"),
                       ),
                       SizedBox(height: 10),
@@ -205,7 +204,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Future<void> _onTapSignInButton(BuildContext context) async {
+  Future<void> _onTapSignInButton() async {
     if (_formKey.currentState!.validate()) {
       final success = await context
           .read<AuthProvider>()

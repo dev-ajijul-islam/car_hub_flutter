@@ -1,8 +1,9 @@
 import 'dart:async';
-
+import 'package:car_hub/data/network/network_caller.dart';
 import 'package:car_hub/ui/main_layout.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
 import 'package:car_hub/ui/widgets/show_snackbar_message.dart';
+import 'package:car_hub/utils/urls.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +22,10 @@ class AuthProvider extends ChangeNotifier {
   ///================================= Sign up with email & password ===========================
 
   Future<bool> signUpWithEmailAndPassword({
-    required context,
+    required  context,
     required String email,
     required String password,
-    String? name,
+    required String name,
   }) async {
     inProgress = true;
     notifyListeners();
@@ -35,19 +36,36 @@ class AuthProvider extends ChangeNotifier {
         password: password,
       );
 
-      if (credential.user != null) {
-        if (name != null) {
-          await credential.user!.updateDisplayName(name);
-        }
+      final user = credential.user;
+      if (user == null) return false;
+
+      final response = await NetworkCaller.postRequest(
+        Urls.createUser,
+        {
+          "name": name,
+          "email": email,
+        },
+      );
+
+      if (!response.success) {
+        await user.delete();
 
         showSnackbarMessage(
           context: context,
-          message: "Sign up successful",
-          color: Colors.green,
+          message: response.message,
+          color: Colors.red,
         );
-        return true;
+        return false;
       }
-      return false;
+
+      await user.updateDisplayName(name);
+
+      showSnackbarMessage(
+        context: context,
+        message: "Sign up successful",
+        color: Colors.green,
+      );
+      return true;
     } on FirebaseAuthException catch (e) {
       showSnackbarMessage(
         context: context,
@@ -60,6 +78,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
 
   ///================================= Sign in with email & password ===========================
 

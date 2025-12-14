@@ -1,7 +1,10 @@
 import 'package:car_hub/providers/auth_provider.dart';
 import 'package:car_hub/ui/main_layout.dart';
+import 'package:car_hub/ui/screens/auth/profile_setup/set_profile_picture.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/reset_email_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_up/email_verification_screen.dart';
+import 'package:car_hub/ui/screens/auth/sign_up/sign_up_success_screen.dart';
 import 'package:car_hub/ui/widgets/loading.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/gestures.dart';
@@ -177,7 +180,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                       ElevatedButton(
                         onPressed: () {
-                          context.read<AuthProvider>().signInWithGoogle(context);
+                          context.read<AuthProvider>().signInWithGoogle(
+                            context,
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black87,
@@ -234,7 +239,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           context: context,
           email: _emailController.text.trim(),
           password: _passwordController.text,
-          name: _nameController.text.trim()
+          name: _nameController.text.trim(),
         );
 
     if (!mounted) return;
@@ -243,7 +248,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _nameController.clear();
       _emailController.clear();
       _passwordController.clear();
-      Navigator.pushNamed(context, SignInScreen.name);
+      Navigator.pushNamed(
+        context,
+        SignUpSuccessScreen.name,
+        arguments: {"email": _emailController.text},
+      );
     }
   }
 
