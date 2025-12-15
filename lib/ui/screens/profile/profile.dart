@@ -32,74 +32,83 @@ class _ProfileState extends State<Profile> {
         child: Visibility(
           visible: context.read<AuthProvider>().currentUser != null,
           replacement: Center(
-            child: ElevatedButton(onPressed: (){
-              Navigator.pushNamed(context, SignInScreen.name);
-            }, child: Text("Login")),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, SignInScreen.name);
+              },
+              child: Text("Login"),
+            ),
           ),
-          child: user != null ? ListView(
-            children: [
-              SizedBox(height: 30),
-              Align(
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.bottomCenter,
+          child: user != null
+              ? ListView(
                   children: [
-                    CircleAvatar(
-                      radius: 70,
-                      backgroundColor: Colors.white,
-                      backgroundImage: profileImage != null
-                          ? FileImage(File(profileImage!.path))
-                          : user!.photoURL != null
-                          ? NetworkImage(user.photoURL.toString())
-                          : AssetImage(AssetsFilePaths.dummyProfile),
-                    ),
-
-                    Positioned(
-                      bottom: -17,
-                      child: GestureDetector(
-                        onTap: _onTapProfilePicture,
-                        child: Container(
-                          padding: EdgeInsets.all(3),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(100),
+                    SizedBox(height: 30),
+                    Align(
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          CircleAvatar(
+                            radius: 70,
+                            backgroundColor: Colors.white,
+                            backgroundImage: profileImage != null
+                                ? FileImage(File(profileImage!.path))
+                                : user!.photoURL != null
+                                ? NetworkImage(user.photoURL.toString())
+                                : AssetImage(AssetsFilePaths.dummyProfile),
                           ),
-                          child: CircleAvatar(radius: 16, child: Icon(Icons.add)),
-                        ),
+
+                          Positioned(
+                            bottom: -17,
+                            child: GestureDetector(
+                              onTap: _onTapProfilePicture,
+                              child: Container(
+                                padding: EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: CircleAvatar(
+                                  radius: 16,
+                                  child: Icon(Icons.add),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 15),
-              Column(
-                children: [
-                  Text(
-                    user!.displayName.toString(),
-                    style: TextTheme.of(context).titleMedium,
-                  ),
-                  Text(user.email.toString()),
-                ],
-              ),
+                    SizedBox(height: 15),
+                    Column(
+                      children: [
+                        Text(
+                          user!.displayName.toString(),
+                          style: TextTheme.of(context).titleMedium,
+                        ),
+                        Text(user.email.toString()),
+                      ],
+                    ),
 
-              ListView.separated(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.all(20),
-                itemBuilder: (context, index) {
-                  final item = profileTiles[index];
-                  return ProfileMenuTile(
-                    title: item["title"],
-                    icon: item["icon"],
-                    switchMode: item["title"] == "Notification",
-                    route: item["route"],
-                  );
-                },
-                separatorBuilder: (context, index) => SizedBox(height: 10),
-                itemCount: profileTiles.length,
-              ),
-            ],
-          ) : SizedBox(),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.all(20),
+                      itemBuilder: (context, index) {
+                        final item = profileTiles[index];
+                        return ProfileMenuTile(
+                          title: item["title"],
+                          icon: item["icon"],
+                          switchMode: item["title"] == "Notification",
+                          route: item["route"],
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          SizedBox(height: 10),
+                      itemCount: profileTiles.length,
+                    ),
+                  ],
+                )
+              : SizedBox(),
         ),
       ),
     );

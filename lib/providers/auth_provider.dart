@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:car_hub/data/model/user_model.dart';
 import 'package:car_hub/data/network/network_caller.dart';
+import 'package:car_hub/data/network/network_response.dart';
 import 'package:car_hub/ui/main_layout.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
 import 'package:car_hub/ui/widgets/show_snackbar_message.dart';
@@ -62,6 +65,7 @@ class AuthProvider extends ChangeNotifier {
         message: "Sign up successful",
         color: Colors.green,
       );
+      await user.reload();
       return true;
     } on FirebaseAuthException catch (e) {
       showSnackbarMessage(
@@ -90,16 +94,28 @@ class AuthProvider extends ChangeNotifier {
         email: email,
         password: password,
       );
+      if (credential.user == null) return false;
 
-      if (credential.user != null) {
+      final idToken = await credential.user!.getIdToken();
+      NetworkResponse response = await NetworkCaller.getRequest(
+        url: Urls.loginUser(idToken: idToken!),
+      );
+
+      if (response.success) {
         showSnackbarMessage(
           context: context,
           message: "Sign in successful",
           color: Colors.green,
         );
         return true;
+      } else {
+        showSnackbarMessage(
+          context: context,
+          message: "Sign in failed",
+          color: Colors.red,
+        );
+        return false;
       }
-      return false;
     } on FirebaseAuthException catch (e) {
       showSnackbarMessage(
         context: context,
