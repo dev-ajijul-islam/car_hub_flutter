@@ -51,9 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  if(user != null)...[
+                  if (user != null) ...[
                     Visibility(
-                      visible: context.watch<AuthProvider>().currentUser != null,
+                      visible:
+                          context.watch<AuthProvider>().currentUser != null,
                       child: Positioned(
                         top: 40,
                         child: SizedBox(
@@ -70,24 +71,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                       backgroundColor: Colors.white,
                                       backgroundImage: user.photoURL != null
                                           ? NetworkImage(
-                                        user.photoURL.toString(),
-                                      )
+                                              user.photoURL.toString(),
+                                            )
                                           : AssetImage(
-                                        AssetsFilePaths.dummyProfile,
-                                      ),
+                                              AssetsFilePaths.dummyProfile,
+                                            ),
                                     ),
                                     Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Hello, ${user!.displayName}",
-                                          style: TextTheme.of(context).titleMedium
+                                          style: TextTheme.of(context)
+                                              .titleMedium
                                               ?.copyWith(
-                                            color: Colors.white,
-                                            fontSize: 17,
-                                            height: 0,
-                                          ),
+                                                color: Colors.white,
+                                                fontSize: 17,
+                                                height: 0,
+                                              ),
                                         ),
                                         Text(
                                           "Welcome back!",
