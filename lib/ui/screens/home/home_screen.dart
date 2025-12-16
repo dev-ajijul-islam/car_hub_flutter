@@ -11,21 +11,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   static String name = "home-screen";
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool _isInitialLoad = true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_isInitialLoad) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final provider = context.read<FeaturedCarProvider>();
+        if (provider.featuredCars.isEmpty && !provider.isLoading) {
+          provider.getFeaturedCar();
+        }
+      });
+      _isInitialLoad = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final User? user = context.watch<AuthProvider>().currentUser;
     final featuredCarProvider = context.watch<FeaturedCarProvider>();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (featuredCarProvider.featuredCars.isEmpty &&
-          !featuredCarProvider.isLoading) {
-        featuredCarProvider.getFeaturedCar();
-      }
-    });
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -61,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                   if (user != null) ...[
                     Visibility(
                       visible:
-                          context.watch<AuthProvider>().currentUser != null,
+                      context.watch<AuthProvider>().currentUser != null,
                       child: Positioned(
                         top: 40,
                         child: SizedBox(
@@ -78,25 +93,25 @@ class HomeScreen extends StatelessWidget {
                                       backgroundColor: Colors.white,
                                       backgroundImage: user.photoURL != null
                                           ? NetworkImage(
-                                              user.photoURL.toString(),
-                                            )
+                                        user.photoURL.toString(),
+                                      )
                                           : AssetImage(
-                                              AssetsFilePaths.dummyProfile,
-                                            ),
+                                        AssetsFilePaths.dummyProfile,
+                                      ),
                                     ),
                                     Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Hello, ${user.displayName}",
                                           style: TextTheme.of(context)
                                               .titleMedium
                                               ?.copyWith(
-                                                color: Colors.white,
-                                                fontSize: 17,
-                                                height: 0,
-                                              ),
+                                            color: Colors.white,
+                                            fontSize: 17,
+                                            height: 0,
+                                          ),
                                         ),
                                         Text(
                                           "Welcome back!",
@@ -260,20 +275,24 @@ class HomeScreen extends StatelessWidget {
                         featuredCarProvider.featuredCars.isEmpty)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Failed to load featured cars",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                            SizedBox(height: 10),
-                            ElevatedButton(
-                              onPressed: () {
-                                featuredCarProvider.getFeaturedCar();
-                              },
-                              child: Text("Retry"),
-                            ),
-                          ],
+                        child: Align(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Failed to load featured cars",
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              SizedBox(height: 10),
+                              FilledButton(
+                                onPressed: () {
+                                  featuredCarProvider.getFeaturedCar();
+                                },
+                                child: Text("Retry"),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
 
