@@ -1,5 +1,6 @@
 import 'package:car_hub/providers/auth_provider.dart';
 import 'package:car_hub/providers/featured_car_provider.dart';
+import 'package:car_hub/providers/hot_deal_car_provider.dart';
 import 'package:car_hub/providers/language_provider.dart';
 import 'package:car_hub/providers/single_car_provider.dart';
 import 'package:car_hub/ui/main_layout.dart';
@@ -44,7 +45,8 @@ class CarHub extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => LanguageProvider()),
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (_)=> FeaturedCarProvider()),
-        ChangeNotifierProvider(create: (_) => SingleCarProvider(),)
+        ChangeNotifierProvider(create: (_) => SingleCarProvider(),),
+        ChangeNotifierProvider(create: (_) => HotDealCarProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

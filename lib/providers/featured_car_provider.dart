@@ -21,7 +21,6 @@ class FeaturedCarProvider extends ChangeNotifier {
       if (response.success) {
         featuredCars.clear();
 
-        // Parse the response
         if (response.body?["body"] is List) {
           List<dynamic> list = response.body!["body"];
 

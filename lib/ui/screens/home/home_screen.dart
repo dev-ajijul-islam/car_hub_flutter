@@ -1,8 +1,10 @@
 import 'package:car_hub/providers/auth_provider.dart';
 import 'package:car_hub/providers/featured_car_provider.dart';
+import 'package:car_hub/providers/hot_deal_car_provider.dart';
 import 'package:car_hub/ui/screens/home/notifications_screen.dart';
 import 'package:car_hub/ui/widgets/car_card.dart';
 import 'package:car_hub/ui/widgets/help_chat_dialog.dart';
+import 'package:car_hub/ui/widgets/hot_deal_carousel.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:car_hub/ui/widgets/search_dialog/search_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -28,9 +30,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (_isInitialLoad) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        final provider = context.read<FeaturedCarProvider>();
-        if (provider.featuredCars.isEmpty && !provider.isLoading) {
-          provider.getFeaturedCar();
+        final featuredProvider = context.read<FeaturedCarProvider>();
+        final hotDealProvider = context.read<HotDealCarProvider>();
+        if (featuredProvider.featuredCars.isEmpty &&
+            !featuredProvider.isLoading) {
+          featuredProvider.getFeaturedCar();
+        }
+        if (hotDealProvider.hotDealCars.isEmpty && !hotDealProvider.isLoading) {
+          hotDealProvider.getHotDealCar();
         }
       });
       _isInitialLoad = false;
@@ -41,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final User? user = context.watch<AuthProvider>().currentUser;
     final featuredCarProvider = context.watch<FeaturedCarProvider>();
+    final hotDealCarsProvider = context.watch<HotDealCarProvider>();
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -76,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (user != null) ...[
                     Visibility(
                       visible:
-                      context.watch<AuthProvider>().currentUser != null,
+                          context.watch<AuthProvider>().currentUser != null,
                       child: Positioned(
                         top: 40,
                         child: SizedBox(
@@ -93,25 +101,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                       backgroundColor: Colors.white,
                                       backgroundImage: user.photoURL != null
                                           ? NetworkImage(
-                                        user.photoURL.toString(),
-                                      )
+                                              user.photoURL.toString(),
+                                            )
                                           : AssetImage(
-                                        AssetsFilePaths.dummyProfile,
-                                      ),
+                                              AssetsFilePaths.dummyProfile,
+                                            ),
                                     ),
                                     Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Hello, ${user.displayName}",
                                           style: TextTheme.of(context)
                                               .titleMedium
                                               ?.copyWith(
-                                            color: Colors.white,
-                                            fontSize: 17,
-                                            height: 0,
-                                          ),
+                                                color: Colors.white,
+                                                fontSize: 17,
+                                                height: 0,
+                                              ),
                                         ),
                                         Text(
                                           "Welcome back!",
@@ -168,48 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              CarouselSlider(
-                items: [1, 2, 3, 4, 5].map((s) {
-                  return Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 20,
-                        ),
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Image.asset(AssetsFilePaths.car2),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 30,
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.black26,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 40,
-                        child: Text(
-                          "Hot Deal",
-                          style: TextTheme.of(context).titleMedium?.copyWith(
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                }).toList(),
-                options: CarouselOptions(viewportFraction: 0.7, autoPlay: true),
-              ),
+              HotDealCarousel(hotDealCars: hotDealCarsProvider.hotDealCars),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
@@ -249,7 +216,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
 
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -262,14 +228,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(height: 10),
 
-
                     if (featuredCarProvider.isLoading &&
                         featuredCarProvider.featuredCars.isEmpty)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         child: Center(child: CircularProgressIndicator()),
                       ),
-
 
                     if (featuredCarProvider.errorMessage != null &&
                         featuredCarProvider.featuredCars.isEmpty)
@@ -296,7 +260,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
 
-
                     if (!featuredCarProvider.isLoading &&
                         featuredCarProvider.errorMessage == null &&
                         featuredCarProvider.featuredCars.isEmpty)
@@ -307,7 +270,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
 
-
                     if (featuredCarProvider.featuredCars.isNotEmpty)
                       ListView.separated(
                         shrinkWrap: true,
@@ -317,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(height: 10),
                         itemBuilder: (context, index) {
                           final car = featuredCarProvider.featuredCars[index];
-                          return CarCard(car: car,);
+                          return CarCard(car: car);
                         },
                       ),
                   ],
@@ -335,3 +297,5 @@ class _HomeScreenState extends State<HomeScreen> {
     searchDialog(context);
   }
 }
+
+
