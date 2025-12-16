@@ -1,312 +1,366 @@
 class CarModel {
-  String? sId;
-  String? title;
-  String? brand;
-  String? model;
-  int? year;
-  Pricing? pricing;
-  Location? location;
-  Media? media;
-  Flags? flags;
-  Specs? specs;
-  Costs? costs;
-  String? carTypeId;
-  String? description;
-  InquiryContacts? inquiryContacts;
+  final String sId;
+  final String title;
+  final String brand;
+  final String model;
+  final int year;
+  final Pricing pricing;
+  final Location location;
+  final Media media;
+  final Flags flags;
+  final Specs specs;
+  final Costs costs;
+  final String carTypeId;
+  final String description;
+  final InquiryContacts inquiryContacts;
 
   CarModel({
-    sId,
-    title,
-    brand,
-    model,
-    year,
-    pricing,
-    location,
-    media,
-    flags,
-    specs,
-    costs,
-    carTypeId,
-    description,
-    inquiryContacts,
+    required this.sId,
+    required this.title,
+    required this.brand,
+    required this.model,
+    required this.year,
+    required this.pricing,
+    required this.location,
+    required this.media,
+    required this.flags,
+    required this.specs,
+    required this.costs,
+    required this.carTypeId,
+    required this.description,
+    required this.inquiryContacts,
   });
 
-  CarModel.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    title = json['title'];
-    brand = json['brand'];
-    model = json['model'];
-    year = json['year'];
-    pricing = json['pricing'] != null
-        ? Pricing.fromJson(json['pricing'])
-        : null;
-    location = json['location'] != null
-        ? Location.fromJson(json['location'])
-        : null;
-    media = json['media'] != null ? Media.fromJson(json['media']) : null;
-    flags = json['flags'] != null ? Flags.fromJson(json['flags']) : null;
-    specs = json['specs'] != null ? Specs.fromJson(json['specs']) : null;
-    costs = json['costs'] != null ? Costs.fromJson(json['costs']) : null;
-    carTypeId = json['carTypeId'];
-    description = json['description'];
-    inquiryContacts = json['inquiryContacts'] != null
-        ? InquiryContacts.fromJson(json['inquiryContacts'])
-        : null;
+  factory CarModel.fromJson(Map<String, dynamic> json) {
+    return CarModel(
+      sId: json['_id']?.toString() ?? '',
+      title: json['title']?.toString() ?? '',
+      brand: json['brand']?.toString() ?? '',
+      model: json['model']?.toString() ?? '',
+      year: _parseInt(json['year']),
+      pricing: Pricing.fromJson(json['pricing'] ?? {}),
+      location: Location.fromJson(json['location'] ?? {}),
+      media: Media.fromJson(json['media'] ?? {}),
+      flags: Flags.fromJson(json['flags'] ?? {}),
+      specs: Specs.fromJson(json['specs'] ?? {}),
+      costs: Costs.fromJson(json['costs'] ?? {}),
+      carTypeId: json['carTypeId']?.toString() ?? '',
+      description: json['description']?.toString() ?? '',
+      inquiryContacts: InquiryContacts.fromJson(json['inquiryContacts'] ?? {}),
+    );
+  }
+
+  static int _parseInt(dynamic value) {
+    if (value == null) return 0;
+    if (value is int) return value;
+    if (value is double) return value.toInt();
+    if (value is String) {
+      final parsed = int.tryParse(value);
+      if (parsed != null) return parsed;
+      final doubleParsed = double.tryParse(value);
+      if (doubleParsed != null) return doubleParsed.toInt();
+      return 0;
+    }
+    return 0;
+  }
+
+  static double _parseDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    return 0.0;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['title'] = title;
-    data['brand'] = brand;
-    data['model'] = model;
-    data['year'] = year;
-    if (pricing != null) {
-      data['pricing'] = pricing!.toJson();
-    }
-    if (location != null) {
-      data['location'] = location!.toJson();
-    }
-    if (media != null) {
-      data['media'] = media!.toJson();
-    }
-    if (flags != null) {
-      data['flags'] = flags!.toJson();
-    }
-    if (specs != null) {
-      data['specs'] = specs!.toJson();
-    }
-    if (costs != null) {
-      data['costs'] = costs!.toJson();
-    }
-    data['carTypeId'] = carTypeId;
-    data['description'] = description;
-    if (inquiryContacts != null) {
-      data['inquiryContacts'] = inquiryContacts!.toJson();
-    }
-    return data;
+    return {
+      '_id': sId,
+      'title': title,
+      'brand': brand,
+      'model': model,
+      'year': year,
+      'pricing': pricing.toJson(),
+      'location': location.toJson(),
+      'media': media.toJson(),
+      'flags': flags.toJson(),
+      'specs': specs.toJson(),
+      'costs': costs.toJson(),
+      'carTypeId': carTypeId,
+      'description': description,
+      'inquiryContacts': inquiryContacts.toJson(),
+    };
   }
 }
 
 class Pricing {
-  int? originalPrice;
-  int? sellingPrice;
-  String? currency;
-  Discount? discount;
-  String? sId;
+  final double originalPrice;
+  final double sellingPrice;
+  final String currency;
+  final Discount? discount;
+  final String sId;
 
-  Pricing({originalPrice, sellingPrice, currency, discount, sId});
+  Pricing({
+    required this.originalPrice,
+    required this.sellingPrice,
+    required this.currency,
+    this.discount,
+    required this.sId,
+  });
 
-  Pricing.fromJson(Map<String, dynamic> json) {
-    originalPrice = json['originalPrice'];
-    sellingPrice = json['sellingPrice'];
-    currency = json['currency'];
-    discount = json['discount'] != null
-        ? Discount.fromJson(json['discount'])
-        : null;
-    sId = json['_id'];
+  factory Pricing.fromJson(Map<String, dynamic> json) {
+    return Pricing(
+      originalPrice: CarModel._parseDouble(json['originalPrice']),
+      sellingPrice: CarModel._parseDouble(json['sellingPrice']),
+      currency: json['currency']?.toString() ?? 'USD',
+      discount: json['discount'] != null
+          ? Discount.fromJson(json['discount'])
+          : null,
+      sId: json['_id']?.toString() ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['originalPrice'] = originalPrice;
-    data['sellingPrice'] = sellingPrice;
-    data['currency'] = currency;
-    if (discount != null) {
-      data['discount'] = discount!.toJson();
-    }
-    data['_id'] = sId;
-    return data;
+    return {
+      'originalPrice': originalPrice,
+      'sellingPrice': sellingPrice,
+      'currency': currency,
+      'discount': discount?.toJson(),
+      '_id': sId,
+    };
   }
 }
 
 class Discount {
-  String? type;
-  int? value;
-  String? sId;
+  final String type;
+  final double value;
+  final String sId;
 
-  Discount({type, value, sId});
+  Discount({
+    required this.type,
+    required this.value,
+    required this.sId,
+  });
 
-  Discount.fromJson(Map<String, dynamic> json) {
-    type = json['type'];
-    value = json['value'];
-    sId = json['_id'];
+  factory Discount.fromJson(Map<String, dynamic> json) {
+    return Discount(
+      type: json['type']?.toString() ?? '',
+      value: CarModel._parseDouble(json['value']),
+      sId: json['_id']?.toString() ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['type'] = type;
-    data['value'] = value;
-    data['_id'] = sId;
-    return data;
+    return {
+      'type': type,
+      'value': value,
+      '_id': sId,
+    };
   }
 }
 
 class Location {
-  String? country;
-  String? city;
-  String? area;
-  String? sId;
+  final String country;
+  final String city;
+  final String area;
+  final String sId;
 
-  Location({country, city, area, sId});
+  Location({
+    required this.country,
+    required this.city,
+    required this.area,
+    required this.sId,
+  });
 
-  Location.fromJson(Map<String, dynamic> json) {
-    country = json['country'];
-    city = json['city'];
-    area = json['area'];
-    sId = json['_id'];
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      country: json['country']?.toString() ?? '',
+      city: json['city']?.toString() ?? '',
+      area: json['area']?.toString() ?? '',
+      sId: json['_id']?.toString() ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['country'] = country;
-    data['city'] = city;
-    data['area'] = area;
-    data['_id'] = sId;
-    return data;
+    return {
+      'country': country,
+      'city': city,
+      'area': area,
+      '_id': sId,
+    };
   }
 }
 
 class Media {
-  String? thumbnail;
-  List<String>? gallery;
-  String? sId;
+  final String thumbnail;
+  final List<String> gallery;
+  final String sId;
 
-  Media({thumbnail, gallery, sId});
+  Media({
+    required this.thumbnail,
+    required this.gallery,
+    required this.sId,
+  });
 
-  Media.fromJson(Map<String, dynamic> json) {
-    thumbnail = json['thumbnail'];
-    gallery = json['gallery'].cast<String>();
-    sId = json['_id'];
+  factory Media.fromJson(Map<String, dynamic> json) {
+    return Media(
+      thumbnail: json['thumbnail']?.toString() ?? '',
+      gallery: (json['gallery'] as List<dynamic>?)
+          ?.map((item) => item?.toString() ?? '')
+          .where((item) => item.isNotEmpty)
+          .toList() ?? [],
+      sId: json['_id']?.toString() ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['thumbnail'] = thumbnail;
-    data['gallery'] = gallery;
-    data['_id'] = sId;
-    return data;
+    return {
+      'thumbnail': thumbnail,
+      'gallery': gallery,
+      '_id': sId,
+    };
   }
 }
 
 class Flags {
-  bool? isFeatured;
-  bool? isHotDeal;
-  bool? isActive;
-  String? sId;
+  final bool isFeatured;
+  final bool isHotDeal;
+  final bool isActive;
+  final String sId;
 
-  Flags({isFeatured, isHotDeal, isActive, sId});
+  Flags({
+    required this.isFeatured,
+    required this.isHotDeal,
+    required this.isActive,
+    required this.sId,
+  });
 
-  Flags.fromJson(Map<String, dynamic> json) {
-    isFeatured = json['isFeatured'];
-    isHotDeal = json['isHotDeal'];
-    isActive = json['isActive'];
-    sId = json['_id'];
+  factory Flags.fromJson(Map<String, dynamic> json) {
+    return Flags(
+      isFeatured: json['isFeatured'] as bool? ?? false,
+      isHotDeal: json['isHotDeal'] as bool? ?? false,
+      isActive: json['isActive'] as bool? ?? true,
+      sId: json['_id']?.toString() ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['isFeatured'] = isFeatured;
-    data['isHotDeal'] = isHotDeal;
-    data['isActive'] = isActive;
-    data['_id'] = sId;
-    return data;
+    return {
+      'isFeatured': isFeatured,
+      'isHotDeal': isHotDeal,
+      'isActive': isActive,
+      '_id': sId,
+    };
   }
 }
 
 class Specs {
-  int? mileageKm;
-  int? enginePowerHp;
-  String? fuelType;
-  int? cylinders;
-  String? transmission;
-  int? seats;
-  String? interiorColor;
-  String? exteriorColor;
-  String? sId;
+  final double mileageKm;
+  final double enginePowerHp;
+  final String fuelType;
+  final int cylinders;
+  final String transmission;
+  final int seats;
+  final String interiorColor;
+  final String exteriorColor;
+  final String sId;
 
   Specs({
-    mileageKm,
-    enginePowerHp,
-    fuelType,
-    cylinders,
-    transmission,
-    seats,
-    interiorColor,
-    exteriorColor,
-    sId,
+    required this.mileageKm,
+    required this.enginePowerHp,
+    required this.fuelType,
+    required this.cylinders,
+    required this.transmission,
+    required this.seats,
+    required this.interiorColor,
+    required this.exteriorColor,
+    required this.sId,
   });
 
-  Specs.fromJson(Map<String, dynamic> json) {
-    mileageKm = json['mileageKm'];
-    enginePowerHp = json['enginePowerHp'];
-    fuelType = json['fuelType'];
-    cylinders = json['cylinders'];
-    transmission = json['transmission'];
-    seats = json['seats'];
-    interiorColor = json['interiorColor'];
-    exteriorColor = json['exteriorColor'];
-    sId = json['_id'];
+  factory Specs.fromJson(Map<String, dynamic> json) {
+    return Specs(
+      mileageKm: CarModel._parseDouble(json['mileageKm']),
+      enginePowerHp: CarModel._parseDouble(json['enginePowerHp']),
+      fuelType: json['fuelType']?.toString() ?? '',
+      cylinders: CarModel._parseInt(json['cylinders']),
+      transmission: json['transmission']?.toString() ?? '',
+      seats: CarModel._parseInt(json['seats']),
+      interiorColor: json['interiorColor']?.toString() ?? '',
+      exteriorColor: json['exteriorColor']?.toString() ?? '',
+      sId: json['_id']?.toString() ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['mileageKm'] = mileageKm;
-    data['enginePowerHp'] = enginePowerHp;
-    data['fuelType'] = fuelType;
-    data['cylinders'] = cylinders;
-    data['transmission'] = transmission;
-    data['seats'] = seats;
-    data['interiorColor'] = interiorColor;
-    data['exteriorColor'] = exteriorColor;
-    data['_id'] = sId;
-    return data;
+    return {
+      'mileageKm': mileageKm,
+      'enginePowerHp': enginePowerHp,
+      'fuelType': fuelType,
+      'cylinders': cylinders,
+      'transmission': transmission,
+      'seats': seats,
+      'interiorColor': interiorColor,
+      'exteriorColor': exteriorColor,
+      '_id': sId,
+    };
   }
 }
 
 class Costs {
-  int? shipping;
-  int? customClearance;
-  String? sId;
+  final double shipping;
+  final double customClearance;
+  final String sId;
 
-  Costs({shipping, customClearance, sId});
+  Costs({
+    required this.shipping,
+    required this.customClearance,
+    required this.sId,
+  });
 
-  Costs.fromJson(Map<String, dynamic> json) {
-    shipping = json['shipping'];
-    customClearance = json['customClearance'];
-    sId = json['_id'];
+  factory Costs.fromJson(Map<String, dynamic> json) {
+    return Costs(
+      shipping: CarModel._parseDouble(json['shipping']),
+      customClearance: CarModel._parseDouble(json['customClearance']),
+      sId: json['_id']?.toString() ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['shipping'] = shipping;
-    data['customClearance'] = customClearance;
-    data['_id'] = sId;
-    return data;
+    return {
+      'shipping': shipping,
+      'customClearance': customClearance,
+      '_id': sId,
+    };
   }
 }
 
 class InquiryContacts {
-  bool? call;
-  bool? message;
-  bool? whatsapp;
-  String? sId;
+  final bool call;
+  final bool message;
+  final bool whatsapp;
+  final String sId;
 
-  InquiryContacts({call, message, whatsapp, sId});
+  InquiryContacts({
+    required this.call,
+    required this.message,
+    required this.whatsapp,
+    required this.sId,
+  });
 
-  InquiryContacts.fromJson(Map<String, dynamic> json) {
-    call = json['call'];
-    message = json['message'];
-    whatsapp = json['whatsapp'];
-    sId = json['_id'];
+  factory InquiryContacts.fromJson(Map<String, dynamic> json) {
+    return InquiryContacts(
+      call: json['call'] as bool? ?? false,
+      message: json['message'] as bool? ?? false,
+      whatsapp: json['whatsapp'] as bool? ?? false,
+      sId: json['_id']?.toString() ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['call'] = call;
-    data['message'] = message;
-    data['whatsapp'] = whatsapp;
-    data['_id'] = sId;
-    return data;
+    return {
+      'call': call,
+      'message': message,
+      'whatsapp': whatsapp,
+      '_id': sId,
+    };
   }
 }

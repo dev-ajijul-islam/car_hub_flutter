@@ -1,4 +1,5 @@
 import 'package:car_hub/providers/auth_provider.dart';
+import 'package:car_hub/providers/featured_car_provider.dart';
 import 'package:car_hub/ui/screens/home/notifications_screen.dart';
 import 'package:car_hub/ui/widgets/car_card.dart';
 import 'package:car_hub/ui/widgets/help_chat_dialog.dart';
@@ -10,18 +11,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
   static String name = "home-screen";
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
   Widget build(BuildContext context) {
     final User? user = context.watch<AuthProvider>().currentUser;
+    final featuredCarProvider = context.watch<FeaturedCarProvider>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (featuredCarProvider.featuredCars.isEmpty &&
+          !featuredCarProvider.isLoading) {
+        featuredCarProvider.getFeaturedCar();
+      }
+    });
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
@@ -31,7 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Icon(Icons.support_agent_outlined),
       ),
       body: RefreshIndicator(
-        onRefresh: () async {},
+        onRefresh: () async {
+          await context.read<FeaturedCarProvider>().getFeaturedCar();
+        },
         child: MediaQuery.removePadding(
           context: context,
           removeTop: true,
@@ -82,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Hello, ${user!.displayName}",
+                                          "Hello, ${user.displayName}",
                                           style: TextTheme.of(context)
                                               .titleMedium
                                               ?.copyWith(
@@ -132,7 +139,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextField(
-                  onTap: _onTapSearchField,
+                  onTap: () {
+                    _onTapSearchField(context);
+                  },
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search_outlined),
                     hintText: "Search",
@@ -224,6 +233,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   enableInfiniteScroll: false,
                 ),
               ),
+
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -236,10 +247,60 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(height: 10),
 
-                    Column(
-                      spacing: 10,
-                      children: [CarCard(), CarCard(), CarCard(), CarCard()],
-                    ),
+
+                    if (featuredCarProvider.isLoading &&
+                        featuredCarProvider.featuredCars.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Center(child: CircularProgressIndicator()),
+                      ),
+
+
+                    if (featuredCarProvider.errorMessage != null &&
+                        featuredCarProvider.featuredCars.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Column(
+                          children: [
+                            Text(
+                              "Failed to load featured cars",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            SizedBox(height: 10),
+                            ElevatedButton(
+                              onPressed: () {
+                                featuredCarProvider.getFeaturedCar();
+                              },
+                              child: Text("Retry"),
+                            ),
+                          ],
+                        ),
+                      ),
+
+
+                    if (!featuredCarProvider.isLoading &&
+                        featuredCarProvider.errorMessage == null &&
+                        featuredCarProvider.featuredCars.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Center(
+                          child: Text("No featured cars available"),
+                        ),
+                      ),
+
+
+                    if (featuredCarProvider.featuredCars.isNotEmpty)
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: featuredCarProvider.featuredCars.length,
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 10),
+                        itemBuilder: (context, index) {
+                          final car = featuredCarProvider.featuredCars[index];
+                          return CarCard();
+                        },
+                      ),
                   ],
                 ),
               ),
@@ -251,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _onTapSearchField() {
+  _onTapSearchField(context) {
     searchDialog(context);
   }
 }
