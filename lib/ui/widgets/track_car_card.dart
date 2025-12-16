@@ -17,7 +17,7 @@ class _TrackCarCardState extends State<TrackCarCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, CarDetailsScreen.name);
+        Navigator.pushNamed(context, CarDetailsScreen.name,);
       },
       child: Card(
         margin: EdgeInsets.all(0),

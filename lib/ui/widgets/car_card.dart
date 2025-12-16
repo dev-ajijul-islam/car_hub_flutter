@@ -6,10 +6,7 @@ import 'package:flutter/material.dart';
 class CarCard extends StatefulWidget {
   final CarModel car;
 
-  const CarCard({
-    super.key,
-    required this.car,
-  });
+  const CarCard({super.key, required this.car});
 
   @override
   State<CarCard> createState() => _CarCardState();
@@ -35,8 +32,8 @@ class _CarCardState extends State<CarCard> {
     final finalPrice = car.pricing.originalPrice - discountAmount;
 
     return GestureDetector(
-      onTap: (){
-        Navigator.pushNamed(context, CarDetailsScreen.name);
+      onTap: () {
+        Navigator.pushNamed(context, CarDetailsScreen.name, arguments: car.sId);
       },
       child: Card(
         clipBehavior: Clip.hardEdge,
@@ -73,7 +70,10 @@ class _CarCardState extends State<CarCard> {
                       top: 10,
                       left: 10,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.red,
                           borderRadius: BorderRadius.circular(4),
@@ -95,7 +95,10 @@ class _CarCardState extends State<CarCard> {
                       top: 10,
                       left: 10,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(4),
@@ -131,7 +134,10 @@ class _CarCardState extends State<CarCard> {
               ),
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 13,
+                  vertical: 10,
+                ),
                 child: Column(
                   spacing: 5,
                   mainAxisSize: MainAxisSize.min,
@@ -160,11 +166,12 @@ class _CarCardState extends State<CarCard> {
                             if (hasDiscount)
                               Text(
                                 "${car.pricing.currency} ${car.pricing.originalPrice.toStringAsFixed(0)}",
-                                style: TextTheme.of(context).bodyMedium?.copyWith(
-                                  decoration: TextDecoration.lineThrough,
-                                  fontSize: 14,
-                                  color: Colors.grey,
-                                ),
+                                style: TextTheme.of(context).bodyMedium
+                                    ?.copyWith(
+                                      decoration: TextDecoration.lineThrough,
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
                               ),
                             // Final price
                             Text(
@@ -197,7 +204,9 @@ class _CarCardState extends State<CarCard> {
                       spacing: 15,
                       children: [
                         Text("Year : ${car.year}"),
-                        Text("Mileage : ${car.specs.mileageKm.toStringAsFixed(0)}km"),
+                        Text(
+                          "Mileage : ${car.specs.mileageKm.toStringAsFixed(0)}km",
+                        ),
                       ],
                     ),
 
@@ -233,10 +242,7 @@ class _CarCardState extends State<CarCard> {
                                 // Implement call logic
                               }
                             },
-                            child: Icon(
-                              Icons.phone_outlined,
-                              size: 20,
-                            ),
+                            child: Icon(Icons.phone_outlined, size: 20),
                           ),
                         ),
                         SizedBox(width: 8),
@@ -254,10 +260,7 @@ class _CarCardState extends State<CarCard> {
                                 // Implement message logic
                               }
                             },
-                            child: Icon(
-                              Icons.message,
-                              size: 20,
-                            ),
+                            child: Icon(Icons.message, size: 20),
                           ),
                         ),
                         SizedBox(width: 8),
@@ -271,14 +274,9 @@ class _CarCardState extends State<CarCard> {
                             ),
                             onPressed: () {
                               // WhatsApp functionality
-                              if (car.inquiryContacts.whatsapp) {
-
-                              }
+                              if (car.inquiryContacts.whatsapp) {}
                             },
-                            child: Icon(
-                              Icons.whatshot,
-                              size: 20,
-                            ),
+                            child: Icon(Icons.whatshot, size: 20),
                           ),
                         ),
                       ],

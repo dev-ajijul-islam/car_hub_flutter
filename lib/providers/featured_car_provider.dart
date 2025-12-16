@@ -35,8 +35,6 @@ class FeaturedCarProvider extends ChangeNotifier {
               }
             }
           }
-
-          print("Loaded ${featuredCars.length} featured cars");
         }
       } else {
         errorMessage = "Failed to load featured cars";

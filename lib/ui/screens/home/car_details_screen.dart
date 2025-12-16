@@ -1,6 +1,8 @@
+import 'package:car_hub/providers/single_car_provider.dart';
 import 'package:car_hub/ui/widgets/delivery_option_dialog.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CarDetailsScreen extends StatefulWidget {
   const CarDetailsScreen({super.key});
@@ -11,25 +13,58 @@ class CarDetailsScreen extends StatefulWidget {
 }
 
 class _CarDetailsScreenState extends State<CarDetailsScreen> {
-  List<Map<String, String>> carDetails = [
-    {"title": "Mileage", "value": "40,000 km"},
-    {"title": "Engine Power", "value": "250HP"},
-    {"title": "Fuel Type", "value": "Petrol"},
-    {"title": "Number of Cylinder", "value": "6"},
-    {"title": "Transmission", "value": "Automatic"},
-    {"title": "Number of Seats", "value": "5"},
-    {"title": "Interior Color", "value": "Black"},
-    {"title": "Exterior Color", "value": "Blue"},
-    {"title": "Shipping Cost", "value": "\$2500"},
-    {"title": "Custom Clearance Cost", "value": "\$1000"},
-  ];
-
+  late final String carId;
   bool isFav = false;
+  bool _calledApi = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_calledApi) {
+      carId = ModalRoute.of(context)!.settings.arguments as String;
+      _calledApi = true;
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        context.read<SingleCarProvider>().getCarById(carId);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<SingleCarProvider>();
+    final car = provider.car;
+
+    if (provider.loading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (car == null) {
+      return const Scaffold(
+        body: Center(child: Text("Car not found")),
+      );
+    }
+
+    /// 🔹 Key specs mapped from model
+    final specs = [
+      _spec("Mileage", "${car.specs.mileageKm} km"),
+      _spec("Engine Power", "${car.specs.enginePowerHp} HP"),
+      _spec("Fuel Type", car.specs.fuelType),
+      _spec("Cylinders", car.specs.cylinders.toString()),
+      _spec("Transmission", car.specs.transmission),
+      _spec("Seats", car.specs.seats.toString()),
+      _spec("Interior Color", car.specs.interiorColor),
+      _spec("Exterior Color", car.specs.exteriorColor),
+      _spec("Shipping Cost", "\$${car.costs.shipping}"),
+      _spec("Custom Clearance", "\$${car.costs.customClearance}"),
+    ];
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Car details", style: TextTheme.of(context).titleMedium),
+        title: Text(car.title),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -38,189 +73,158 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Card(
-                margin: EdgeInsets.all(0),
+                clipBehavior: Clip.hardEdge,
+                margin: EdgeInsets.zero,
                 elevation: 0,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Stack(
-                        children: [
-                          Image.asset(
-                            AssetsFilePaths.car2,
-                            fit: BoxFit.fill,
-                            width: double.maxFinite,
-                          ),
-                          Positioned(
-                            top: 5,
-                            right: 0,
-                            child: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  isFav = !isFav;
-                                });
-                              },
-                              icon: Icon(
-                                isFav
-                                    ? Icons.favorite
-                                    : Icons.favorite_border_outlined,
-                                color: ColorScheme.of(context).primary,
-                              ),
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        Image.network(
+                          car.media.thumbnail,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                        Positioned(
+                          top: 5,
+                          right: 0,
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() => isFav = !isFav);
+                            },
+                            icon: Icon(
+                              isFav
+                                  ? Icons.favorite
+                                  : Icons.favorite_border_outlined,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    /// TITLE + PRICE
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              car.title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium,
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              if (car.pricing.discount != null)
+                                Text(
+                                  "\$${car.pricing.originalPrice}",
+                                  style: const TextStyle(
+                                    decoration:
+                                    TextDecoration.lineThrough,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              Text(
+                                "\$${car.pricing.sellingPrice} ${car.pricing.currency}",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 13,
-                          vertical: 10,
-                        ),
-                        child: Column(
-                          spacing: 5,
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Audi . RS Q8 . TFSI V8",
-                                  style: TextTheme.of(context).titleMedium,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "\$24000 ",
-                                      style: TextTheme.of(context).bodyMedium
-                                          ?.copyWith(
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                            fontSize: 17,
-                                            color: Colors.grey,
-                                          ),
-                                    ),
-                                    Text("\$22000 "),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Row(spacing: 15, children: [Text("Year : 2025")]),
-                            Row(
-                              children: [
-                                Icon(Icons.location_on_outlined),
-                                Text("Ras AI Khor, Dubai"),
-                              ],
-                            ),
-                            Row(
-                              spacing: 10,
-                              children: [
-                                Expanded(
-                                  child: OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                    ),
 
-                                      children: [Icon(Icons.phone_outlined)],
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-
-                                      children: [Icon(Icons.message)],
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-
-                                      children: [Icon(Icons.whatshot)],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                    /// LOCATION + YEAR
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 12, right: 12, bottom: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Year : ${car.year}"),
+                          Row(
+                            children: [
+                              const Icon(Icons.location_on_outlined, size: 18),
+                              const SizedBox(width: 4),
+                              Text(
+                                "${car.location.city}, ${car.location.country}",
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
+
+              const SizedBox(height: 20),
+
+              /// KEY SPECIFICATIONS
               Text(
                 "Key Specification",
-                style: TextTheme.of(context).titleMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
+
               GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: carDetails.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: specs.length,
+                gridDelegate:
+                const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 2.4,
                 ),
-                itemBuilder: (context, index) {
+                itemBuilder: (_, i) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        carDetails[index]["title"]!,
-                        style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                        specs[i]["title"]!,
+                        style: TextStyle(
+                            fontSize: 13, color: Colors.grey[600]),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        carDetails[index]["value"]!,
+                        specs[i]["value"]!,
                         style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
+                            fontWeight: FontWeight.w600),
                       ),
-                      const Divider(color: Colors.grey),
+                      const Divider(),
                     ],
                   );
                 },
               ),
-              Text("Details", style: TextTheme.of(context).titleMedium),
+
+              const SizedBox(height: 10),
+
+              /// DESCRIPTION
               Text(
-                "Experience refined luxury and everyday performance with the 2021 Audi Q5. This premium SUV features a powerful 2.0L turbocharged engine with 261 horsepower and Audi’s signature Quattro all-wheel drive,",
+                "Details",
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-              SizedBox(height: 10),
-              FilledButton(onPressed: () {
-                deliveryDialog(context);
-              }, child: Text("Buy Now")),
+              const SizedBox(height: 6),
+              Text(car.description),
+
+              const SizedBox(height: 20),
+              FilledButton(
+                onPressed: () => deliveryDialog(context),
+                child: const Text("Buy Now"),
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
+  Map<String, String> _spec(String title, String value) =>
+      {"title": title, "value": value};
 }
