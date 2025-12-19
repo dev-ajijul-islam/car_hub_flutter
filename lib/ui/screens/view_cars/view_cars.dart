@@ -71,7 +71,7 @@ class _ViewCarsState extends State<ViewCars> {
                     color: ColorScheme.of(context).primary,
                     onPressed: () {
                       _searchController.clear();
-                      context.read<ViewCarsProvider>().getAllCars();
+                      context.read<ViewCarsProvider>().resetSearch();
                     },
                     icon: Icon(Icons.close, size: 20),
                   ),

@@ -45,7 +45,7 @@ class ViewCarsProvider extends ChangeNotifier {
     }
   }
 
-  //search by title
+  //==================================search by title===============================
   Future<void> getcarByTitle({required String title}) async {
     isLoading = true;
     errorMessage = null;
@@ -63,8 +63,16 @@ class ViewCarsProvider extends ChangeNotifier {
     }
   }
 
-  //sort cars
+  //================================reset searches ====================================
+  void resetSearch() {
+    isLoading = true;
+    notifyListeners();
+    cars = allCars;
+    isLoading = false;
+    notifyListeners();
+  }
 
+  //================================sort cars ====================================
   void sortCars(String? criteria) {
     if (criteria == "year-lowest-to-highest") {
       cars.sort((a, b) => a.year.compareTo(b.year));
