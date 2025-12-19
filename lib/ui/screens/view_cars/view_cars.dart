@@ -12,6 +12,8 @@ class ViewCars extends StatefulWidget {
 }
 
 class _ViewCarsState extends State<ViewCars> {
+  final TextEditingController _seacrchController = TextEditingController();
+
   @override
   void initState() {
     Future.microtask(() {
@@ -20,6 +22,12 @@ class _ViewCarsState extends State<ViewCars> {
       }
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _seacrchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -44,7 +52,7 @@ class _ViewCarsState extends State<ViewCars> {
                 onChanged: (value) {
                   context.read<ViewCarsProvider>().getcarByTitle(title: value);
                 },
-
+                controller: _seacrchController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
@@ -59,10 +67,20 @@ class _ViewCarsState extends State<ViewCars> {
                     borderSide: BorderSide.none,
                   ),
                   prefixIcon: Icon(Icons.search_outlined),
+                  suffixIcon: IconButton(
+                    color: ColorScheme.of(context).primary,
+                    onPressed: () {
+                      _seacrchController.clear();
+                    },
+                    icon: Icon(Icons.close, size: 20),
+                  ),
                   hintText: "Search",
                 ),
               ),
               DropdownMenu(
+                onSelected: (String? value) {
+                  context.read<ViewCarsProvider>().sortCars(value);
+                },
                 hintText: "Sort",
                 enableFilter: true,
                 inputDecorationTheme: InputDecorationTheme(
@@ -79,20 +97,20 @@ class _ViewCarsState extends State<ViewCars> {
                 width: 150,
                 dropdownMenuEntries: [
                   DropdownMenuEntry(
-                    value: "Newest to Oldest",
-                    label: "Newest to Oldest",
+                    label: "Price highest to lowest",
+                    value: "price-highest-to-lowest",
                   ),
                   DropdownMenuEntry(
-                    value: "Newest to Oldest",
-                    label: "Newest to Oldest",
+                    label: "Price lowest to highest",
+                    value: "price-lowest-to-highest",
                   ),
                   DropdownMenuEntry(
-                    value: "Newest to Oldest",
-                    label: "Newest to Oldest",
+                    label: "Year lowest to highest",
+                    value: "year-lowest-to-highest",
                   ),
                   DropdownMenuEntry(
-                    value: "Newest to Oldest",
-                    label: "Newest to Oldest",
+                    label: "Year highest to lowest",
+                    value: "year-highest-to-lowest",
                   ),
                 ],
               ),

@@ -41,7 +41,6 @@ class ViewCarsProvider extends ChangeNotifier {
   }
 
   //search by title
-
   Future<void> getcarByTitle({required String title}) async {
     isLoading = true;
     errorMessage = null;
@@ -69,5 +68,25 @@ class ViewCarsProvider extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  //sort cars
+
+  void sortCars(String? criteria) {
+    if (criteria == "year-lowest-to-highest") {
+      cars.sort((a, b) => a.year.compareTo(b.year));
+    } else if (criteria == "year-highest-to-lowest") {
+      cars.sort((a, b) => b.year.compareTo(a.year));
+    } else if (criteria == "price-highest-to-lowest") {
+      cars.sort(
+        (a, b) => b.pricing.sellingPrice.compareTo(a.pricing.sellingPrice),
+      );
+    } else if (criteria == "price-lowest-to-highest") {
+      cars.sort(
+        (a, b) => a.pricing.sellingPrice.compareTo(b.pricing.sellingPrice),
+      );
+    }
+
+    notifyListeners();
   }
 }
