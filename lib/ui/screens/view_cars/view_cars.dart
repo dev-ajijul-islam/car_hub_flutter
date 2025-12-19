@@ -12,7 +12,7 @@ class ViewCars extends StatefulWidget {
 }
 
 class _ViewCarsState extends State<ViewCars> {
-  final TextEditingController _seacrchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _ViewCarsState extends State<ViewCars> {
 
   @override
   void dispose() {
-    _seacrchController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -52,7 +52,7 @@ class _ViewCarsState extends State<ViewCars> {
                 onChanged: (value) {
                   context.read<ViewCarsProvider>().getcarByTitle(title: value);
                 },
-                controller: _seacrchController,
+                controller: _searchController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
@@ -70,7 +70,8 @@ class _ViewCarsState extends State<ViewCars> {
                   suffixIcon: IconButton(
                     color: ColorScheme.of(context).primary,
                     onPressed: () {
-                      _seacrchController.clear();
+                      _searchController.clear();
+                      context.read<ViewCarsProvider>().getAllCars();
                     },
                     icon: Icon(Icons.close, size: 20),
                   ),
@@ -118,21 +119,23 @@ class _ViewCarsState extends State<ViewCars> {
                 child: Consumer<ViewCarsProvider>(
                   builder: (context, provider, child) {
                     return provider.errorMessage == null
-                        ? Visibility(
-                            replacement: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                            visible: provider.isLoading == false,
-                            child: ListView.separated(
-                              separatorBuilder: (context, index) =>
-                                  SizedBox(height: 10),
-                              itemCount: provider.cars.length,
-                              itemBuilder: (context, index) {
-                                CarModel car = provider.cars[index];
-                                return CarCard(car: car);
-                              },
-                            ),
-                          )
+                        ? provider.cars.isEmpty
+                              ? Center(child: Text("No car found"))
+                              : Visibility(
+                                  replacement: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  visible: provider.isLoading == false,
+                                  child: ListView.separated(
+                                    separatorBuilder: (context, index) =>
+                                        SizedBox(height: 10),
+                                    itemCount: provider.cars.length,
+                                    itemBuilder: (context, index) {
+                                      CarModel car = provider.cars[index];
+                                      return CarCard(car: car);
+                                    },
+                                  ),
+                                )
                         : Center(child: Text(provider.errorMessage.toString()));
                   },
                 ),

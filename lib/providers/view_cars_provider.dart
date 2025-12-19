@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 class ViewCarsProvider extends ChangeNotifier {
   bool isLoading = false;
   String? errorMessage;
+
   List<CarModel> cars = [];
+  List<CarModel> allCars = [];
 
   // get all cars
 
@@ -25,6 +27,9 @@ class ViewCarsProvider extends ChangeNotifier {
         List<dynamic> list = response.body!["body"];
 
         cars = list.map((c) {
+          return CarModel.fromJson(c);
+        }).toList();
+        allCars = list.map((c) {
           return CarModel.fromJson(c);
         }).toList();
         notifyListeners();
@@ -45,22 +50,10 @@ class ViewCarsProvider extends ChangeNotifier {
     isLoading = true;
     errorMessage = null;
     notifyListeners();
-
     try {
-      NetworkResponse response = await NetworkCaller.getRequest(
-        url: Urls.getCarByTitle(title),
-      );
-      if (response.success) {
-        cars.clear();
-        errorMessage = null;
-
-        List<dynamic> list = response.body!["body"];
-        cars = list.map((c) => CarModel.fromJson(c)).toList();
-        notifyListeners();
-      } else {
-        errorMessage = response.message;
-        notifyListeners();
-      }
+      cars = allCars
+          .where((car) => car.title.toLowerCase().contains(title.toLowerCase()))
+          .toList();
     } catch (e) {
       errorMessage = e.toString();
       notifyListeners();
