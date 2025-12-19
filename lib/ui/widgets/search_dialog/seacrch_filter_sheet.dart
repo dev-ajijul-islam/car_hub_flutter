@@ -1,3 +1,4 @@
+import 'package:car_hub/providers/advance_search_provider.dart';
 import 'package:car_hub/providers/car_models_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,10 +49,20 @@ searchFilter(BuildContext context) {
                   Consumer<CarBrandsProvider>(
                     builder: (context, provider, child) {
                       return DropdownMenu(
+                        initialSelection: context
+                            .read<AdvanceSearchProvider>()
+                            .brand,
+                        enableSearch: true,
+                        enableFilter: true,
+                        menuStyle: MenuStyle(
+                          fixedSize: WidgetStatePropertyAll(Size(30, 400)),
+                        ),
+                        selectedTrailingIcon: Icon(Icons.check),
                         onSelected: (value) {
                           context.read<CarModelsProvider>().getAllCarModels(
                             brand: value,
                           );
+                          context.read<AdvanceSearchProvider>().brand = value;
                         },
                         inputDecorationTheme: InputDecorationThemeData(
                           filled: true,
@@ -80,6 +91,13 @@ searchFilter(BuildContext context) {
                   Consumer<CarModelsProvider>(
                     builder: (context, provider, child) {
                       return DropdownMenu(
+                        initialSelection: context
+                            .read<AdvanceSearchProvider>()
+                            .model,
+                        onSelected: (value) {
+                          context.read<AdvanceSearchProvider>().model = value;
+                        },
+                        selectedTrailingIcon: Icon(Icons.check),
                         inputDecorationTheme: InputDecorationThemeData(
                           filled: true,
                           fillColor: Colors.white54,
@@ -182,11 +200,15 @@ searchFilter(BuildContext context) {
                   Padding(
                     padding: const EdgeInsets.only(left: 10, bottom: 10),
                     child: Text(
-                      "Brand",
+                      "Fuel type",
                       style: TextTheme.of(context).bodyLarge,
                     ),
                   ),
                   DropdownMenu(
+                    menuStyle: MenuStyle(
+                      fixedSize: WidgetStatePropertyAll(Size(30, 400)),
+                    ),
+                    selectedTrailingIcon: Icon(Icons.check),
                     inputDecorationTheme: InputDecorationThemeData(
                       filled: true,
                       fillColor: Colors.white54,
@@ -205,11 +227,15 @@ searchFilter(BuildContext context) {
                   Padding(
                     padding: const EdgeInsets.only(left: 10, bottom: 10),
                     child: Text(
-                      "Brand",
+                      "Location",
                       style: TextTheme.of(context).bodyLarge,
                     ),
                   ),
                   DropdownMenu(
+                    menuStyle: MenuStyle(
+                      fixedSize: WidgetStatePropertyAll(Size(30, 400)),
+                    ),
+                    selectedTrailingIcon: Icon(Icons.check),
                     inputDecorationTheme: InputDecorationThemeData(
                       filled: true,
                       fillColor: Colors.white54,

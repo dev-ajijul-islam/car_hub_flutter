@@ -10,6 +10,14 @@ class Urls {
   static String getCarTypes = "$baseUrl/carType";
   static String getAllCars = "$baseUrl/cars";
   static String getCarBrands = "$baseUrl/carBrands";
-  static String getCarModels(String? brand) => "$baseUrl/carModels?brand=$brand";
+  static String getCarModels(String? brand) =>
+      "$baseUrl/carModels?brand=$brand";
+  static String getCarFuelTypes(String? brand, String? model) =>
+      "$baseUrl/carFuelTypes?brand=$brand&model=$model";
+  static String getCarLocations(
+    String? brand,
+    String? fuelType,
+    String? model,
+  ) => "$baseUrl/carFuelTypes?brand=$brand&fuelType=$fuelType&model=$model";
   static String getCarByTitle(String title) => "$baseUrl/cars?title=$title";
 }
