@@ -4,6 +4,7 @@ import 'package:car_hub/providers/featured_car_provider.dart';
 import 'package:car_hub/providers/hot_deal_car_provider.dart';
 import 'package:car_hub/providers/language_provider.dart';
 import 'package:car_hub/providers/single_car_provider.dart';
+import 'package:car_hub/providers/view_cars_provider.dart';
 import 'package:car_hub/ui/main_layout.dart';
 import 'package:car_hub/ui/screens/auth/profile_setup/set_profile_picture.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/pin_verification_screen.dart';
@@ -48,7 +49,8 @@ class CarHub extends StatelessWidget {
         ChangeNotifierProvider(create: (_)=> FeaturedCarProvider()),
         ChangeNotifierProvider(create: (_) => SingleCarProvider(),),
         ChangeNotifierProvider(create: (_) => HotDealCarProvider()),
-        ChangeNotifierProvider(create: (_)=> CarTypesProvider())
+        ChangeNotifierProvider(create: (_)=> CarTypesProvider()),
+        ChangeNotifierProvider(create: (_)=> ViewCarsProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

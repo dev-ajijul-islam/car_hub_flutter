@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: provider.featuredCars.length,
                           itemBuilder: (context, index) =>
-                              CarCard(car: provider.featuredCars[index],),
+                              CarCard(car: provider.featuredCars[index]),
                         );
                       },
                     ),

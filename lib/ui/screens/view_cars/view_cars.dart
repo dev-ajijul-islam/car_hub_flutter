@@ -1,8 +1,27 @@
+import 'package:car_hub/data/model/car_model.dart';
+import 'package:car_hub/providers/view_cars_provider.dart';
 import 'package:car_hub/ui/widgets/car_card.dart';
+import 'package:car_hub/ui/widgets/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ViewCars extends StatelessWidget {
+class ViewCars extends StatefulWidget {
   const ViewCars({super.key});
+
+  @override
+  State<ViewCars> createState() => _ViewCarsState();
+}
+
+class _ViewCarsState extends State<ViewCars> {
+  @override
+  void initState() {
+    Future.microtask(() {
+      if (mounted) {
+        context.read<ViewCarsProvider>().getAllCars();
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,15 +81,29 @@ class ViewCars extends StatelessWidget {
                 ),
               ],
             ),
-            // Expanded(
-            //   child: ListView.separated(
-            //     separatorBuilder: (context, index) => SizedBox(height: 10,),
-            //     itemCount: 20,
-            //     itemBuilder: (context, index) {
-            //       return CarCard();
-            //     },
-            //   ),
-            // ),
+            Expanded(
+              child: Consumer<ViewCarsProvider>(
+                builder: (context, provider, child) {
+                  return provider.errorMessage == null
+                      ? Visibility(
+                          replacement: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          visible: provider.isLoading == false,
+                          child: ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                SizedBox(height: 10),
+                            itemCount: provider.cars.length,
+                            itemBuilder: (context, index) {
+                              CarModel car = provider.cars[index];
+                              return CarCard(car: car);
+                            },
+                          ),
+                        )
+                      : Center(child: Text(provider.errorMessage.toString()));
+                },
+              ),
+            ),
           ],
         ),
       ),
