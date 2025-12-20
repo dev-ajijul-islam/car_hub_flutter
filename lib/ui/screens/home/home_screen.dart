@@ -88,7 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (provider.isLoading) {
                           return Center(child: CircularProgressIndicator());
                         }
-                        return ListView.builder(
+                        return ListView.separated(
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 10),
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: provider.featuredCars.length,
