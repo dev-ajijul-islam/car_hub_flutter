@@ -12,12 +12,13 @@ void searchDialog(BuildContext context) {
     searchFilter(context);
   }
 
-  void onSubmit() {
-    Navigator.pushNamed(context, SearchResultScreen.name);
-  }
+
 
   final TextEditingController searchController = TextEditingController();
 
+  void onSubmit() {
+    Navigator.pushNamed(context, SearchResultScreen.name);
+  }
   showDialog(
     barrierColor: Colors.transparent,
     useSafeArea: true,
@@ -38,7 +39,6 @@ void searchDialog(BuildContext context) {
                         color: ColorScheme.of(context).primary,
                         onPressed: () {
                           Navigator.pop(context);
-                          searchController.dispose();
                         },
                         icon: Icon(Icons.close_outlined),
                       ),
@@ -50,7 +50,6 @@ void searchDialog(BuildContext context) {
                             await context
                                 .read<AdvanceSearchProvider>()
                                 .getCarsByFiltering(title: value);
-                            searchController.dispose();
                           },
                           autofocus: true,
                           decoration: InputDecoration(

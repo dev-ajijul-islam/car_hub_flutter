@@ -1,6 +1,7 @@
 import 'package:car_hub/providers/advance_search_provider.dart';
 import 'package:car_hub/providers/auth_provider.dart';
 import 'package:car_hub/providers/car_brands_provider.dart';
+import 'package:car_hub/providers/car_by_types_provider.dart';
 import 'package:car_hub/providers/car_fuel_type_provider.dart';
 import 'package:car_hub/providers/car_locations_provider.dart';
 import 'package:car_hub/providers/car_min_and_max_price_provider.dart';
@@ -22,6 +23,7 @@ import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_up/email_verification_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_up/sign_up_success_screen.dart';
+import 'package:car_hub/ui/screens/cars_by_type_screen.dart';
 import 'package:car_hub/ui/screens/home/booking_cost_calculation.dart';
 import 'package:car_hub/ui/screens/home/car_details_screen.dart';
 import 'package:car_hub/ui/screens/home/delivery_info_screen.dart';
@@ -63,8 +65,9 @@ class CarHub extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AdvanceSearchProvider()),
         ChangeNotifierProvider(create: (_) => CarFuelTypeProvider()),
         ChangeNotifierProvider(create: (_) => CarLocationsProvider()),
-        ChangeNotifierProvider(create: (_)=> CarMinAndMaxYearProvider()),
-        ChangeNotifierProvider(create: (_)=> CarMinAndMaxPriceProvider()),
+        ChangeNotifierProvider(create: (_) => CarMinAndMaxYearProvider()),
+        ChangeNotifierProvider(create: (_) => CarMinAndMaxPriceProvider()),
+        ChangeNotifierProvider(create: (context) => CarByTypesProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -146,6 +149,7 @@ class CarHub extends StatelessWidget {
           MyHistory.name: (_) => MyHistory(),
           MyBookings.name: (_) => MyBookings(),
           TermsAndCondition.name: (_) => TermsAndCondition(),
+          CarsByTypeScreen.name: (_) => CarsByTypeScreen(),
         },
         initialRoute: SplashScreen.name,
       ),
