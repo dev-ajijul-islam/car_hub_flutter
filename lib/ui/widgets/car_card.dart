@@ -2,6 +2,7 @@ import 'package:car_hub/data/model/car_model.dart';
 import 'package:car_hub/providers/favorite_provider.dart';
 import 'package:car_hub/ui/screens/home/car_details_screen.dart';
 import 'package:car_hub/ui/widgets/loading.dart';
+import 'package:car_hub/ui/widgets/show_snackbar_message.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -130,6 +131,17 @@ class _CarCardState extends State<CarCard> {
                           final response = await provider.createFavorite(
                             carId: car.sId,
                           );
+                          if (response.success) {
+                            showSnackbarMessage(
+                              context: context,
+                              message: response.message,
+                            );
+                          } else {
+                            showSnackbarMessage(
+                              context: context,
+                              message: response.message,
+                            );
+                          }
                         },
                         icon: provider.isLoading
                             ? Loading()
