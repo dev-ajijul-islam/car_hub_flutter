@@ -46,8 +46,10 @@ class FavoriteProvider extends ChangeNotifier {
     try {
       final NetworkResponse response = await NetworkCaller.getRequest(
         url: Urls.getFavoriteCars,
+        token: AuthProvider.idToken
       );
 
+      print(response.body);
       if (response.success) {
         favoriteCars.clear();
         List<dynamic> list = response.body!["body"];
@@ -57,6 +59,9 @@ class FavoriteProvider extends ChangeNotifier {
       }
     } catch (e) {
       debugPrint("loading favorite car failed $e");
+    }finally{
+      isLoading = false;
+      notifyListeners();
     }
   }
 }

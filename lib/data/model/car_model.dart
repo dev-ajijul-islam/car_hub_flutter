@@ -12,6 +12,7 @@ class CarModel {
   final Costs costs;
   final String carTypeId;
   final String description;
+  final String? isFavorite;
   final InquiryContacts inquiryContacts;
 
   CarModel({
@@ -29,6 +30,7 @@ class CarModel {
     required this.carTypeId,
     required this.description,
     required this.inquiryContacts,
+    this.isFavorite
   });
 
   factory CarModel.fromJson(Map<String, dynamic> json) {
@@ -46,6 +48,7 @@ class CarModel {
       costs: Costs.fromJson(json['costs'] ?? {}),
       carTypeId: json['carTypeId']?.toString() ?? '',
       description: json['description']?.toString() ?? '',
+      isFavorite: json['isFavorite']?.toString() ?? '',
       inquiryContacts: InquiryContacts.fromJson(json['inquiryContacts'] ?? {}),
     );
   }
