@@ -58,6 +58,8 @@ class NetworkCaller {
 
       final decodedData = jsonDecode(response.body);
 
+      print(decodedData);
+
       if (response.statusCode == 201) {
         return NetworkResponse(
           statusCode: response.statusCode,

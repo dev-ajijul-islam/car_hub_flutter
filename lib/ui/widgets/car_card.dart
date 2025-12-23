@@ -130,7 +130,6 @@ class _CarCardState extends State<CarCard> {
                           final response = await provider.createFavorite(
                             carId: car.sId,
                           );
-                          print("------------------------------------${response.body}");
                         },
                         icon: provider.isLoading
                             ? Loading()
