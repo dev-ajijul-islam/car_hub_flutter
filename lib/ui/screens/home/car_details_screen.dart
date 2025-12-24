@@ -103,18 +103,20 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                                   showSnackbarMessage(
                                     context: context,
                                     message: response.message,
+                                    color: Colors.green,
                                   );
                                 } else {
-                                 final response =  await context
+                                  final response = await context
                                       .read<FavoriteProvider>()
                                       .createFavorite(carId: car.sId);
                                   context.read<SingleCarProvider>().getCarById(
                                     car.sId,
                                   );
-                                 showSnackbarMessage(
-                                   context: context,
-                                   message: response.message,
-                                 );
+                                  showSnackbarMessage(
+                                    context: context,
+                                    message: response.message,
+                                    color: Colors.green,
+                                  );
                                 }
                               },
                               icon: provider.loading
