@@ -20,7 +20,6 @@ class FavoriteProvider extends ChangeNotifier {
         body: {"carId": carId},
         token: AuthProvider.idToken,
       );
-      print(AuthProvider.idToken);
       if (response.success) {
         return response;
       } else {
@@ -46,7 +45,7 @@ class FavoriteProvider extends ChangeNotifier {
     try {
       final NetworkResponse response = await NetworkCaller.getRequest(
         url: Urls.getFavoriteCars,
-        token: AuthProvider.idToken
+        token: AuthProvider.idToken,
       );
       if (response.success) {
         favoriteCars.clear();
@@ -57,9 +56,32 @@ class FavoriteProvider extends ChangeNotifier {
       }
     } catch (e) {
       debugPrint("loading favorite car failed $e");
-    }finally{
+    } finally {
       isLoading = false;
       notifyListeners();
+    }
+  }
+
+  ///=========================================delete favorite car ====================================
+  Future<NetworkResponse> deleteFavorite({required String carId}) async {
+    isLoading = true;
+    notifyListeners();
+    try {
+      NetworkResponse response = await NetworkCaller.deleteRequest(
+        url: Urls.deleteFavoriteCar(carId),
+        token: AuthProvider.idToken,
+      );
+      if (response.success) {
+        return response;
+      } else {
+        return response;
+      }
+    } catch (e) {
+      return NetworkResponse(
+        statusCode: -1,
+        success: false,
+        message: "deleting favorite failed $e",
+      );
     }
   }
 }
