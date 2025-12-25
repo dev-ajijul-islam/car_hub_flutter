@@ -34,7 +34,7 @@ dev_dependencies:
 flutter_icons :
   android : "launcher_icon"
   ios : true
-  image_path : "assets/images/carosel_images/car1.png"
+  image_path : "assets/images/logo.avif"
 
 
 flutter:

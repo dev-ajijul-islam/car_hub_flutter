@@ -20,15 +20,14 @@ class CarCard extends StatefulWidget {
 class _CarCardState extends State<CarCard> {
   @override
   Widget build(BuildContext context) {
-    // ১. SingleCarProvider থেকে ডেটা ওয়াচ করা হচ্ছে ইনস্ট্যান্ট টগলের জন্য
+
     final providerCar = context.watch<SingleCarProvider>().car;
 
-    // ২. আইডি ম্যাচ করলে প্রোভাইডারের আপডেটেড কার দেখাবে, নাহলে ইনিশিয়াল কার
+
     final car = (providerCar != null && providerCar.sId == widget.car.sId)
         ? providerCar
         : widget.car;
 
-    // ৩. প্রাইস ও ডিসকাউন্ট ক্যালকুলেশন
     final hasDiscount = car.pricing.discount != null;
     final discount = car.pricing.discount;
 
@@ -89,7 +88,7 @@ class _CarCardState extends State<CarCard> {
                           onPressed: () async {
                             final bool currentlyFav = car.isFavorite ?? false;
 
-                            // ফেভারিট এপিআই কল
+
                             final response = currentlyFav
                                 ? await favProvider.deleteFavorite(carId: car.sId)
                                 : await favProvider.createFavorite(carId: car.sId);
@@ -103,7 +102,6 @@ class _CarCardState extends State<CarCard> {
                                 color: Colors.green,
                               );
 
-                              // 🔥 এই কলটি অন্য সব স্ক্রিনে (Home/Details) আইকন টগল নিশ্চিত করবে
                               context.read<SingleCarProvider>().getCarById(car.sId);
                             } else {
                               showSnackbarMessage(
