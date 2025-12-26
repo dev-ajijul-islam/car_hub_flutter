@@ -28,7 +28,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         context.read<FavoriteProvider>().getFavoriteCars();
       },
       child: Scaffold(
-        appBar: AppBar(title: Text("Favorite Car")),
+        appBar: AppBar(
+          title: Text(
+            "Favorite Car (${context.watch<FavoriteProvider>().favoriteCars.length})",
+          ),
+        ),
         body: Consumer<FavoriteProvider>(
           builder: (context, provider, child) => provider.favoriteCars.isEmpty
               ? Center(child: Text("No favorite car found"))
