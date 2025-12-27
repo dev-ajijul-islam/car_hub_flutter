@@ -20,8 +20,6 @@ class FavoriteProvider extends ChangeNotifier {
         token: AuthProvider.idToken,
       );
       if (response.success) {
-        // নোট: এখানে clear না করে সরাসরি list fetch করা ভালো অথবা
-        // ঐ নির্দিষ্ট আইটেমের isFavorite প্রপার্টি লোকালি আপডেট করা।
         return response;
       }
       return response;
@@ -62,7 +60,6 @@ class FavoriteProvider extends ChangeNotifier {
         token: AuthProvider.idToken,
       );
       if (response.success) {
-        // 🔥 এই লাইনটিই ফেভারিট স্ক্রিন থেকে কার্ডটি সাথে সাথে সরিয়ে দিবে
         favoriteCars.removeWhere((element) => element.sId == carId);
         return response;
       }
