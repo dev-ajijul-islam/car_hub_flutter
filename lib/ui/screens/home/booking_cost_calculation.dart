@@ -1,7 +1,13 @@
 import 'package:car_hub/data/model/car_model.dart';
+import 'package:car_hub/data/model/order_model.dart';
+import 'package:car_hub/providers/auth_provider.dart';
+import 'package:car_hub/providers/create_order_provider.dart';
 import 'package:car_hub/ui/screens/home/payment_screen.dart';
 import 'package:car_hub/ui/widgets/common_dialog.dart';
+import 'package:car_hub/ui/widgets/loading.dart';
+import 'package:car_hub/ui/widgets/show_snackbar_message.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BookingCostCalculation extends StatelessWidget {
   const BookingCostCalculation({super.key});
@@ -12,6 +18,11 @@ class BookingCostCalculation extends StatelessWidget {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final CarModel car = args['car'];
+    final String deliveryOption = args['deliveryOption'];
+    final String fullName = args['fullName'];
+    final String email = args['email'];
+    final String phone = args['phone'];
+    final String location = args['location'];
 
     final double carPrice = car.pricing.sellingPrice.toDouble();
     final double shipping = car.costs.shipping.toDouble();
@@ -84,12 +95,36 @@ class BookingCostCalculation extends StatelessWidget {
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    onPressed: () => _onTapBookNowButton(context, args, total),
-                    child: const Text("Book now"),
-                  ),
+                child: Consumer<CreateOrderProvider>(
+                  builder: (context, orderProvider, child) {
+                    if (orderProvider.isLoading) {
+                      return SizedBox(
+                        width: double.infinity,
+                        child: FilledButton(
+                          onPressed: null,
+                          child: const Loading(),
+                        ),
+                      );
+                    }
+
+                    return SizedBox(
+                      width: double.infinity,
+                      child: FilledButton(
+                        onPressed: () => _onTapBookNowButton(
+                          context,
+                          car,
+                          deliveryOption,
+                          total,
+                          fullName,
+                          email,
+                          phone,
+                          location,
+                          orderProvider,
+                        ),
+                        child: const Text("Book now"),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -101,22 +136,78 @@ class BookingCostCalculation extends StatelessWidget {
 
   void _onTapBookNowButton(
     BuildContext context,
-    Map<String, dynamic> args,
+    CarModel car,
+    String deliveryOption,
     double totalPrice,
-  ) {
-    commonDialog(
-      context,
-      title: "Booking Request Done",
-      subtitle:
-          "Your booking request has been sent. Once the admin accepts your request, you will be able to make the payment",
+    String fullName,
+    String email,
+    String phone,
+    String location,
+    CreateOrderProvider orderProvider,
+  ) async {
+    // Get current user from AuthProvider
+    final user = context.read<AuthProvider>().currentUser;
+    if (user == null) {
+      showSnackbarMessage(
+        context: context,
+        message: "Please login to book a car",
+        color: Colors.red,
+      );
+      return;
+    }
+
+    // Create OrderModel
+    final order = OrderModel(
+      carId: car.sId,
+      userId: user.uid,
+      deliveryOption: deliveryOption,
+      totalAmount: totalPrice,
+      paymentMethod: 'Pending',
+      paymentStatus: 'Pending',
+      fullName: fullName,
+      email: email,
+      phone: phone,
+      location: location,
     );
 
-    Future.delayed(const Duration(seconds: 1), () {
-      Navigator.pushNamed(
+    // Call CreateOrderProvider
+    await orderProvider.createOrder(order);
+
+    if (orderProvider.isSuccess) {
+      // Show success dialog
+      commonDialog(
         context,
-        PaymentScreen.name,
-        arguments: {...args, 'totalPrice': totalPrice},
+        title: "Order Created Successfully",
+        subtitle: "Your order has been placed. Proceed to payment.",
       );
-    });
+
+      // Navigate to PaymentScreen after delay
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.pushNamed(
+          context,
+          PaymentScreen.name,
+          arguments: {
+            'car': car,
+            'deliveryOption': deliveryOption,
+            'fullName': fullName,
+            'email': email,
+            'phone': phone,
+            'location': location,
+            'totalPrice': totalPrice,
+            'order': order,
+          },
+        );
+
+        // Reset provider status
+        orderProvider.resetStatus();
+      });
+    } else if (orderProvider.errorMessage != null) {
+      // Show error message
+      showSnackbarMessage(
+        context: context,
+        message: orderProvider.errorMessage!,
+        color: Colors.red,
+      );
+    }
   }
 }
