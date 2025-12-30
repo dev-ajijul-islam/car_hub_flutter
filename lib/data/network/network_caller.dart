@@ -49,14 +49,15 @@ class NetworkCaller {
     String? token,
   }) async {
     Uri uri = Uri.parse(url);
+
     try {
       Response response = await post(
         uri,
         headers: {"Content-Type": "application/json", "token": token ?? ""},
         body: jsonEncode(body),
       );
-
       final decodedData = jsonDecode(response.body);
+
       if (response.statusCode == 201) {
         return NetworkResponse(
           statusCode: response.statusCode,
@@ -75,7 +76,7 @@ class NetworkCaller {
       return NetworkResponse(
         statusCode: null,
         success: false,
-        message: "Something wrong",
+        message: "Something wrong $e",
       );
     }
   }

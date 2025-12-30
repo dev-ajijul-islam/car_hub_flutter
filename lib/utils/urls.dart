@@ -61,4 +61,7 @@ class Urls {
   static String getMyOrders = "$baseUrl/orders";
   static String getTrackingStatus(String orderIdOrCode) =>
       "$baseUrl/tracking/$orderIdOrCode";
+  static String paymentIPN = "$baseUrl/payment/ipn";
+  static String confirmPayment = "$baseUrl/payment/confirm";
+  static String getPaymentStatus(String orderId) => "$baseUrl/payment/status/$orderId";
 }

@@ -1,8 +1,5 @@
 import 'package:car_hub/providers/payment_provider.dart';
-import 'package:car_hub/ui/screens/home/delivery_info_screen.dart';
-import 'package:car_hub/ui/screens/track_car/track_car.dart';
 import 'package:car_hub/ui/screens/track_car/tracking_progress.dart';
-import 'package:car_hub/ui/widgets/common_dialog.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +18,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   void didChangeDependencies() {
-    allOrderData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     super.didChangeDependencies();
+    allOrderData =
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+
+    final paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
+    paymentProvider.reset();
   }
 
   @override
@@ -34,10 +36,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Payment Option",
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            Text("Payment Option", style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 10),
             Card(
               elevation: 0,
@@ -71,40 +70,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Card(
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 20,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(
-                                Icons.payment,
-                                size: 30,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                              Text(
-                                "Payment Information",
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ],
-                          ),
-                          _buildRichText("Selected Method : ", "SSLCommerz Online Payment"),
-                          _buildRichText("Order Amount : ", "\$${allOrderData['totalPrice']}"),
-                          _buildRichText("Order ID : ", "#${allOrderData['order']?.sId?.substring(0, 8) ?? 'N/A'}"),
-                          _buildRichText(
-                            "Note : ",
-                            "Complete payment to proceed with car delivery",
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  _buildPaymentInfoCard(),
                   Consumer<PaymentProvider>(
                     builder: (context, paymentProvider, child) {
                       if (paymentProvider.isLoading) {
@@ -114,20 +80,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             onPressed: null,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const CircularProgressIndicator(
+                              children: const [
+                                CircularProgressIndicator(
                                   color: Colors.white,
                                   strokeWidth: 2,
                                 ),
-                                const SizedBox(width: 10),
-                                const Text("Processing..."),
+                                SizedBox(width: 10),
+                                Text("Processing..."),
                               ],
                             ),
                           ),
                         );
                       }
 
-                      if (paymentProvider.status == PaymentStatus.success) {
+
+                      if (paymentProvider.status == PaymentStatus.success &&
+                          paymentProvider.errorMessage == null) {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           Navigator.pushNamed(
                             context,
@@ -137,37 +105,24 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           paymentProvider.reset();
                         });
 
-                        return SizedBox(
-                          width: double.infinity,
-                          child: FilledButton(
-                            onPressed: null,
-                            style: FilledButton.styleFrom(
-                              backgroundColor: Colors.green,
-                            ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.check_circle, size: 20),
-                                SizedBox(width: 10),
-                                Text("Payment Successful"),
-                              ],
-                            ),
-                          ),
+                        return _buildStatusButton(
+                          label: "Payment Successful",
+                          color: Colors.green,
+                          icon: Icons.check_circle,
+                          enabled: false,
                         );
                       }
 
-                      if (paymentProvider.status == PaymentStatus.failed) {
+
+                      if (paymentProvider.status == PaymentStatus.failed ||
+                          paymentProvider.errorMessage != null) {
                         return Column(
                           children: [
-                            SizedBox(
-                              width: double.infinity,
-                              child: FilledButton(
-                                onPressed: () => _processPayment(paymentProvider),
-                                style: FilledButton.styleFrom(
-                                  backgroundColor: Colors.red,
-                                ),
-                                child: const Text("Try Again"),
-                              ),
+                            _buildStatusButton(
+                              label: "Try Again",
+                              color: Colors.red,
+                              enabled: true,
+                              onPressed: () => _processPayment(paymentProvider),
                             ),
                             const SizedBox(height: 10),
                             if (paymentProvider.errorMessage != null)
@@ -183,12 +138,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         );
                       }
 
-                      return SizedBox(
-                        width: double.infinity,
-                        child: FilledButton(
-                          onPressed: () => _processPayment(paymentProvider),
-                          child: const Text("Pay Now"),
-                        ),
+
+                      return _buildStatusButton(
+                        label: "Pay Now",
+                        color: Theme.of(context).colorScheme.primary,
+                        enabled: true,
+                        onPressed: () => _processPayment(paymentProvider),
                       );
                     },
                   ),
@@ -201,20 +156,75 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  Widget _buildRichText(String label, String value) {
-    return RichText(
-      text: TextSpan(
-        text: label,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.w600,
+  Widget _buildPaymentInfoCard() {
+    final order = allOrderData['order'];
+    final car = allOrderData['car'];
+    return Card(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(Icons.payment, size: 30, color: Theme.of(context).colorScheme.primary),
+                Text("Payment Information", style: Theme.of(context).textTheme.titleMedium),
+              ],
+            ),
+            const SizedBox(height: 20),
+            _buildRichText("Selected Method : ", "SSLCommerz Online Payment"),
+            _buildRichText("Order Amount : ", "\$${allOrderData['totalPrice']}"),
+            _buildRichText(
+                "Order ID : ", "#${order?.sId?.substring(0, 8) ?? 'N/A'}"),
+            _buildRichText(
+                "Note : ", "Complete payment to proceed with car delivery"),
+          ],
         ),
-        children: [
-          TextSpan(
-            text: value,
-            style: const TextStyle(color: Colors.grey),
+      ),
+    );
+  }
+
+  Widget _buildRichText(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: RichText(
+        text: TextSpan(
+          text: label,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
           ),
-        ],
+          children: [
+            TextSpan(text: value, style: const TextStyle(color: Colors.grey)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatusButton({
+    required String label,
+    required Color color,
+    bool enabled = true,
+    IconData? icon,
+    VoidCallback? onPressed,
+  }) {
+    return SizedBox(
+      width: double.infinity,
+      child: FilledButton(
+        onPressed: enabled ? onPressed : null,
+        style: FilledButton.styleFrom(backgroundColor: color),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (icon != null) Icon(icon, size: 20),
+            if (icon != null) const SizedBox(width: 10),
+            Text(label),
+          ],
+        ),
       ),
     );
   }

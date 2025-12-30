@@ -1,11 +1,16 @@
+import 'dart:convert';
+import 'package:car_hub/data/network/network_response.dart';
+import 'package:car_hub/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sslcommerz/sslcommerz.dart';
+import 'package:car_hub/data/network/network_caller.dart';
+import 'package:car_hub/utils/urls.dart';
 import 'package:flutter_sslcommerz/model/SSLCCustomerInfoInitializer.dart';
 import 'package:flutter_sslcommerz/model/SSLCSdkType.dart';
 import 'package:flutter_sslcommerz/model/SSLCommerzInitialization.dart';
 import 'package:flutter_sslcommerz/model/SSLCurrencyType.dart';
 import 'package:flutter_sslcommerz/model/sslproductinitilizer/PhysicalGoods.dart';
 import 'package:flutter_sslcommerz/model/sslproductinitilizer/SSLCProductInitializer.dart';
-import 'package:flutter_sslcommerz/sslcommerz.dart';
 
 enum PaymentStatus { pending, processing, success, failed }
 
@@ -19,6 +24,14 @@ class PaymentProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   String? get transactionId => _transactionId;
+
+  void reset() {
+    _status = PaymentStatus.pending;
+    _isLoading = false;
+    _errorMessage = null;
+    _transactionId = null;
+    notifyListeners();
+  }
 
   Future<void> processPayment({
     required String orderId,
@@ -76,9 +89,23 @@ class PaymentProvider extends ChangeNotifier {
 
       final response = await sslcommerz.payNow();
 
-      if (response.status == 'SUCCESS') {
-        _status = PaymentStatus.success;
+      if (response.status == 'VALID') {
         _transactionId = response.tranId;
+
+        final NetworkResponse backendResponse = await NetworkCaller.postRequest(
+          url: Urls.confirmPayment,
+          body: {"orderId": orderId, "transactionId": _transactionId},
+          token: AuthProvider.idToken,
+        );
+
+        if (backendResponse.success) {
+          _status = PaymentStatus.success;
+          _errorMessage = null;
+        } else {
+          _status = PaymentStatus.failed;
+          _errorMessage =
+              "Payment succeeded but backend update failed: ${backendResponse.message}";
+        }
       } else {
         _status = PaymentStatus.failed;
         _errorMessage = response.status ?? "Payment failed";
@@ -90,13 +117,5 @@ class PaymentProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
-  }
-
-  void reset() {
-    _status = PaymentStatus.pending;
-    _isLoading = false;
-    _errorMessage = null;
-    _transactionId = null;
-    notifyListeners();
   }
 }
