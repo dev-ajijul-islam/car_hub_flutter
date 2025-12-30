@@ -62,9 +62,6 @@ class _TrackingProgressState extends State<TrackingProgress> {
 
           // Check if data is empty
           final displayData = trackingProvider.trackingTimeline;
-
-
-
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
