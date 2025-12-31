@@ -144,70 +144,12 @@ class _TrackCarCardState extends State<TrackCarCard> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
-                    FilledButton(
-                      onPressed: () => _trackCarDialog(widget.order.sId),
-                      child: const Text("Track"),
-                    ),
+
                   ],
                 ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  void _trackCarDialog(String? orderId) {
-    final TextEditingController codeController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        title: Text(
-          "Enter tracking code",
-          style: TextTheme.of(context).titleMedium,
-        ),
-        content: Column(
-          spacing: 10,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: codeController,
-              decoration: const InputDecoration(
-                hintText: "Enter your tracking code",
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 10),
-            FilledButton(
-              onPressed: () {
-                final trackingCode = codeController.text.trim();
-                final codeToUse = trackingCode.isNotEmpty
-                    ? trackingCode
-                    : orderId;
-
-                if (codeToUse != null && codeToUse.isNotEmpty) {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(
-                    context,
-                    TrackingProgress.name,
-                    arguments: codeToUse,
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Please enter a valid tracking code"),
-                    ),
-                  );
-                }
-              },
-              child: const Text("Track your car"),
-            ),
-          ],
         ),
       ),
     );
