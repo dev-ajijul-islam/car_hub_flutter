@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:car_hub/data/network/network_response.dart';
 import 'package:car_hub/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +103,7 @@ class PaymentProvider extends ChangeNotifier {
         } else {
           _status = PaymentStatus.failed;
           _errorMessage =
-              "Payment succeeded but backend update failed: ${backendResponse.message}";
+              "$backendResponse.message";
         }
       } else {
         _status = PaymentStatus.failed;

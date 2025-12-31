@@ -11,22 +11,28 @@ void commonDialog(BuildContext context,{required String title,required String su
     context: context,
     builder: (context) {
       return AlertDialog(
-        contentPadding: EdgeInsets.all(20),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          spacing: 10,
-          children: [
-            SvgPicture.asset(AssetsFilePaths.doneSvg),
-            Text(
-              textAlign: TextAlign.center,
-              title,
-              style: TextTheme.of(context).titleLarge,
-            ),
-            Text(
-              textAlign: TextAlign.center,
-              subtitle,
-            ),
-          ],
+        insetPadding: EdgeInsets.all(20),
+        content: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 10,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: SvgPicture.asset(AssetsFilePaths.doneSvg),
+              ),
+              Text(
+                textAlign: TextAlign.center,
+                title,
+                style: TextTheme.of(context).titleLarge,
+              ),
+              Text(
+                textAlign: TextAlign.center,
+                subtitle,
+              ),
+            ],
+          ),
         ),
       );
     },

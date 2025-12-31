@@ -1,5 +1,6 @@
 import 'package:car_hub/providers/payment_provider.dart';
 import 'package:car_hub/ui/screens/track_car/tracking_progress.dart';
+import 'package:car_hub/ui/widgets/loading.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,10 +21,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     allOrderData =
-    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
-
-    final paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
+    final paymentProvider = Provider.of<PaymentProvider>(
+      context,
+      listen: false,
+    );
     paymentProvider.reset();
   }
 
@@ -36,7 +39,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Payment Option", style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              "Payment Option",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             const SizedBox(height: 10),
             Card(
               elevation: 0,
@@ -78,21 +84,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           width: double.infinity,
                           child: FilledButton(
                             onPressed: null,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
-                                ),
-                                SizedBox(width: 10),
-                                Text("Processing..."),
-                              ],
-                            ),
+                            child: Loading(),
                           ),
                         );
                       }
-
 
                       if (paymentProvider.status == PaymentStatus.success &&
                           paymentProvider.errorMessage == null) {
@@ -112,7 +107,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           enabled: false,
                         );
                       }
-
 
                       if (paymentProvider.status == PaymentStatus.failed ||
                           paymentProvider.errorMessage != null) {
@@ -137,7 +131,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           ],
                         );
                       }
-
 
                       return _buildStatusButton(
                         label: "Pay Now",
@@ -170,17 +163,31 @@ class _PaymentScreenState extends State<PaymentScreen> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.payment, size: 30, color: Theme.of(context).colorScheme.primary),
-                Text("Payment Information", style: Theme.of(context).textTheme.titleMedium),
+                Icon(
+                  Icons.payment,
+                  size: 30,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                Text(
+                  "Payment Information",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
               ],
             ),
             const SizedBox(height: 20),
             _buildRichText("Selected Method : ", "SSLCommerz Online Payment"),
-            _buildRichText("Order Amount : ", "\$${allOrderData['totalPrice']}"),
             _buildRichText(
-                "Order ID : ", "#${order?.sId?.substring(0, 8) ?? 'N/A'}"),
+              "Order Amount : ",
+              "\$${allOrderData['totalPrice']}",
+            ),
             _buildRichText(
-                "Note : ", "Complete payment to proceed with car delivery"),
+              "Order ID : ",
+              "#${order?.sId?.substring(0, 8) ?? 'N/A'}",
+            ),
+            _buildRichText(
+              "Note : ",
+              "Complete payment to proceed with car delivery",
+            ),
           ],
         ),
       ),
@@ -198,7 +205,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
             fontWeight: FontWeight.w600,
           ),
           children: [
-            TextSpan(text: value, style: const TextStyle(color: Colors.grey)),
+            TextSpan(
+              text: value,
+              style: const TextStyle(color: Colors.grey),
+            ),
           ],
         ),
       ),
