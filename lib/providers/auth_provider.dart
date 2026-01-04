@@ -244,7 +244,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  ///================================= Update Profile ===========================
+  ///=============================== Update Profile ===========================
   Future<bool> updateProfile({
     required BuildContext context,
     required String userId,
@@ -348,6 +348,80 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+  ///=============================== Change Password ===========================
+  Future<bool> changePassword({
+    required BuildContext context,
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    inProgress = true;
+    notifyListeners();
+
+    try {
+      final user = _auth.currentUser;
+
+      if (user == null || user.email == null) {
+        showSnackbarMessage(
+          context: context,
+          message: "User not logged in",
+          color: Colors.red,
+        );
+        return false;
+      }
+
+      // 🔐 Re-authenticate
+      final credential = EmailAuthProvider.credential(
+        email: user.email!,
+        password: oldPassword,
+      );
+
+      await user.reauthenticateWithCredential(credential);
+
+      // 🔁 Update password
+      await user.updatePassword(newPassword);
+
+      showSnackbarMessage(
+        context: context,
+        message: "Password updated successfully",
+        color: Colors.green,
+      );
+
+      return true;
+    } on FirebaseAuthException catch (e) {
+      String message = "Password update failed";
+
+      switch (e.code) {
+        case 'wrong-password':
+          message = "Old password is incorrect";
+          break;
+        case 'weak-password':
+          message = "Password should be at least 6 characters";
+          break;
+        case 'requires-recent-login':
+          message = "Please login again and try";
+          break;
+      }
+
+      showSnackbarMessage(
+        context: context,
+        message: message,
+        color: Colors.red,
+      );
+      return false;
+    } catch (e) {
+      showSnackbarMessage(
+        context: context,
+        message: "Password update failed: $e",
+        color: Colors.red,
+      );
+      return false;
+    } finally {
+      inProgress = false;
+      notifyListeners();
+    }
+  }
+
 
   ///================================= Sign out ===========================
   Future<void> signOut(BuildContext context) async {
