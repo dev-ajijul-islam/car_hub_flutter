@@ -1,4 +1,5 @@
 import 'package:car_hub/data/model/order_model.dart';
+import 'package:car_hub/ui/screens/track_car/tracking_progress.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -9,95 +10,100 @@ class HistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.hardEdge,
-      child: SizedBox(
-        height: 110,
-        child: Row(
-          children: [
-            Expanded(
-              child: order.carData?["media"]["thumbnail"] != null
-                  ? Image.network(
-                      order.carData?["media"]["thumbnail"],
-                      fit: BoxFit.fill,
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                    )
-                  : Image.asset(
-                      AssetsFilePaths.carBg,
-                      fit: BoxFit.fill,
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                    ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 0,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 2),
-                    Text(
-                      order.carData?["title"],
-                      style: TextTheme.of(
-                        context,
-                      ).titleMedium?.copyWith(fontSize: 18),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: "Tracking ID: ",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: "#${order.sId?.substring(0, 10)}..",
-                            style: TextStyle(color: Colors.black54),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, TrackingProgress.name,arguments: order.sId);
+      },
+      child: Card(
+        clipBehavior: Clip.hardEdge,
+        child: SizedBox(
+          height: 110,
+          child: Row(
+            children: [
+              Expanded(
+                child: order.carData?["media"]["thumbnail"] != null
+                    ? Image.network(
+                        order.carData?["media"]["thumbnail"],
+                        fit: BoxFit.fill,
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                      )
+                    : Image.asset(
+                        AssetsFilePaths.carBg,
+                        fit: BoxFit.fill,
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                      ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 0,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 2),
+                      Text(
+                        order.carData?["title"],
+                        style: TextTheme.of(
+                          context,
+                        ).titleMedium?.copyWith(fontSize: 18),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "Tracking ID: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
                           ),
-                        ],
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: "Date: ",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
+                          children: [
+                            TextSpan(
+                              text: "#${order.sId?.substring(0, 10)}..",
+                              style: TextStyle(color: Colors.black54),
+                            ),
+                          ],
                         ),
-                        children: [
-                          TextSpan(
-                            text: order.createdAt != null
-                                ? DateFormat(
-                                    'dd MMM yyyy • hh:mm a',
-                                  ).format(order.createdAt!)
-                                : '',
-                            style: TextStyle(color: Colors.black54),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "Date: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
                           ),
-                        ],
+                          children: [
+                            TextSpan(
+                              text: order.createdAt != null
+                                  ? DateFormat(
+                                      'dd MMM yyyy • hh:mm a',
+                                    ).format(order.createdAt!)
+                                  : '',
+                              style: TextStyle(color: Colors.black54),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    FilledButton(
-                      onPressed: () {},
-                      style: FilledButton.styleFrom(
-                        minimumSize: const Size(double.maxFinite, 30),
-                        backgroundColor: Colors.blue.withAlpha(100),
+                      FilledButton(
+                        onPressed: () {},
+                        style: FilledButton.styleFrom(
+                          minimumSize: const Size(double.maxFinite, 30),
+                          backgroundColor: Colors.blue.withAlpha(100),
+                        ),
+                        child: Text(
+                          getOrderStatus(order),
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ),
-                      child: Text(
-                        getOrderStatus(order),
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
