@@ -30,7 +30,7 @@ class _ProfileState extends State<Profile> {
             final user = provider.dbUser;
 
             return Visibility(
-              visible: provider.inProgress == false,
+              visible: provider.dbUser != null,
               replacement: Center(
                 child: FilledButton(
                   onPressed: () {
@@ -165,7 +165,7 @@ class _ProfileState extends State<Profile> {
         await provider.updateProfile(
           context: context,
           userId: userId,
-          profileImageFile: picked, // send XFile to provider
+          profileImageFile: picked,
         );
       }
     }
