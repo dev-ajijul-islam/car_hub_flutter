@@ -332,7 +332,6 @@ class AuthProvider extends ChangeNotifier {
         url: Urls.loginUser(idToken: idToken!),
       );
 
-      print("---------------------------------------${response.body?["body"]}");
       if (response.success && response.body?["body"] != null) {
         final body = response.body?["body"];
         dbUser = UserModel(
@@ -342,7 +341,7 @@ class AuthProvider extends ChangeNotifier {
           phone: body["phone"],
           address: body["address"],
           passportIdUrl: body["passportIdUrl"],
-          photo: body["picture"],
+          photo: body["photo"],
         );
       }
       notifyListeners();
