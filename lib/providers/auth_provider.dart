@@ -281,7 +281,7 @@ class AuthProvider extends ChangeNotifier {
             phone: phone ?? dbUser!.phone,
             address: address ?? dbUser!.address,
             passportIdUrl: passportIdUrl ?? dbUser!.passportIdUrl,
-            photo : photo ?? dbUser!.photo,
+            photo: photo ?? dbUser!.photo,
           );
         }
 
@@ -296,6 +296,8 @@ class AuthProvider extends ChangeNotifier {
           message: response.message,
           color: Colors.green,
         );
+
+        Navigator.pop(context);
         notifyListeners();
         return true;
       } else {
@@ -326,7 +328,6 @@ class AuthProvider extends ChangeNotifier {
       idToken = await user?.getIdToken();
 
       notifyListeners();
-
 
       final response = await NetworkCaller.getRequest(
         url: Urls.loginUser(idToken: idToken!),

@@ -54,61 +54,85 @@ class _PersonalInformationState extends State<PersonalInformation> {
     );
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(title: const Text("Personal information")),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _label("Full Name"),
-              _input(
-                controller: _nameController,
-                hint: "Full name",
-                icon: Icons.person_2_outlined,
-                validator: (v) => v!.isEmpty ? "Name is required" : null,
-              ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: IntrinsicHeight(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _label("Full Name"),
+                          _input(
+                            controller: _nameController,
+                            hint: "Full name",
+                            icon: Icons.person_2_outlined,
+                            validator: (v) =>
+                                v!.isEmpty ? "Name is required" : null,
+                          ),
 
-              _label("Email"),
-              _input(
-                controller: _emailController,
-                hint: "Email",
-                icon: Icons.email_outlined,
-                enabled: false,
-              ),
+                          _label("Email"),
+                          _input(
+                            controller: _emailController,
+                            hint: "Email",
+                            icon: Icons.email_outlined,
+                            enabled: false,
+                          ),
 
-              _label("Phone Number"),
-              _input(
-                controller: _phoneController,
-                hint: "Enter phone number",
-                icon: Icons.phone_outlined,
-                keyboardType: TextInputType.phone,
-                validator: (v) {
-                  if (v!.isNotEmpty && v.length < 10) {
-                    return "Enter valid phone number";
-                  }
-                  return null;
-                },
-              ),
+                          _label("Phone Number"),
+                          _input(
+                            controller: _phoneController,
+                            hint: "Enter phone number",
+                            icon: Icons.phone_outlined,
+                            keyboardType: TextInputType.phone,
+                            validator: (v) {
+                              if (v!.isNotEmpty && v.length < 10) {
+                                return "Enter valid phone number";
+                              }
+                              return null;
+                            },
+                          ),
 
-              _label("Address"),
-              _input(
-                controller: _addressController,
-                hint: "Enter address",
-                icon: Icons.location_on_outlined,
-              ),
+                          _label("Address"),
+                          _input(
+                            controller: _addressController,
+                            hint: "Enter address",
+                            icon: Icons.location_on_outlined,
+                          ),
 
-              _label("Upload Passport / ID"),
-              _passportPicker(context),
+                          _label("Upload Passport / ID"),
+                          _passportPicker(context),
 
-              const Spacer(),
+                          const Spacer(), // ✅ preserved
 
-              FilledButton(
-                onPressed: loading ? null : _onSubmit,
-                child: loading ? const Loading() : const Text("Update"),
-              ),
-            ],
+                          SizedBox(
+                            width: double.infinity,
+                            child: FilledButton(
+                              onPressed: loading ? null : _onSubmit,
+                              child: loading
+                                  ? const Loading()
+                                  : const Text("Update"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -130,7 +154,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
       name: _nameController.text.trim(),
       phone: _phoneController.text.trim(),
       address: _addressController.text.trim(),
-      passportIdUrl: "passportIdImage!.path",
+      passportIdUrl: passportIdImage?.path,
     );
   }
 
@@ -169,7 +193,13 @@ class _PersonalInformationState extends State<PersonalInformation> {
           height: 150,
           width: double.infinity,
           child: passportIdImage != null
-              ? Image.file(File(passportIdImage!.path), fit: BoxFit.cover)
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.file(
+                    File(passportIdImage!.path),
+                    fit: BoxFit.cover,
+                  ),
+                )
               : const Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
