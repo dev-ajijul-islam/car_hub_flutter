@@ -1,4 +1,5 @@
 import 'package:car_hub/providers/order_tracking_provider.dart';
+import 'package:car_hub/ui/main_layout.dart';
 import 'package:car_hub/ui/widgets/tracking_progress_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,8 @@ class _TrackingProgressState extends State<TrackingProgress> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final trackingCode = ModalRoute.of(context)?.settings.arguments as String?;
+      final trackingCode =
+          ModalRoute.of(context)?.settings.arguments as String?;
       if (trackingCode != null && trackingCode.isNotEmpty) {
         context.read<OrderTrackingProvider>().getTrackingProgress(trackingCode);
       }
@@ -27,7 +29,21 @@ class _TrackingProgressState extends State<TrackingProgress> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Track your car")),
+      appBar: AppBar(
+        title: const Text("Track your car"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                MainLayout.name,
+                (route) => false,
+              );
+            },
+            icon: Icon(Icons.done),
+          ),
+        ],
+      ),
       body: Consumer<OrderTrackingProvider>(
         builder: (context, trackingProvider, child) {
           // Show loading
@@ -48,7 +64,8 @@ class _TrackingProgressState extends State<TrackingProgress> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      final trackingCode = ModalRoute.of(context)?.settings.arguments as String?;
+                      final trackingCode =
+                          ModalRoute.of(context)?.settings.arguments as String?;
                       if (trackingCode != null) {
                         trackingProvider.getTrackingProgress(trackingCode);
                       }
@@ -81,8 +98,10 @@ class _TrackingProgressState extends State<TrackingProgress> {
                     return TrackingProgressTile(
                       title: status.title,
                       subtitle: status.subtitle,
-                      icon: IconData(status.iconCodePoint,
-                          fontFamily: 'MaterialIcons'),
+                      icon: IconData(
+                        status.iconCodePoint,
+                        fontFamily: 'MaterialIcons',
+                      ),
                       isFirst: status.isFirst,
                       isLast: status.isLast,
                       isPast: status.isPast,
@@ -98,4 +117,5 @@ class _TrackingProgressState extends State<TrackingProgress> {
         },
       ),
     );
-  }}
+  }
+}

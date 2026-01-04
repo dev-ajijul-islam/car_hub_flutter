@@ -1,7 +1,5 @@
 import 'package:car_hub/data/model/order_model.dart';
-import 'package:car_hub/ui/screens/home/car_details_screen.dart';
 import 'package:car_hub/ui/screens/track_car/order_details_screen.dart';
-import 'package:car_hub/ui/screens/track_car/tracking_progress.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

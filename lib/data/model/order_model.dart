@@ -1,4 +1,4 @@
-import 'package:car_hub/data/model/car_model.dart';
+import 'package:car_hub/data/model/tracking_status_model.dart';
 
 class OrderModel {
   final String? sId;
@@ -17,6 +17,7 @@ class OrderModel {
   final String? paymentTransactionId;
   final DateTime? paymentDate;
   final bool? ipnValidated;
+  final List<TrackingStatusModel> tracking; // <-- New tracking field
 
   OrderModel({
     this.sId,
@@ -35,6 +36,7 @@ class OrderModel {
     this.paymentTransactionId,
     this.paymentDate,
     this.ipnValidated,
+    this.tracking = const [],
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
@@ -78,6 +80,11 @@ class OrderModel {
           ? DateTime.parse(json['paymentDate'].toString())
           : null,
       ipnValidated: json['ipnValidated'] ?? false,
+      tracking: json['tracking'] != null
+          ? (json['tracking'] as List)
+          .map((e) => TrackingStatusModel.fromJson(e))
+          .toList()
+          : [],
     );
   }
 
@@ -96,6 +103,7 @@ class OrderModel {
       'paymentTransactionId': paymentTransactionId,
       'paymentDate': paymentDate?.toIso8601String(),
       'ipnValidated': ipnValidated,
+      'tracking': tracking.map((e) => e.toJson()).toList(),
     };
   }
 

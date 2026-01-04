@@ -1,8 +1,11 @@
+import 'package:car_hub/data/model/order_model.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class HistoryCard extends StatelessWidget {
-  const HistoryCard({super.key});
+  const HistoryCard({super.key, required this.order});
+  final OrderModel order;
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +16,19 @@ class HistoryCard extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: Image.asset(
-                AssetsFilePaths.carBg,
-                fit: BoxFit.fill,
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-              ),
+              child: order.carData?["media"]["thumbnail"] != null
+                  ? Image.network(
+                      order.carData?["media"]["thumbnail"],
+                      fit: BoxFit.fill,
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                    )
+                  : Image.asset(
+                      AssetsFilePaths.carBg,
+                      fit: BoxFit.fill,
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                    ),
             ),
             Expanded(
               flex: 2,
@@ -33,7 +43,7 @@ class HistoryCard extends StatelessWidget {
                   children: [
                     SizedBox(height: 2),
                     Text(
-                      "Audi . RS Q8 . TFSI V8",
+                      order.carData?["title"],
                       style: TextTheme.of(
                         context,
                       ).titleMedium?.copyWith(fontSize: 18),
@@ -47,7 +57,7 @@ class HistoryCard extends StatelessWidget {
                         ),
                         children: [
                           TextSpan(
-                            text: "#134509",
+                            text: "#${order.sId?.substring(0, 10)}..",
                             style: TextStyle(color: Colors.black54),
                           ),
                         ],
@@ -62,7 +72,11 @@ class HistoryCard extends StatelessWidget {
                         ),
                         children: [
                           TextSpan(
-                            text: "25 july 2026",
+                            text: order.createdAt != null
+                                ? DateFormat(
+                                    'dd MMM yyyy • hh:mm a',
+                                  ).format(order.createdAt!)
+                                : '',
                             style: TextStyle(color: Colors.black54),
                           ),
                         ],
@@ -71,12 +85,13 @@ class HistoryCard extends StatelessWidget {
                     FilledButton(
                       onPressed: () {},
                       style: FilledButton.styleFrom(
-                        minimumSize: Size(double.maxFinite, 30),
-                        backgroundColor: WidgetStateColor.resolveWith(
-                          (states) => Colors.blue.withAlpha(100),
-                        ),
+                        minimumSize: const Size(double.maxFinite, 30),
+                        backgroundColor: Colors.blue.withAlpha(100),
                       ),
-                      child: Text("In Progress"),
+                      child: Text(
+                        getOrderStatus(order),
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
@@ -86,5 +101,32 @@ class HistoryCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getOrderStatus(OrderModel order) {
+    if (order.tracking.isEmpty) return 'In Progress';
+
+    final current = order.tracking.firstWhere(
+      (t) => t.isCurrent,
+      orElse: () => order.tracking.first,
+    );
+
+    if (current.isCurrent) {
+      return current.title;
+    }
+
+    final delivered = order.tracking.any((t) => t.isLast && t.isPast);
+    if (delivered) {
+      return 'Delivered';
+    }
+
+    final canceled = order.tracking.any(
+      (t) => t.title.toLowerCase() == 'canceled',
+    );
+    if (canceled) {
+      return 'Canceled';
+    }
+
+    return 'In Progress';
   }
 }
