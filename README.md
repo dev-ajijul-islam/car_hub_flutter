@@ -36,6 +36,45 @@ This app is designed to give users a **smooth, intuitive, and feature-rich exper
 ---
 
 
+## 📱 App Gallery
+
+<div align="center">
+  <table style="border: none;">
+    <tr>
+      <td align="center"><strong>Home Screen</strong></td>
+      <td align="center"><strong>Car Details</strong></td>
+      <td align="center"><strong>Payment Checkout</strong></td>
+    </tr>
+    <tr>
+      <td><img src="screenshots/home.jpg" width="220" /></td>
+      <td><img src="screenshots/car_details.jpg" width="220" /></td>
+      <td><img src="screenshots/payment.jpg" width="220" /></td>
+    </tr>
+    <tr>
+      <td align="center"><strong>Favorites</strong></td>
+      <td align="center"><strong>Profile</strong></td>
+      <td align="center"><strong>Track car</strong></td>
+    </tr>
+    <tr>
+      <td><img src="screenshots/favorite.jpg" width="220" /></td>
+      <td><img src="screenshots/profile.jpg" width="220" /></td>
+      <td><img src="screenshots/tracking.jpg" width="220" /></td>
+    </tr>
+    <tr>
+      <td align="center"><strong>Language</strong></td>
+      <td align="center"><strong>Hiistory</strong></td>
+      <td align="center"><strong>Track car</strong></td>
+    </tr>
+    <tr>
+      <td><img src="screenshots/language.jpg" width="220" /></td>
+      <td><img src="screenshots/history.jpg" width="220" /></td>
+      <td><img src="screenshots/tracking.jpg" width="220" /></td>
+    </tr>
+  </table>
+</div>
+---
+
+
 
 ## ✨ Features
 
@@ -146,49 +185,6 @@ ___
 | ![SSLCommerz](https://sslcommerz.com/images/logo.svg) | Payment gateway |
 
 ---
-
-## 📱 App Gallery
-
-<div align="center">
-  <table style="border: none;">
-    <tr>
-      <td align="center"><strong>Home Screen</strong></td>
-      <td align="center"><strong>Car Details</strong></td>
-      <td align="center"><strong>Payment Checkout</strong></td>
-    </tr>
-    <tr>
-      <td><img src="screenshots/home.jpg" width="220" /></td>
-      <td><img src="screenshots/car_details.jpg" width="220" /></td>
-      <td><img src="screenshots/payment.jpg" width="220" /></td>
-    </tr>
-    <tr>
-      <td align="center"><strong>Favorites</strong></td>
-      <td align="center"><strong>Profile</strong></td>
-      <td align="center"><strong>Track car</strong></td>
-    </tr>
-    <tr>
-      <td><img src="screenshots/favorite.jpg" width="220" /></td>
-      <td><img src="screenshots/profile.jpg" width="220" /></td>
-      <td><img src="screenshots/tracking.jpg" width="220" /></td>
-    </tr>
-    <tr>
-      <td align="center"><strong>Language</strong></td>
-      <td align="center"><strong>Hiistory</strong></td>
-      <td align="center"><strong>Track car</strong></td>
-    </tr>
-    <tr>
-      <td><img src="screenshots/language.jpg" width="220" /></td>
-      <td><img src="screenshots/history.jpg" width="220" /></td>
-      <td><img src="screenshots/tracking.jpg" width="220" /></td>
-    </tr>
-  </table>
-</div>
-
-
-> ![App Preview GIF](screenshots/app_preview.gif)
-
----
-
 
 ## 🗄️ Backend / Server Repository
 
