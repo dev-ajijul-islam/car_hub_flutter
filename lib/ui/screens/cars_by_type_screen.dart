@@ -1,5 +1,6 @@
 import 'package:car_hub/providers/car_by_types_provider.dart';
 import 'package:car_hub/ui/widgets/car_card.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,7 @@ class _CarsByTypeScreenState extends State<CarsByTypeScreen> {
     Future.microtask(() {
       if (mounted) {
         final String carTypeId =
-            ModalRoute.of(context)!.settings.arguments as String;
+        ModalRoute.of(context)!.settings.arguments as String;
         context.read<CarByTypesProvider>().getcarsByType(carTypeId);
       }
     });
@@ -26,18 +27,18 @@ class _CarsByTypeScreenState extends State<CarsByTypeScreen> {
   @override
   Widget build(BuildContext context) {
     final String carTypeId =
-        ModalRoute.of(context)!.settings.arguments as String;
+    ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Cars by $carTypeId (${context.watch<CarByTypesProvider>().cars.length})",
+          "${"cars_by_type.title".tr()} $carTypeId (${context.watch<CarByTypesProvider>().cars.length})",
         ),
       ),
       body: Consumer<CarByTypesProvider>(
         builder: (context, provider, child) => ListView.separated(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           itemBuilder: (context, index) => CarCard(car: provider.cars[index]),
-          separatorBuilder: (context, index) => SizedBox(height: 10),
+          separatorBuilder: (context, index) => const SizedBox(height: 10),
           itemCount: provider.cars.length,
         ),
       ),
