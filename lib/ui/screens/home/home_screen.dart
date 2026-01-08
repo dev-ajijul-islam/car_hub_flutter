@@ -7,6 +7,7 @@ import 'package:car_hub/ui/widgets/help_chat_dialog.dart';
 import 'package:car_hub/ui/widgets/hero_banner.dart';
 import 'package:car_hub/ui/widgets/hot_deal_carousel.dart';
 import 'package:car_hub/ui/widgets/search_dialog/search_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -60,12 +61,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     _onTapSearchField(context);
                   },
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search_outlined),
-                    hintText: "Search",
+                    prefixIcon: const Icon(Icons.search_outlined),
+                    hintText: "home.search".tr(),
                     suffixIcon: IconButton(
                       color: ColorScheme.of(context).primary,
                       onPressed: () {},
-                      icon: Icon(Icons.read_more_outlined, weight: 800),
+                      icon: const Icon(Icons.read_more_outlined, weight: 800),
                     ),
                   ),
                 ),
@@ -77,22 +78,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
-                      "Featured car",
+                      "home.featured_car".tr(),
                       style: TextTheme.of(context).titleMedium,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Consumer<FeaturedCarProvider>(
                       builder: (context, provider, child) {
                         if (provider.isLoading) {
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(child: CircularProgressIndicator());
                         }
                         return ListView.separated(
                           separatorBuilder: (context, index) =>
-                              SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: provider.featuredCars.length,
                           itemBuilder: (context, index) =>
                               CarCard(car: provider.featuredCars[index]),
@@ -102,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),
