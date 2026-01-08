@@ -136,6 +136,10 @@
     },
     "login_prompt": "Login"
   },
+  "hero_banner": {
+    "hello": "Hello",
+    "welcome_back": "Welcome back!"
+  },
   "car_card": {
     "year": "Year",
     "mileage": "Mileage"
