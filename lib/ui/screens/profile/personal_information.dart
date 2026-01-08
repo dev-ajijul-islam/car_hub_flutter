@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:car_hub/providers/auth_provider.dart';
 import 'package:car_hub/ui/widgets/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide AuthProvider;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -51,12 +52,12 @@ class _PersonalInformationState extends State<PersonalInformation> {
   @override
   Widget build(BuildContext context) {
     final bool loading = context.select<AuthProvider, bool>(
-      (p) => p.inProgress,
+          (p) => p.inProgress,
     );
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(title: const Text("Personal information")),
+      appBar: AppBar(title: Text("personal_information.title".tr())),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -66,7 +67,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
               builder: (context, constraints) {
                 return SingleChildScrollView(
                   keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  ScrollViewKeyboardDismissBehavior.onDrag,
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
                       minHeight: constraints.maxHeight,
@@ -75,45 +76,45 @@ class _PersonalInformationState extends State<PersonalInformation> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _label("Full Name"),
+                          _label("personal_information.full_name".tr()),
                           _input(
                             controller: _nameController,
-                            hint: "Full name",
+                            hint: "personal_information.hint_full_name".tr(),
                             icon: Icons.person_2_outlined,
                             validator: (v) =>
-                                v!.isEmpty ? "Name is required" : null,
+                            v!.isEmpty ? "personal_information.name_required".tr() : null,
                           ),
 
-                          _label("Email"),
+                          _label("personal_information.email".tr()),
                           _input(
                             controller: _emailController,
-                            hint: "Email",
+                            hint: "personal_information.hint_email".tr(),
                             icon: Icons.email_outlined,
                             enabled: false,
                           ),
 
-                          _label("Phone Number"),
+                          _label("personal_information.phone_number".tr()),
                           _input(
                             controller: _phoneController,
-                            hint: "Enter phone number",
+                            hint: "personal_information.hint_phone".tr(),
                             icon: Icons.phone_outlined,
                             keyboardType: TextInputType.phone,
                             validator: (v) {
                               if (v!.isNotEmpty && v.length < 10) {
-                                return "Enter valid phone number";
+                                return "personal_information.valid_phone".tr();
                               }
                               return null;
                             },
                           ),
 
-                          _label("Address"),
+                          _label("personal_information.address".tr()),
                           _input(
                             controller: _addressController,
-                            hint: "Enter address",
+                            hint: "personal_information.hint_address".tr(),
                             icon: Icons.location_on_outlined,
                           ),
 
-                          _label("Upload Passport / ID"),
+                          _label("personal_information.upload_passport_id".tr()),
                           _passportPicker(context),
 
                           const Spacer(),
@@ -124,7 +125,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               onPressed: loading ? null : _onSubmit,
                               child: loading
                                   ? const Loading()
-                                  : const Text("Update"),
+                                  : Text("personal_information.update".tr()),
                             ),
                           ),
                         ],
@@ -208,12 +209,12 @@ class _PersonalInformationState extends State<PersonalInformation> {
                 provider.dbUser!.passportIdUrl.toString(),
                 fit: BoxFit.cover,
               ),
-            ) :  const Center(
+            ) :  Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.upload_file),
-                  Text("Click to upload"),
+                  const Icon(Icons.upload_file),
+                  Text("personal_information.click_to_upload".tr()),
                 ],
               ),
             ),
