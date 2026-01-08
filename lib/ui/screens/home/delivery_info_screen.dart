@@ -1,6 +1,7 @@
 import 'package:car_hub/data/model/car_model.dart';
 import 'package:car_hub/providers/auth_provider.dart';
 import 'package:car_hub/ui/screens/home/booking_cost_calculation.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,7 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
   @override
   void didChangeDependencies() {
     final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     car = args['car'];
     deliveryOption = args['deliveryOption'];
     super.didChangeDependencies();
@@ -43,7 +44,7 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Delivery information")),
+      appBar: AppBar(title: Text("delivery_info.title".tr())),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -59,20 +60,20 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 10, bottom: 2),
                         child: Text(
-                          "Full name",
+                          "delivery_info.full_name".tr(),
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       TextFormField(
                         enabled: false,
                         controller: _nameTEController,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.person_outline),
-                          hintText: "full name",
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.person_outline),
+                          hintText: "delivery_info.hint_full_name".tr(),
                         ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return 'Please enter your full name';
+                            return 'delivery_info.enter_full_name'.tr();
                           }
                           return null;
                         },
@@ -81,25 +82,25 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 10, bottom: 2),
                         child: Text(
-                          "Email",
+                          "delivery_info.email".tr(),
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       TextFormField(
                         enabled: false,
                         controller: _emailTEController,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.mail_outline),
-                          hintText: "Email",
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.mail_outline),
+                          hintText: "delivery_info.hint_email".tr(),
                         ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return 'Please enter your email';
+                            return 'delivery_info.enter_email'.tr();
                           }
                           if (!RegExp(
                             r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                           ).hasMatch(value)) {
-                            return 'Please enter a valid email address';
+                            return 'delivery_info.enter_valid_email'.tr();
                           }
                           return null;
                         },
@@ -108,25 +109,25 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 10, bottom: 2),
                         child: Text(
-                          "Phone number",
+                          "delivery_info.phone_number".tr(),
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       TextFormField(
                         controller: _phoneTEController,
                         keyboardType: TextInputType.phone,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.phone_outlined),
-                          hintText: "phone number",
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.phone_outlined),
+                          hintText: "delivery_info.hint_phone".tr(),
                         ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return 'Please enter your phone number';
+                            return 'delivery_info.enter_phone'.tr();
                           }
                           if (!RegExp(
                             r'^[0-9]{10,}$',
                           ).hasMatch(value.replaceAll(RegExp(r'\D'), ''))) {
-                            return 'Please enter a valid phone number';
+                            return 'delivery_info.enter_valid_phone'.tr();
                           }
                           return null;
                         },
@@ -135,22 +136,22 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 10, bottom: 2),
                         child: Text(
-                          "Location",
+                          "delivery_info.location".tr(),
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       TextFormField(
                         controller: _locationTEController,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.location_on_outlined),
-                          hintText: "location",
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.location_on_outlined),
+                          hintText: "delivery_info.hint_location".tr(),
                         ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return 'Please enter your location';
+                            return 'delivery_info.enter_location'.tr();
                           }
                           if (value.trim().length < 5) {
-                            return 'Please enter a valid location';
+                            return 'delivery_info.enter_valid_location'.tr();
                           }
                           return null;
                         },
@@ -169,7 +170,7 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
               width: double.infinity,
               child: FilledButton(
                 onPressed: _onTapContinue,
-                child: const Text("Continue"),
+                child: Text("delivery_info.continue".tr()),
               ),
             ),
           ],
