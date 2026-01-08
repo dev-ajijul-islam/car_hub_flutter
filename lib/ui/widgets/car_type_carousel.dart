@@ -2,6 +2,7 @@ import 'package:car_hub/providers/car_types_provider.dart';
 import 'package:car_hub/ui/screens/cars_by_type_screen.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,11 +19,11 @@ class CarTypeCarousel extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                "Shop by car type",
+                "home.shop_by_car_type".tr(),
                 style: TextTheme.of(context).titleMedium,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             CarouselSlider(
               items: provider.carTypes.map((c) {
                 return GestureDetector(
@@ -34,7 +35,7 @@ class CarTypeCarousel extends StatelessWidget {
                     );
                   },
                   child: Card(
-                    margin: EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                    margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                     color: Colors.white,
                     child: Center(
                       child: Column(
@@ -45,7 +46,7 @@ class CarTypeCarousel extends StatelessWidget {
                           Image.asset(AssetsFilePaths.carTypeImage1),
                           Text(
                             c,
-                            style: TextStyle(fontWeight: FontWeight.w400),
+                            style: const TextStyle(fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
