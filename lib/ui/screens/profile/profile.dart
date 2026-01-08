@@ -7,6 +7,7 @@ import 'package:car_hub/ui/screens/profile/my_history.dart';
 import 'package:car_hub/ui/screens/profile/personal_information.dart';
 import 'package:car_hub/ui/screens/profile/terms_and_condition.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -36,83 +37,83 @@ class _ProfileState extends State<Profile> {
                   onPressed: () {
                     Navigator.pushNamed(context, SignInScreen.name);
                   },
-                  child: Text("Login"),
+                  child: Text("profile.login_prompt".tr()),
                 ),
               ),
               child: user != null
                   ? ListView(
+                children: [
+                  const SizedBox(height: 30),
+                  Align(
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      alignment: Alignment.bottomCenter,
                       children: [
-                        SizedBox(height: 30),
-                        Align(
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            alignment: Alignment.bottomCenter,
-                            children: [
-                              CircleAvatar(
-                                radius: 70,
-                                backgroundColor: Colors.white,
-                                backgroundImage:
-                                    profileImage != null && !provider.inProgress
-                                    ? FileImage(File(profileImage!.path))
-                                    : user.photo != null
-                                    ? NetworkImage(user.photo!)
-                                    : AssetImage(AssetsFilePaths.dummyProfile)
-                                          as ImageProvider,
-                                child:
-                                    provider.inProgress && profileImage != null
-                                    ? CircularProgressIndicator()
-                                    : null,
+                        CircleAvatar(
+                          radius: 70,
+                          backgroundColor: Colors.white,
+                          backgroundImage:
+                          profileImage != null && !provider.inProgress
+                              ? FileImage(File(profileImage!.path))
+                              : user.photo != null
+                              ? NetworkImage(user.photo!)
+                              : AssetImage(AssetsFilePaths.dummyProfile)
+                          as ImageProvider,
+                          child:
+                          provider.inProgress && profileImage != null
+                              ? const CircularProgressIndicator()
+                              : null,
+                        ),
+                        Positioned(
+                          bottom: -17,
+                          child: GestureDetector(
+                            onTap: () => _onTapProfilePicture(provider),
+                            child: Container(
+                              padding: const EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(100),
                               ),
-                              Positioned(
-                                bottom: -17,
-                                child: GestureDetector(
-                                  onTap: () => _onTapProfilePicture(provider),
-                                  child: Container(
-                                    padding: EdgeInsets.all(3),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: CircleAvatar(
-                                      radius: 16,
-                                      child: Icon(Icons.add),
-                                    ),
-                                  ),
-                                ),
+                              child: const CircleAvatar(
+                                radius: 16,
+                                child: Icon(Icons.add),
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                        SizedBox(height: 15),
-                        Column(
-                          children: [
-                            Text(
-                              user.name.toString(),
-                              style: TextTheme.of(context).titleMedium,
-                            ),
-                            Text(user.email.toString()),
-                          ],
-                        ),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.all(20),
-                          itemBuilder: (context, index) {
-                            final item = profileTiles[index];
-                            return ProfileMenuTile(
-                              title: item["title"],
-                              icon: item["icon"],
-                              switchMode: item["title"] == "Notification",
-                              route: item["route"],
-                            );
-                          },
-                          separatorBuilder: (context, index) =>
-                              SizedBox(height: 10),
-                          itemCount: profileTiles.length,
-                        ),
                       ],
-                    )
-                  : SizedBox(),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Column(
+                    children: [
+                      Text(
+                        user.name.toString(),
+                        style: TextTheme.of(context).titleMedium,
+                      ),
+                      Text(user.email.toString()),
+                    ],
+                  ),
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(20),
+                    itemBuilder: (context, index) {
+                      final item = profileTiles[index];
+                      return ProfileMenuTile(
+                        title: item["title"],
+                        icon: item["icon"],
+                        switchMode: item["title"] == "profile.notification".tr(),
+                        route: item["route"],
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                    const SizedBox(height: 10),
+                    itemCount: profileTiles.length,
+                  ),
+                ],
+              )
+                  : const SizedBox(),
             );
           },
         ),
@@ -123,31 +124,37 @@ class _ProfileState extends State<Profile> {
   final List<Map<String, dynamic>> profileTiles = [
     {
       "icon": Icons.person_2_outlined,
-      "title": "Personal Information",
+      "title": "profile.personal_information".tr(),
       "route": PersonalInformation.name,
     },
     {
       "icon": Icons.lock_outline_rounded,
-      "title": "Change Password",
+      "title": "profile.change_password".tr(),
       "route": ChangePassword.name,
     },
-    {"icon": Icons.notifications_outlined, "title": "Notification"},
+    {
+      "icon": Icons.notifications_outlined,
+      "title": "profile.notification".tr()
+    },
     {
       "icon": Icons.history_outlined,
-      "title": "History",
+      "title": "profile.history".tr(),
       "route": MyHistory.name,
     },
     {
       "icon": Icons.language_outlined,
-      "title": "Language",
+      "title": "profile.language".tr(),
       "route": LanguageSelectScreen.name,
     },
     {
       "icon": Icons.question_mark,
-      "title": "Terms & Condition",
+      "title": "profile.terms_condition".tr(),
       "route": TermsAndCondition.name,
     },
-    {"icon": Icons.logout_outlined, "title": "Log Out"},
+    {
+      "icon": Icons.logout_outlined,
+      "title": "profile.log_out".tr()
+    },
   ];
 
   Future<void> _onTapProfilePicture(AuthProvider provider) async {
@@ -203,21 +210,21 @@ class _ProfileMenuTileState extends State<ProfileMenuTile> {
             widget.route!,
             arguments: {"fromProfileScreen": true},
           );
-        } else if (widget.title == "Log Out") {
+        } else if (widget.title == "profile.log_out".tr()) {
           _onTapLogOut();
         }
       },
       leading: Icon(widget.icon),
       trailing: (widget.switchMode == true && widget.switchMode != null)
           ? Switch(
-              value: isNotificationOn,
-              onChanged: (value) {
-                setState(() {
-                  isNotificationOn = value;
-                });
-              },
-            )
-          : Icon(Icons.chevron_right_outlined),
+        value: isNotificationOn,
+        onChanged: (value) {
+          setState(() {
+            isNotificationOn = value;
+          });
+        },
+      )
+          : const Icon(Icons.chevron_right_outlined),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
       tileColor: Colors.white,
       title: Text(widget.title),
@@ -236,10 +243,10 @@ class _ProfileMenuTileState extends State<ProfileMenuTile> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(AssetsFilePaths.done),
-            Text("Log Out?", style: TextTheme.of(context).titleMedium),
+            Text("profile.log_out_dialog.title".tr(), style: TextTheme.of(context).titleMedium),
             Text(
               textAlign: TextAlign.center,
-              "You’ve been signed out safely. See you again soon!",
+              "profile.log_out_dialog.message".tr(),
               style: TextTheme.of(context).bodyMedium,
             ),
             Row(
@@ -251,18 +258,18 @@ class _ProfileMenuTileState extends State<ProfileMenuTile> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text("No"),
+                    child: Text("profile.log_out_dialog.no".tr()),
                   ),
                 ),
                 Expanded(
                   child: FilledButton(
                     style: FilledButton.styleFrom(
-                      minimumSize: Size(double.maxFinite, 40),
+                      minimumSize: const Size(double.maxFinite, 40),
                     ),
                     onPressed: () {
                       context.read<AuthProvider>().signOut(context);
                     },
-                    child: Text("Yes"),
+                    child: Text("profile.log_out_dialog.yes".tr()),
                   ),
                 ),
               ],
