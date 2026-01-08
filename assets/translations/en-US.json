@@ -4,30 +4,374 @@
       "title": "Welcome to CarLanda",
       "subtitle": "Your gateway to premium vehicles, delivered from around the world"
     },
-    "1" :{
+    "1": {
       "title": "Fast & Secure Shipping",
       "subtitle": "Get your dream car delivered safely and quickly"
     },
-    "2" :{
+    "2": {
       "title": "Worldwide Collection",
       "subtitle": "Explore vehicles from Japan, UK, USA and more"
     },
-    "3":{
+    "3": {
       "title": "Buy With Confidence",
       "subtitle": "Verified vehicles from trusted global sellers"
     },
-    "4":{
+    "4": {
       "title": "Let's Get Started",
       "subtitle": "Experience a seamless car buying journey"
     }
   },
-  "skip" : "Skip",
-  "next" : "Next",
-  "get_started" : "Get Started",
-
+  "skip": "Skip",
+  "next": "Next",
+  "get_started": "Get Started",
   "choose_lang_title": "Choose your language",
   "choose_lang_description": "Select your preferred language to use CarLanda",
   "continue": "Continue",
   "save": "Save",
-  "language": "Language"
+  "language": "Language",
+
+  "reset_password": {
+    "title": "Reset your password",
+    "subtitle": "The password must be different than before",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "hint_password": "Password",
+    "hint_confirm_password": "Confirm Password"
+  },
+
+  "reset_password_success": {
+    "title": "Successfully Reset your password",
+    "go_to_sign_in": "Go to Sign in screen"
+  },
+
+  "sign_in": {
+    "title": "Sign In",
+    "subtitle": "Welcome back! \n Please enter your details",
+    "email": "Email",
+    "password": "Password",
+    "hint_email": "Enter your Email",
+    "hint_password": "Enter your Password",
+    "forgot_password": "Forget password",
+    "sign_in_button": "Sign in",
+    "or": "Or",
+    "sign_in_with_google": "Sign in with Google",
+    "dont_have_account": "Don't have an account?",
+    "sign_up": "Sign up",
+    "enter_email": "Enter email",
+    "enter_valid_email": "Enter valid email",
+    "enter_password": "Enter Password",
+    "password_min_length": "Password must be at least 6 characters"
+  },
+
+  "sign_up": {
+    "title": "Sign Up",
+    "subtitle": "Welcome to CarLanda! \n Please enter your details",
+    "full_name": "Full name",
+    "email": "Email",
+    "password": "Password",
+    "hint_full_name": "Enter your full name",
+    "hint_email": "Enter your email",
+    "hint_password": "Enter your password",
+    "forgot_password": "Forget password",
+    "sign_up_button": "Sign up",
+    "or": "Or",
+    "sign_in_with_google": "Sign in with Google",
+    "already_have_account": "Already have an account?",
+    "sign_in": "Sign in",
+    "enter_name": "Enter name",
+    "enter_email": "Enter email",
+    "enter_valid_email": "Enter valid email",
+    "enter_password": "Enter password",
+    "password_min_length": "Password must be at least 6 characters"
+  },
+
+  "sign_up_success": {
+    "title": "Congratulation",
+    "subtitle": "You've successfully created your account.",
+    "verification_message": "An verification email has sent to your email please verify and login",
+    "continue": "Continue"
+  },
+
+  "reset_email": {
+    "title": "Enter your email to reset your password",
+    "email": "Email",
+    "hint_email": "Enter Email",
+    "continue": "Continue",
+    "enter_email": "Enter email",
+    "enter_valid_email": "Enter valid email"
+  },
+
+  "pin_verification": {
+    "title": "Check your email",
+    "subtitle": "We sent a password reset link to",
+    "back_to_sign_in": "Back to Sign In"
+  },
+
+  "home": {
+    "search": "Search",
+    "featured_car": "Featured car",
+    "shop_by_car_type": "Shop by car type",
+    "hot_deal": "Hot Deal",
+    "help_support": "Help & Support"
+  },
+
+  "notifications": {
+    "title": "Notifications",
+    "sample_message": "Your preview access to 'Deep Work' ends in 24 hours.",
+    "time_ago": "1h ago"
+  },
+
+  "profile": {
+    "personal_information": "Personal Information",
+    "change_password": "Change Password",
+    "notification": "Notification",
+    "history": "History",
+    "terms_condition": "Terms & Condition",
+    "log_out": "Log Out",
+    "log_out_dialog": {
+      "title": "Log Out?",
+      "message": "You've been signed out safely. See you again soon!",
+      "no": "No",
+      "yes": "Yes"
+    },
+    "login_prompt": "Login"
+  },
+
+  "personal_information": {
+    "title": "Personal information",
+    "full_name": "Full Name",
+    "email": "Email",
+    "phone_number": "Phone Number",
+    "address": "Address",
+    "upload_passport_id": "Upload Passport / ID",
+    "hint_full_name": "Full name",
+    "hint_email": "Email",
+    "hint_phone": "Enter phone number",
+    "hint_address": "Enter address",
+    "click_to_upload": "Click to upload",
+    "update": "Update",
+    "name_required": "Name is required",
+    "valid_phone": "Enter valid phone number"
+  },
+
+  "change_password": {
+    "title": "Change password",
+    "existing_password": "Existing password",
+    "new_password": "New password",
+    "confirm_password": "Confirm password",
+    "hint_existing": "Existing password",
+    "hint_new": "New password",
+    "hint_confirm": "Confirm password",
+    "change_password_button": "Change Password",
+    "enter_old_password": "Enter old password",
+    "enter_new_password": "Enter new password",
+    "password_min_length": "Password must be at least 6 characters",
+    "confirm_your_password": "Confirm your password",
+    "passwords_not_match": "Passwords do not match"
+  },
+
+  "terms_condition": {
+    "title": "Terms and Condition"
+  },
+
+  "track_car": {
+    "title": "Track Your Car",
+    "track_order": "Track order",
+    "no_orders": "No orders found",
+    "retry": "Retry",
+    "tracking_dialog": {
+      "title": "Enter tracking code",
+      "hint": "Enter your tracking code",
+      "track_your_car": "Track your car",
+      "enter_valid_code": "Please enter a valid tracking code"
+    }
+  },
+
+  "tracking_progress": {
+    "title": "Track your car",
+    "delivery_to_port": "Delivery to Port"
+  },
+
+  "view_cars": {
+    "title": "View Cars",
+    "search": "Search",
+    "sort": "Sort",
+    "price_highest_to_lowest": "Price highest to lowest",
+    "price_lowest_to_highest": "Price lowest to highest",
+    "year_lowest_to_highest": "Year lowest to highest",
+    "year_highest_to_lowest": "Year highest to lowest",
+    "no_car_found": "No car found"
+  },
+
+  "cars_by_type": {
+    "title": "Cars by"
+  },
+
+  "favorite_screen": {
+    "title": "Favorite Car",
+    "no_favorite_car": "No favorite car found"
+  },
+
+  "search_result": {
+    "title": "Search Result"
+  },
+
+  "filter": {
+    "title": "Filter",
+    "brand": "Brand",
+    "model": "Model",
+    "price": "Price",
+    "year": "Year",
+    "fuel_type": "Fuel type",
+    "location": "Location",
+    "select_car_brand": "Select car brand",
+    "select_car_model": "Select car model",
+    "select_by_fuel_type": "Select by fuel type",
+    "select_by_location": "Select by location"
+  },
+
+  "search_dialog": {
+    "search": "Search"
+  },
+
+  "car_details": {
+    "key_specification": "Key Specification",
+    "details": "Details",
+    "buy_now": "Buy Now",
+    "mileage": "Mileage",
+    "engine_power": "Engine Power",
+    "fuel_type": "Fuel Type",
+    "cylinders": "Cylinders",
+    "transmission": "Transmission",
+    "seats": "Seats",
+    "interior_color": "Interior Color",
+    "exterior_color": "Exterior Color",
+    "shipping_cost": "Shipping Cost",
+    "custom_clearance": "Custom Clearance",
+    "year": "Year",
+    "delivery_options": "Delivery Options",
+    "delivered_to_luanda": "Delivered to Luanda",
+    "delivered_to_doorstep": "Delivered to Doorstep",
+    "continue": "Continue"
+  },
+
+  "delivery_info": {
+    "title": "Delivery information",
+    "full_name": "Full name",
+    "email": "Email",
+    "phone_number": "Phone number",
+    "location": "Location",
+    "hint_full_name": "full name",
+    "hint_email": "Email",
+    "hint_phone": "phone number",
+    "hint_location": "location",
+    "continue": "Continue",
+    "enter_full_name": "Please enter your full name",
+    "enter_email": "Please enter your email",
+    "enter_valid_email": "Please enter a valid email address",
+    "enter_phone": "Please enter your phone number",
+    "enter_valid_phone": "Please enter a valid phone number",
+    "enter_location": "Please enter your location",
+    "enter_valid_location": "Please enter a valid location"
+  },
+
+  "booking_cost": {
+    "title": "Car cost",
+    "cost_summary": "Cost Summary",
+    "car_price": "Car price",
+    "shipping": "Shipping",
+    "total_price": "Total price",
+    "book_now": "Book now",
+    "order_created_success": "Order Created Successfully",
+    "order_created_message": "Your order has been placed. Proceed to payment.",
+    "please_login": "Please login to book a car"
+  },
+
+  "payment": {
+    "title": "Payment",
+    "payment_option": "Payment Option",
+    "pay_with_sslcommerz": "Pay with SSLCommerz",
+    "payment_information": "Payment Information",
+    "selected_method": "Selected Method",
+    "order_amount": "Order Amount",
+    "order_id": "Order ID",
+    "note": "Note",
+    "sslcommerz_online_payment": "SSLCommerz Online Payment",
+    "complete_payment_note": "Complete payment to proceed with car delivery",
+    "pay_now": "Pay Now",
+    "try_again": "Try Again",
+    "payment_successful": "Payment Successful",
+    "payment_completed": "Payment Completed",
+    "order_information_missing": "Order information missing"
+  },
+
+  "order_details": {
+    "title": "Order Details",
+    "price": "Price",
+    "mileage": "Mileage",
+    "fuel": "Fuel",
+    "transmission": "Transmission",
+    "order_id": "Order ID",
+    "delivery": "Delivery",
+    "order_amount": "Order Amount",
+    "payment_status": "Payment Status",
+    "customer": "Customer",
+    "phone": "Phone",
+    "location": "Location"
+  },
+
+  "history": {
+    "title": "My History",
+    "in_progress": "In Progress",
+    "delivered": "Delivered",
+    "canceled": "Canceled",
+    "tracking_id": "Tracking ID",
+    "date": "Date",
+    "no_orders_found": "No orders found"
+  },
+
+  "common_dialog": {
+    "add_photo": "Add photo",
+    "gallery": "Gallery",
+    "camera": "Camera"
+  },
+
+  "main_layout": {
+    "home": "Home",
+    "view_car": "View car",
+    "track_car": "Track car",
+    "favorite": "Favorite",
+    "profile": "Profile"
+  },
+
+  "validation": {
+    "required": "Required",
+    "invalid_email": "Invalid email",
+    "min_length": "Must be at least {length} characters",
+    "passwords_not_match": "Passwords do not match",
+    "invalid_phone": "Invalid phone number"
+  },
+
+  "buttons": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "submit": "Submit",
+    "back": "Back",
+    "done": "Done"
+  },
+
+  "status": {
+    "paid": "Paid",
+    "pending": "Pending",
+    "in_progress": "In Progress",
+    "delivered": "Delivered",
+    "canceled": "Canceled"
+  },
+
+  "messages": {
+    "order_id_copied": "Order ID copied to clipboard",
+    "success": "Success",
+    "error": "Error",
+    "loading": "Loading..."
+  }
 }

@@ -19,7 +19,6 @@ import 'package:car_hub/providers/single_car_provider.dart';
 import 'package:car_hub/providers/track_car_provider.dart';
 import 'package:car_hub/providers/view_cars_provider.dart';
 import 'package:car_hub/ui/main_layout.dart';
-import 'package:car_hub/ui/screens/auth/profile_setup/set_profile_picture.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/reset_email_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/reset_password_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/reset_password_success.dart';
@@ -143,7 +142,6 @@ class CarHub extends StatelessWidget {
           ResetPasswordSuccess.name: (_) => ResetPasswordSuccess(),
           PinVerificationScreen.name : (_)=> PinVerificationScreen(),
           SignUpSuccessScreen.name: (_) => SignUpSuccessScreen(),
-          SetProfilePicture.name: (_) => SetProfilePicture(),
           HomeScreen.name: (_) => HomeScreen(),
           MainLayout.name: (_) => MainLayout(),
           SearchResultScreen.name: (_) => SearchResultScreen(),

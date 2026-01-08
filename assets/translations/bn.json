@@ -1,34 +1,377 @@
 {
   "welcome_slides": {
-    "0" : {
+    "0": {
       "title": "CarLanda-তে স্বাগতম",
       "subtitle": "বিশ্বজুড়ে প্রিমিয়াম গাড়ি আপনার কাছে পৌঁছে দিচ্ছি"
     },
-    "1" : {
+    "1": {
       "title": "দ্রুত ও নিরাপদ শিপমেন্ট",
       "subtitle": "আপনার পছন্দের গাড়ি দ্রুত এবং নিরাপদে পৌঁছে যাবে"
     },
-    "2" : {
+    "2": {
       "title": "বিশ্বব্যাপী সংগ্রহ",
       "subtitle": "জাপান, যুক্তরাজ্য, যুক্তরাষ্ট্রসহ বিভিন্ন দেশের গাড়ি দেখুন"
     },
-    "3" : {
+    "3": {
       "title": "নির্ভরতার সাথে ক্রয় করুন",
       "subtitle": "বিশ্বস্ত বিক্রেতাদের যাচাই করা গাড়ি"
     },
-    "4" : {
+    "4": {
       "title": "চলুন শুরু করি",
       "subtitle": "ঝামেলাহীন গাড়ি ক্রয়ের অভিজ্ঞতা নিন"
     }
   },
-  "skip" : "এড়িয়ে যাও",
-  "next" : "পরবর্তী",
-  "get_started" : "শুরু করো",
-
-
+  "skip": "এড়িয়ে যাও",
+  "next": "পরবর্তী",
+  "get_started": "শুরু করো",
   "choose_lang_title": "আপনার ভাষা নির্বাচন করুন",
   "choose_lang_description": "CarLanda ব্যবহার করার জন্য আপনার পছন্দের ভাষা নির্বাচন করুন",
   "continue": "চালিয়ে যান",
   "save": "সংরক্ষণ করুন",
-  "language": "ভাষা"
+  "language": "ভাষা",
+
+  "reset_password": {
+    "title": "আপনার পাসওয়ার্ড রিসেট করুন",
+    "subtitle": "পাসওয়ার্ডটি আগের থেকে আলাদা হতে হবে",
+    "password": "পাসওয়ার্ড",
+    "confirm_password": "পাসওয়ার্ড নিশ্চিত করুন",
+    "hint_password": "পাসওয়ার্ড",
+    "hint_confirm_password": "পাসওয়ার্ড নিশ্চিত করুন"
+  },
+
+  "reset_password_success": {
+    "title": "সফলভাবে আপনার পাসওয়ার্ড রিসেট হয়েছে",
+    "go_to_sign_in": "সাইন ইন স্ক্রিনে যান"
+  },
+
+  "sign_in": {
+    "title": "সাইন ইন",
+    "subtitle": "আপনাকে আবার দেখে ভালো লাগলো! \n দয়া করে আপনার বিবরণ লিখুন",
+    "email": "ইমেইল",
+    "password": "পাসওয়ার্ড",
+    "hint_email": "আপনার ইমেইল লিখুন",
+    "hint_password": "আপনার পাসওয়ার্ড লিখুন",
+    "forgot_password": "পাসওয়ার্ড ভুলে গেছেন?",
+    "sign_in_button": "সাইন ইন",
+    "or": "বা",
+    "sign_in_with_google": "Google দিয়ে সাইন ইন",
+    "dont_have_account": "অ্যাকাউন্ট নেই?",
+    "sign_up": "সাইন আপ",
+    "enter_email": "ইমেইল লিখুন",
+    "enter_valid_email": "বৈধ ইমেইল লিখুন",
+    "enter_password": "পাসওয়ার্ড লিখুন",
+    "password_min_length": "পাসওয়ার্ড অন্তত ৬ অক্ষর দীর্ঘ হতে হবে"
+  },
+
+  "sign_up": {
+    "title": "সাইন আপ",
+    "subtitle": "CarLanda-তে স্বাগতম! \n দয়া করে আপনার বিবরণ লিখুন",
+    "full_name": "পুরো নাম",
+    "email": "ইমেইল",
+    "password": "পাসওয়ার্ড",
+    "hint_full_name": "আপনার পুরো নাম লিখুন",
+    "hint_email": "আপনার ইমেইল লিখুন",
+    "hint_password": "আপনার পাসওয়ার্ড লিখুন",
+    "forgot_password": "পাসওয়ার্ড ভুলে গেছেন?",
+    "sign_up_button": "সাইন আপ",
+    "or": "বা",
+    "sign_in_with_google": "Google দিয়ে সাইন ইন",
+    "already_have_account": "ইতিমধ্যে অ্যাকাউন্ট আছে?",
+    "sign_in": "সাইন ইন",
+    "enter_name": "নাম লিখুন",
+    "enter_email": "ইমেইল লিখুন",
+    "enter_valid_email": "বৈধ ইমেইল লিখুন",
+    "enter_password": "পাসওয়ার্ড লিখুন",
+    "password_min_length": "পাসওয়ার্ড অন্তত ৬ অক্ষর দীর্ঘ হতে হবে"
+  },
+
+  "sign_up_success": {
+    "title": "অভিনন্দন",
+    "subtitle": "আপনি সফলভাবে আপনার অ্যাকাউন্ট তৈরি করেছেন।",
+    "verification_message": "আপনার ইমেইলে একটি ভেরিফিকেশন মেইল পাঠানো হয়েছে। দয়া করে ভেরিফাই করে লগইন করুন।",
+    "continue": "চালিয়ে যান"
+  },
+
+  "reset_email": {
+    "title": "আপনার পাসওয়ার্ড রিসেট করতে ইমেইল লিখুন",
+    "email": "ইমেইল",
+    "hint_email": "ইমেইল লিখুন",
+    "continue": "চালিয়ে যান",
+    "enter_email": "ইমেইল লিখুন",
+    "enter_valid_email": "বৈধ ইমেইল লিখুন"
+  },
+
+  "pin_verification": {
+    "title": "আপনার ইমেইল চেক করুন",
+    "subtitle": "আমরা একটি পাসওয়ার্ড রিসেট লিঙ্ক পাঠিয়েছি",
+    "back_to_sign_in": "সাইন ইন-এ ফিরে যান"
+  },
+
+  "home": {
+    "search": "খুঁজুন",
+    "featured_car": "ফিচার্ড গাড়ি",
+    "shop_by_car_type": "গাড়ির ধরণ অনুযায়ী শপ করুন",
+    "hot_deal": "হট ডিল",
+    "help_support": "হেল্প ও সাপোর্ট"
+  },
+
+  "notifications": {
+    "title": "নোটিফিকেশন",
+    "sample_message": "আপনার 'ডিপ ওয়ার্ক'-এর প্রিভিউ অ্যাক্সেস ২৪ ঘণ্টার মধ্যে শেষ হবে।",
+    "time_ago": "১ ঘন্টা আগে"
+  },
+
+  "profile": {
+    "personal_information": "ব্যক্তিগত তথ্য",
+    "change_password": "পাসওয়ার্ড পরিবর্তন",
+    "notification": "নোটিফিকেশন",
+    "history": "ইতিহাস",
+    "terms_condition": "শর্তাবলী",
+    "log_out": "লগ আউট",
+    "log_out_dialog": {
+      "title": "লগ আউট?",
+      "message": "আপনি নিরাপদে সাইন আউট করেছেন। শীঘ্রই আবার দেখা হবে!",
+      "no": "না",
+      "yes": "হ্যাঁ"
+    },
+    "login_prompt": "লগইন করুন"
+  },
+
+  "personal_information": {
+    "title": "ব্যক্তিগত তথ্য",
+    "full_name": "পুরো নাম",
+    "email": "ইমেইল",
+    "phone_number": "ফোন নাম্বার",
+    "address": "ঠিকানা",
+    "upload_passport_id": "পাসপোর্ট / আইডি আপলোড করুন",
+    "hint_full_name": "পুরো নাম",
+    "hint_email": "ইমেইল",
+    "hint_phone": "ফোন নাম্বার লিখুন",
+    "hint_address": "ঠিকানা লিখুন",
+    "click_to_upload": "আপলোড করতে ক্লিক করুন",
+    "update": "আপডেট করুন",
+    "name_required": "নাম প্রয়োজন",
+    "valid_phone": "বৈধ ফোন নাম্বার লিখুন"
+  },
+
+  "change_password": {
+    "title": "পাসওয়ার্ড পরিবর্তন",
+    "existing_password": "বর্তমান পাসওয়ার্ড",
+    "new_password": "নতুন পাসওয়ার্ড",
+    "confirm_password": "পাসওয়ার্ড নিশ্চিত করুন",
+    "hint_existing": "বর্তমান পাসওয়ার্ড",
+    "hint_new": "নতুন পাসওয়ার্ড",
+    "hint_confirm": "পাসওয়ার্ড নিশ্চিত করুন",
+    "change_password_button": "পাসওয়ার্ড পরিবর্তন",
+    "enter_old_password": "পুরানো পাসওয়ার্ড লিখুন",
+    "enter_new_password": "নতুন পাসওয়ার্ড লিখুন",
+    "password_min_length": "পাসওয়ার্ড অন্তত ৬ অক্ষর দীর্ঘ হতে হবে",
+    "confirm_your_password": "আপনার পাসওয়ার্ড নিশ্চিত করুন",
+    "passwords_not_match": "পাসওয়ার্ড মিলছে না"
+  },
+
+  "terms_condition": {
+    "title": "শর্তাবলী"
+  },
+
+  "track_car": {
+    "title": "আপনার গাড়ি ট্র্যাক করুন",
+    "track_order": "অর্ডার ট্র্যাক করুন",
+    "no_orders": "কোনো অর্ডার পাওয়া যায়নি",
+    "retry": "পুনরায় চেষ্টা করুন",
+    "tracking_dialog": {
+      "title": "ট্র্যাকিং কোড লিখুন",
+      "hint": "আপনার ট্র্যাকিং কোড লিখুন",
+      "track_your_car": "আপনার গাড়ি ট্র্যাক করুন",
+      "enter_valid_code": "দয়া করে একটি বৈধ ট্র্যাকিং কোড লিখুন"
+    }
+  },
+
+  "tracking_progress": {
+    "title": "আপনার গাড়ি ট্র্যাক করুন",
+    "delivery_to_port": "পোর্টে ডেলিভারি"
+  },
+
+  "view_cars": {
+    "title": "গাড়ি দেখুন",
+    "search": "খুঁজুন",
+    "sort": "সাজান",
+    "price_highest_to_lowest": "দাম সর্বোচ্চ থেকে সর্বনিম্ন",
+    "price_lowest_to_highest": "দাম সর্বনিম্ন থেকে সর্বোচ্চ",
+    "year_lowest_to_highest": "বছর সর্বনিম্ন থেকে সর্বোচ্চ",
+    "year_highest_to_lowest": "বছর সর্বোচ্চ থেকে সর্বনিম্ন",
+    "no_car_found": "কোনো গাড়ি পাওয়া যায়নি"
+  },
+
+  "cars_by_type": {
+    "title": "গাড়ি দেখুন"
+  },
+
+  "favorite_screen": {
+    "title": "প্রিয় গাড়ি",
+    "no_favorite_car": "কোনো প্রিয় গাড়ি পাওয়া যায়নি"
+  },
+
+  "search_result": {
+    "title": "সার্চ রেজাল্ট"
+  },
+
+  "filter": {
+    "title": "ফিল্টার",
+    "brand": "ব্র্যান্ড",
+    "model": "মডেল",
+    "price": "দাম",
+    "year": "বছর",
+    "fuel_type": "ফুয়েল টাইপ",
+    "location": "লোকেশন",
+    "select_car_brand": "গাড়ির ব্র্যান্ড নির্বাচন করুন",
+    "select_car_model": "গাড়ির মডেল নির্বাচন করুন",
+    "select_by_fuel_type": "ফুয়েল টাইপ দ্বারা নির্বাচন করুন",
+    "select_by_location": "লোকেশন দ্বারা নির্বাচন করুন"
+  },
+
+  "search_dialog": {
+    "search": "খুঁজুন"
+  },
+
+  "car_details": {
+    "key_specification": "মূল স্পেসিফিকেশন",
+    "details": "বিস্তারিত",
+    "buy_now": "এখন কিনুন",
+    "mileage": "মাইলেজ",
+    "engine_power": "ইঞ্জিন পাওয়ার",
+    "fuel_type": "ফুয়েল টাইপ",
+    "cylinders": "সিলিন্ডার",
+    "transmission": "ট্রান্সমিশন",
+    "seats": "সীট",
+    "interior_color": "অভ্যন্তরীণ রঙ",
+    "exterior_color": "বাহ্যিক রঙ",
+    "shipping_cost": "শিপিং খরচ",
+    "custom_clearance": "কাস্টম ক্লিয়ারেন্স",
+    "year": "বছর",
+    "delivery_options": "ডেলিভারি অপশন",
+    "delivered_to_luanda": "লুয়ান্ডায় ডেলিভারি",
+    "delivered_to_doorstep": "দরজায় ডেলিভারি",
+    "continue": "চালিয়ে যান"
+  },
+
+  "delivery_info": {
+    "title": "ডেলিভারি তথ্য",
+    "full_name": "পুরো নাম",
+    "email": "ইমেইল",
+    "phone_number": "ফোন নাম্বার",
+    "location": "ঠিকানা",
+    "hint_full_name": "পুরো নাম",
+    "hint_email": "ইমেইল",
+    "hint_phone": "ফোন নাম্বার",
+    "hint_location": "ঠিকানা",
+    "continue": "চালিয়ে যান",
+    "enter_full_name": "দয়া করে আপনার পুরো নাম লিখুন",
+    "enter_email": "দয়া করে আপনার ইমেইল লিখুন",
+    "enter_valid_email": "দয়া করে একটি বৈধ ইমেইল ঠিকানা লিখুন",
+    "enter_phone": "দয়া করে আপনার ফোন নাম্বার লিখুন",
+    "enter_valid_phone": "দয়া করে একটি বৈধ ফোন নাম্বার লিখুন",
+    "enter_location": "দয়া করে আপনার ঠিকানা লিখুন",
+    "enter_valid_location": "দয়া করে একটি বৈধ ঠিকানা লিখুন"
+  },
+
+  "booking_cost": {
+    "title": "গাড়ির খরচ",
+    "cost_summary": "খরচের সারসংক্ষেপ",
+    "car_price": "গাড়ির দাম",
+    "shipping": "শিপিং",
+    "total_price": "মোট দাম",
+    "book_now": "এখন বুক করুন",
+    "order_created_success": "অর্ডার সফলভাবে তৈরি হয়েছে",
+    "order_created_message": "আপনার অর্ডার দেওয়া হয়েছে। পেমেন্টে এগিয়ে যান।",
+    "please_login": "গাড়ি বুক করতে দয়া করে লগইন করুন"
+  },
+
+  "payment": {
+    "title": "পেমেন্ট",
+    "payment_option": "পেমেন্ট অপশন",
+    "pay_with_sslcommerz": "SSLCommerz দিয়ে পেমেন্ট করুন",
+    "payment_information": "পেমেন্ট তথ্য",
+    "selected_method": "নির্বাচিত পদ্ধতি",
+    "order_amount": "অর্ডারের পরিমাণ",
+    "order_id": "অর্ডার আইডি",
+    "note": "নোট",
+    "sslcommerz_online_payment": "SSLCommerz অনলাইন পেমেন্ট",
+    "complete_payment_note": "গাড়ি ডেলিভারি এগিয়ে নিতে পেমেন্ট সম্পূর্ণ করুন",
+    "pay_now": "এখন পেমেন্ট করুন",
+    "try_again": "আবার চেষ্টা করুন",
+    "payment_successful": "পেমেন্ট সফল",
+    "payment_completed": "পেমেন্ট সম্পন্ন",
+    "order_information_missing": "অর্ডার তথ্য পাওয়া যায়নি"
+  },
+
+  "order_details": {
+    "title": "অর্ডার বিবরণ",
+    "price": "দাম",
+    "mileage": "মাইলেজ",
+    "fuel": "ফুয়েল",
+    "transmission": "ট্রান্সমিশন",
+    "order_id": "অর্ডার আইডি",
+    "delivery": "ডেলিভারি",
+    "order_amount": "অর্ডারের পরিমাণ",
+    "payment_status": "পেমেন্ট স্ট্যাটাস",
+    "customer": "গ্রাহক",
+    "phone": "ফোন",
+    "location": "ঠিকানা"
+  },
+
+  "history": {
+    "title": "আমার ইতিহাস",
+    "in_progress": "চলমান",
+    "delivered": "ডেলিভার্ড",
+    "canceled": "বাতিল",
+    "tracking_id": "ট্র্যাকিং আইডি",
+    "date": "তারিখ",
+    "no_orders_found": "কোনো অর্ডার পাওয়া যায়নি"
+  },
+
+  "common_dialog": {
+    "add_photo": "ছবি যোগ করুন",
+    "gallery": "গ্যালারি",
+    "camera": "ক্যামেরা"
+  },
+
+  "main_layout": {
+    "home": "হোম",
+    "view_car": "গাড়ি দেখুন",
+    "track_car": "গাড়ি ট্র্যাক করুন",
+    "favorite": "প্রিয়",
+    "profile": "প্রোফাইল"
+  },
+
+  "validation": {
+    "required": "প্রয়োজন",
+    "invalid_email": "বৈধ ইমেইল নয়",
+    "min_length": "অন্তত {length} অক্ষর দীর্ঘ হতে হবে",
+    "passwords_not_match": "পাসওয়ার্ড মিলছে না",
+    "invalid_phone": "বৈধ ফোন নাম্বার নয়"
+  },
+
+  "buttons": {
+    "cancel": "বাতিল",
+    "confirm": "নিশ্চিত করুন",
+    "submit": "জমা দিন",
+    "back": "পিছনে",
+    "done": "সম্পন্ন"
+  },
+
+  "status": {
+    "paid": "পেইড",
+    "pending": "পেন্ডিং",
+    "in_progress": "চলমান",
+    "delivered": "ডেলিভার্ড",
+    "canceled": "বাতিল"
+  },
+
+  "messages": {
+    "order_id_copied": "অর্ডার আইডি ক্লিপবোর্ডে কপি হয়েছে",
+    "success": "সফল",
+    "error": "ত্রুটি",
+    "loading": "লোড হচ্ছে..."
+  }
 }

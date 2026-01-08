@@ -1,9 +1,7 @@
 import 'package:car_hub/providers/auth_provider.dart';
 import 'package:car_hub/ui/main_layout.dart';
-import 'package:car_hub/ui/screens/auth/profile_setup/set_profile_picture.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/reset_email_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
-import 'package:car_hub/ui/screens/auth/sign_up/email_verification_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_up/sign_up_success_screen.dart';
 import 'package:car_hub/ui/widgets/loading.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
