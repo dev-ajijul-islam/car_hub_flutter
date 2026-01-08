@@ -1,4 +1,5 @@
 import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class PinVerificationScreen extends StatelessWidget {
@@ -20,12 +21,12 @@ class PinVerificationScreen extends StatelessWidget {
               const Icon(Icons.mark_email_read_outlined, size: 80),
               const SizedBox(height: 20),
               Text(
-                "Check your email",
+                "pin_verification.title".tr(),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 10),
               Text(
-                "We sent a password reset link to",
+                "pin_verification.subtitle".tr(),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 6),
@@ -39,10 +40,10 @@ class PinVerificationScreen extends StatelessWidget {
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     SignInScreen.name,
-                    (route) => false,
+                        (route) => false,
                   );
                 },
-                child: const Text("Back to Sign In"),
+                child: Text("pin_verification.back_to_sign_in".tr()),
               ),
             ],
           ),
