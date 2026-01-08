@@ -4,9 +4,10 @@ import 'package:car_hub/providers/car_locations_provider.dart';
 import 'package:car_hub/providers/car_min_and_max_price_provider.dart';
 import 'package:car_hub/providers/car_min_and_max_year_provider.dart';
 import 'package:car_hub/providers/car_models_provider.dart';
+import 'package:car_hub/providers/car_brands_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:car_hub/providers/car_brands_provider.dart';
 
 searchFilter(BuildContext context) {
   context.read<CarBrandsProvider>().getAllCarBrands();
@@ -16,7 +17,6 @@ searchFilter(BuildContext context) {
   context.read<CarMinAndMaxPriceProvider>().getMinAndMaxPrice();
   context.read<CarMinAndMaxYearProvider>().getMinAndMaxYear();
 
-  // --- পরিবর্তন এখানে: Provider থেকে ডাটা নিয়ে Initializing করা হয়েছে ---
   final advProvider = context.read<AdvanceSearchProvider>();
 
   RangeValues priceValues = RangeValues(
@@ -28,7 +28,6 @@ searchFilter(BuildContext context) {
     advProvider.minYear?.toDouble() ?? 2000,
     advProvider.maxYear?.toDouble() ?? 2025,
   );
-  // -----------------------------------------------------------------
 
   showModalBottomSheet(
     isScrollControlled: true,
@@ -38,7 +37,7 @@ searchFilter(BuildContext context) {
       return StatefulBuilder(
         builder: (context, setState) {
           return Container(
-            padding: EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 20),
             color: Colors.grey.shade300,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -53,16 +52,16 @@ searchFilter(BuildContext context) {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: Icon(Icons.close_outlined),
+                        icon: const Icon(Icons.close_outlined),
                       ),
-                      Text("Filter", style: TextTheme.of(context).titleMedium),
+                      Text("filter.title".tr(), style: TextTheme.of(context).titleMedium),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.only(left: 10, bottom: 10),
                     child: Text(
-                      "Brand",
+                      "filter.brand".tr(),
                       style: TextTheme.of(context).bodyLarge,
                     ),
                   ),
@@ -74,10 +73,10 @@ searchFilter(BuildContext context) {
                             .brand,
                         enableSearch: true,
                         enableFilter: true,
-                        menuStyle: MenuStyle(
+                        menuStyle: const MenuStyle(
                           fixedSize: WidgetStatePropertyAll(Size(30, 400)),
                         ),
-                        selectedTrailingIcon: Icon(Icons.check),
+                        selectedTrailingIcon: const Icon(Icons.check),
                         onSelected: (value) {
                           context.read<CarModelsProvider>().getAllCarModels(
                             brand: value,
@@ -95,16 +94,16 @@ searchFilter(BuildContext context) {
                           );
                           context.read<AdvanceSearchProvider>().brand = value;
                         },
-                        inputDecorationTheme: InputDecorationThemeData(
+                        inputDecorationTheme: const InputDecorationThemeData(
                           filled: true,
                           fillColor: Colors.white54,
                         ),
-                        hintText: "Select car brand",
+                        hintText: "filter.select_car_brand".tr(),
                         width: MediaQuery.of(context).size.width,
-                        leadingIcon: Icon(Icons.directions_car_outlined),
+                        leadingIcon: const Icon(Icons.directions_car_outlined),
                         dropdownMenuEntries: List.generate(
                           provider.carBrands.length,
-                          (index) => DropdownMenuEntry(
+                              (index) => DropdownMenuEntry(
                             value: provider.carBrands[index],
                             label: provider.carBrands[index],
                           ),
@@ -115,7 +114,7 @@ searchFilter(BuildContext context) {
                   Padding(
                     padding: const EdgeInsets.only(left: 10, bottom: 10),
                     child: Text(
-                      "Model",
+                      "filter.model".tr(),
                       style: TextTheme.of(context).bodyLarge,
                     ),
                   ),
@@ -139,17 +138,17 @@ searchFilter(BuildContext context) {
                                 .fuelType,
                           );
                         },
-                        selectedTrailingIcon: Icon(Icons.check),
-                        inputDecorationTheme: InputDecorationThemeData(
+                        selectedTrailingIcon: const Icon(Icons.check),
+                        inputDecorationTheme: const InputDecorationThemeData(
                           filled: true,
                           fillColor: Colors.white54,
                         ),
-                        hintText: "Select car model",
+                        hintText: "filter.select_car_model".tr(),
                         width: MediaQuery.of(context).size.width,
-                        leadingIcon: Icon(Icons.directions_car_outlined),
+                        leadingIcon: const Icon(Icons.directions_car_outlined),
                         dropdownMenuEntries: List.generate(
                           provider.carModels.length,
-                          (index) => DropdownMenuEntry(
+                              (index) => DropdownMenuEntry(
                             value: provider.carModels[index],
                             label: provider.carModels[index],
                           ),
@@ -157,11 +156,11 @@ searchFilter(BuildContext context) {
                       );
                     },
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.only(left: 10, bottom: 10),
                     child: Text(
-                      "Price",
+                      "filter.price".tr(),
                       style: TextTheme.of(context).bodyLarge,
                     ),
                   ),
@@ -180,12 +179,12 @@ searchFilter(BuildContext context) {
                             double.tryParse(
                               provider.minAndMaxPrice["min"].toString(),
                             ) ??
-                            0;
+                                0;
                         double max =
                             double.tryParse(
                               provider.minAndMaxPrice["max"].toString(),
                             ) ??
-                            100000;
+                                100000;
 
                         RangeValues safePrice = RangeValues(
                           priceValues.start.clamp(min, max),
@@ -198,7 +197,7 @@ searchFilter(BuildContext context) {
                             children: [
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text("\$${safePrice.start.round()}"),
                                   Text("\$${safePrice.end.round()}"),
@@ -213,11 +212,11 @@ searchFilter(BuildContext context) {
                                   context
                                       .read<AdvanceSearchProvider>()
                                       .maxPrice = val.end
-                                      .toInt(); // Fixed logic here
+                                      .toInt();
                                   context
                                       .read<AdvanceSearchProvider>()
                                       .minPrice = val.start
-                                      .toInt(); // Fixed logic here
+                                      .toInt();
                                 },
                               ),
                             ],
@@ -228,7 +227,7 @@ searchFilter(BuildContext context) {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10, bottom: 10),
-                    child: Text("Year", style: TextTheme.of(context).bodyLarge),
+                    child: Text("filter.year".tr(), style: TextTheme.of(context).bodyLarge),
                   ),
 
                   Card(
@@ -245,12 +244,12 @@ searchFilter(BuildContext context) {
                             double.tryParse(
                               provider.minAndMaxYear["min"].toString(),
                             ) ??
-                            1990;
+                                1990;
                         double max =
                             double.tryParse(
                               provider.minAndMaxYear["max"].toString(),
                             ) ??
-                            2025;
+                                2025;
 
                         RangeValues safeYear = RangeValues(
                           yearValues.start.clamp(min, max),
@@ -263,7 +262,7 @@ searchFilter(BuildContext context) {
                             children: [
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text("${safeYear.start.round()}"),
                                   Text("${safeYear.end.round()}"),
@@ -278,11 +277,11 @@ searchFilter(BuildContext context) {
                                   context
                                       .read<AdvanceSearchProvider>()
                                       .maxYear = val.end
-                                      .toInt(); // Fixed logic here
+                                      .toInt();
                                   context
                                       .read<AdvanceSearchProvider>()
                                       .minYear = val.start
-                                      .toInt(); // Fixed logic here
+                                      .toInt();
                                 },
                               ),
                             ],
@@ -294,7 +293,7 @@ searchFilter(BuildContext context) {
                   Padding(
                     padding: const EdgeInsets.only(left: 10, bottom: 10),
                     child: Text(
-                      "Fuel type",
+                      "filter.fuel_type".tr(),
                       style: TextTheme.of(context).bodyLarge,
                     ),
                   ),
@@ -313,17 +312,17 @@ searchFilter(BuildContext context) {
                         initialSelection: context
                             .read<AdvanceSearchProvider>()
                             .fuelType,
-                        selectedTrailingIcon: Icon(Icons.check),
-                        inputDecorationTheme: InputDecorationThemeData(
+                        selectedTrailingIcon: const Icon(Icons.check),
+                        inputDecorationTheme: const InputDecorationThemeData(
                           filled: true,
                           fillColor: Colors.white54,
                         ),
-                        hintText: "Select by fuel type",
+                        hintText: "filter.select_by_fuel_type".tr(),
                         width: MediaQuery.of(context).size.width,
-                        leadingIcon: Icon(Icons.hourglass_bottom),
+                        leadingIcon: const Icon(Icons.hourglass_bottom),
                         dropdownMenuEntries: List.generate(
                           provider.carFuelTypes.length,
-                          (index) => DropdownMenuEntry(
+                              (index) => DropdownMenuEntry(
                             value: provider.carFuelTypes[index],
                             label: provider.carFuelTypes[index],
                           ),
@@ -334,7 +333,7 @@ searchFilter(BuildContext context) {
                   Padding(
                     padding: const EdgeInsets.only(left: 10, bottom: 10),
                     child: Text(
-                      "Location",
+                      "filter.location".tr(),
                       style: TextTheme.of(context).bodyLarge,
                     ),
                   ),
@@ -348,17 +347,17 @@ searchFilter(BuildContext context) {
                         initialSelection: context
                             .read<AdvanceSearchProvider>()
                             .location,
-                        selectedTrailingIcon: Icon(Icons.check),
-                        inputDecorationTheme: InputDecorationThemeData(
+                        selectedTrailingIcon: const Icon(Icons.check),
+                        inputDecorationTheme: const InputDecorationThemeData(
                           filled: true,
                           fillColor: Colors.white54,
                         ),
-                        hintText: "Select by location",
+                        hintText: "filter.select_by_location".tr(),
                         width: MediaQuery.of(context).size.width,
-                        leadingIcon: Icon(Icons.location_on_outlined),
+                        leadingIcon: const Icon(Icons.location_on_outlined),
                         dropdownMenuEntries: List.generate(
                           provider.carLocations.length,
-                          (index) => DropdownMenuEntry(
+                              (index) => DropdownMenuEntry(
                             value: provider.carLocations[index],
                             label: provider.carLocations[index],
                           ),
