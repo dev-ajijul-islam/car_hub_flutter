@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 setProfileBottomSheet(
-  BuildContext context, {
-  required VoidCallback onTapGallery,
-  required VoidCallback onTapCamera,
-}) {
+    BuildContext context, {
+      required VoidCallback onTapGallery,
+      required VoidCallback onTapCamera,
+    }) {
   return showModalBottomSheet(
     context: context,
     builder: (context) {
@@ -14,18 +15,23 @@ setProfileBottomSheet(
           clipBehavior: Clip.none,
           children: [
             Column(
-              spacing: 10,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("Add photo", style: TextTheme.of(context).titleSmall),
-                SizedBox(height: 10),
+                Text(
+                  "common_dialog.add_photo".tr(),
+                  style: TextTheme.of(context).titleSmall,
+                ),
+                const SizedBox(height: 10),
                 OutlinedButton(
                   onPressed: () {
                     onTapGallery();
                   },
                   child: Row(
-                    spacing: 10,
-                    children: [Icon(Icons.image_outlined), Text("Gallery")],
+                    children: [
+                      const Icon(Icons.image_outlined),
+                      const SizedBox(width: 10),
+                      Text("common_dialog.gallery".tr()),
+                    ],
                   ),
                 ),
                 OutlinedButton(
@@ -33,8 +39,11 @@ setProfileBottomSheet(
                     onTapCamera();
                   },
                   child: Row(
-                    spacing: 10,
-                    children: [Icon(Icons.camera_alt_outlined), Text("Camera")],
+                    children: [
+                      const Icon(Icons.camera_alt_outlined),
+                      const SizedBox(width: 10),
+                      Text("common_dialog.camera".tr()),
+                    ],
                   ),
                 ),
               ],
@@ -47,7 +56,7 @@ setProfileBottomSheet(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.cancel),
+                icon: const Icon(Icons.cancel),
               ),
             ),
           ],
