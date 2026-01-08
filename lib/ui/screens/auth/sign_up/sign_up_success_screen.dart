@@ -1,5 +1,6 @@
 import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -9,7 +10,7 @@ class SignUpSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -39,11 +40,11 @@ class SignUpSuccessScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   textAlign: TextAlign.center,
-                                  "Congratulation",
+                                  "sign_up_success.title".tr(),
                                   style: TextTheme.of(context).titleMedium,
                                 ),
                                 Text(
-                                  "You’ve successfully created your account.",
+                                  "sign_up_success.subtitle".tr(),
                                   textAlign: TextAlign.center,
                                 ),
                                 Text(
@@ -63,7 +64,7 @@ class SignUpSuccessScreen extends StatelessWidget {
                                 onPressed: () {
                                   _onTapGoToSignInScreenButton(context);
                                 },
-                                child: Text("Continue"),
+                                child: Text("sign_up_success.continue".tr()),
                               ),
                             ),
                           ],
