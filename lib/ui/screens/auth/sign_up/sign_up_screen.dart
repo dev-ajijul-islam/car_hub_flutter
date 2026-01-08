@@ -5,6 +5,7 @@ import 'package:car_hub/ui/screens/auth/sign_in/sign_in_screen.dart';
 import 'package:car_hub/ui/screens/auth/sign_up/sign_up_success_screen.dart';
 import 'package:car_hub/ui/widgets/loading.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final bool isLoading = context.select<AuthProvider, bool>(
-      (p) => p.inProgress,
+          (p) => p.inProgress,
     );
 
     return Scaffold(
@@ -56,13 +57,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.topRight,
                   child: TextButton(
                     onPressed: _onTapSkipButton,
-                    child: const Text("Skip"),
+                    child: Text("skip".tr()),
                   ),
                 ),
 
-                Text("Sign Up", style: Theme.of(context).textTheme.titleLarge),
+                Text("sign_up.title".tr(), style: Theme.of(context).textTheme.titleLarge),
                 Text(
-                  "Welcome to CarLanda! \nPlease enter your details",
+                  "sign_up.subtitle".tr(),
                   style: Theme.of(context).textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -74,61 +75,61 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 10),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text("Full name"),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text("sign_up.full_name".tr()),
                       ),
                       TextFormField(
                         controller: _nameController,
                         validator: (value) => value == null || value.isEmpty
-                            ? "Enter name"
+                            ? "sign_up.enter_name".tr()
                             : null,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.person_outline),
-                          hintText: "Enter your full name",
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.person_outline),
+                          hintText: "sign_up.hint_full_name".tr(),
                         ),
                       ),
 
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text("Email"),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text("sign_up.email".tr()),
                       ),
                       TextFormField(
                         controller: _emailController,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Enter email";
+                            return "sign_up.enter_email".tr();
                           }
                           if (!value.contains("@")) {
-                            return "Enter valid email";
+                            return "sign_up.enter_valid_email".tr();
                           }
                           return null;
                         },
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.mail_outline_rounded),
-                          hintText: "Enter your email",
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.mail_outline_rounded),
+                          hintText: "sign_up.hint_email".tr(),
                         ),
                       ),
 
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text("Password"),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text("sign_up.password".tr()),
                       ),
                       TextFormField(
                         controller: _passwordController,
                         obscureText: !isPasswordVisible,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Enter password";
+                            return "sign_up.enter_password".tr();
                           }
                           if (value.length < 6) {
-                            return "Password must be at least 6 characters";
+                            return "sign_up.password_min_length".tr();
                           }
                           return null;
                         },
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.lock_outline_rounded),
-                          hintText: "Enter your password",
+                          hintText: "sign_up.hint_password".tr(),
                           suffixIcon: IconButton(
                             icon: Icon(
                               isPasswordVisible
@@ -148,9 +149,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         alignment: Alignment.topRight,
                         child: TextButton(
                           onPressed: _onTapForgetPasswordButton,
-                          child: const Text(
-                            "Forget password",
-                            style: TextStyle(color: Colors.grey),
+                          child: Text(
+                            "sign_up.forgot_password".tr(),
+                            style: const TextStyle(color: Colors.grey),
                           ),
                         ),
                       ),
@@ -158,19 +159,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(height: 10),
                       FilledButton(
                         onPressed: isLoading ? null : _onTapSignUpButton,
-                        child: isLoading ? Loading() : const Text("Sign up"),
+                        child: isLoading ? Loading() : Text("sign_up.sign_up_button".tr()),
                       ),
 
                       const SizedBox(height: 20),
 
                       Row(
-                        children: const [
-                          Expanded(child: Divider()),
+                        children: [
+                          const Expanded(child: Divider()),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Text("Or"),
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text("sign_up.or".tr()),
                           ),
-                          Expanded(child: Divider()),
+                          const Expanded(child: Divider()),
                         ],
                       ),
 
@@ -190,7 +191,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           children: [
                             Image.asset(AssetsFilePaths.google),
                             const SizedBox(width: 10),
-                            const Text("Sign in with Google"),
+                            Text("sign_up.sign_in_with_google".tr()),
                           ],
                         ),
                       ),
@@ -203,10 +204,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 RichText(
                   text: TextSpan(
                     style: const TextStyle(color: Colors.grey),
-                    text: "Already have an account? ",
+                    text: "sign_up.already_have_account".tr(),
                     children: [
                       TextSpan(
-                        text: "Sign in",
+                        text: "sign_up.sign_in".tr(),
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                         ),
@@ -234,11 +235,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final success = await context
         .read<AuthProvider>()
         .signUpWithEmailAndPassword(
-          context: context,
-          email: _emailController.text.trim(),
-          password: _passwordController.text,
-          name: _nameController.text.trim(),
-        );
+      context: context,
+      email: _emailController.text.trim(),
+      password: _passwordController.text,
+      name: _nameController.text.trim(),
+    );
 
     if (!mounted) return;
 
@@ -250,8 +251,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         context,
         SignUpSuccessScreen.name,
         arguments: {
-          "message":
-              "An verification email has sent to your email please verify and login",
+          "message": "sign_up_success.verification_message".tr(),
         },
       );
     }
