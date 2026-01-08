@@ -1,5 +1,6 @@
 import 'package:car_hub/ui/screens/home/car_details_screen.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class BookingsCard extends StatefulWidget {
@@ -18,7 +19,7 @@ class _BookingsCardState extends State<BookingsCard> {
         Navigator.pushNamed(context, CarDetailsScreen.name);
       },
       child: Card(
-        margin: EdgeInsets.all(0),
+        margin: EdgeInsets.zero,
         color: Colors.white,
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -53,15 +54,26 @@ class _BookingsCardState extends State<BookingsCard> {
                           "Audi . RS Q8 . TFSI V8",
                           style: TextTheme.of(context).titleMedium,
                         ),
-                        Text("\$22000 "),
+                        const Text("\$22000 "),
                       ],
                     ),
                     Row(
                       spacing: 15,
-                      children: [Text("Year : 2025"), Text("Mileage : 1700km")],
+                      children: [
+                        Text("${"bookings_card.year".tr()} : 2025"),
+                        Text("${"bookings_card.mileage".tr()} : 1700km")
+                      ],
                     ),
-                    Row(children: [Text("Tracking id : "), Text("#13450")]),
-                    FilledButton(onPressed: () {}, child: Text("Pay Now")),
+                    Row(
+                      children: [
+                        Text("${"bookings_card.tracking_id".tr()} : "),
+                        const Text("#13450")
+                      ],
+                    ),
+                    FilledButton(
+                        onPressed: () {},
+                        child: Text("bookings_card.pay_now".tr())
+                    ),
                   ],
                 ),
               ),
