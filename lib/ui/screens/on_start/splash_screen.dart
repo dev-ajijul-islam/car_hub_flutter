@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.watch<AuthProvider>().dbUser;
+    final user = context.watch<AuthProvider>().firebaseUser;
 
     if (!_navigated && user != null) {
       _navigated = true;
