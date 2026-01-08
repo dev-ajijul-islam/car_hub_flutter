@@ -1,6 +1,7 @@
 import 'package:car_hub/data/model/order_model.dart';
 import 'package:car_hub/ui/screens/track_car/order_details_screen.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,8 +23,8 @@ class _TrackCarCardState extends State<TrackCarCard> {
           context,
           OrderDetailsScreen.name,
           arguments: {
-            "order" : widget.order,
-            "car" : widget.order.carData
+            "order": widget.order,
+            "car": widget.order.carData,
           },
         );
       },
@@ -39,26 +40,26 @@ class _TrackCarCardState extends State<TrackCarCard> {
             children: [
               widget.order.carData!["media"]["thumbnail"] == null
                   ? Image.asset(
-                      AssetsFilePaths.car2,
-                      fit: BoxFit.fill,
-                      width: double.maxFinite,
-                    )
+                AssetsFilePaths.car2,
+                fit: BoxFit.fill,
+                width: double.maxFinite,
+              )
                   : Image.network(
-                      widget.order.carData!["media"]["thumbnail"],
-                      fit: BoxFit.fill,
-                      width: double.maxFinite,
-                      height: 220,
-                    ),
+                widget.order.carData!["media"]["thumbnail"],
+                fit: BoxFit.fill,
+                width: double.maxFinite,
+                height: 220,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 13,
                   vertical: 10,
                 ),
                 child: Column(
-                  spacing: 5,
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +75,7 @@ class _TrackCarCardState extends State<TrackCarCard> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              widget.order.paymentStatus,
+                              getPaymentStatusText(widget.order.paymentStatus),
                               style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -94,11 +95,12 @@ class _TrackCarCardState extends State<TrackCarCard> {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Delivery: ${widget.order.deliveryOption}",
+                          "${"order_details.delivery".tr()}: ${widget.order.deliveryOption}",
                           style: const TextStyle(fontSize: 14),
                         ),
                         Row(
@@ -115,9 +117,9 @@ class _TrackCarCardState extends State<TrackCarCard> {
                                     ClipboardData(text: widget.order.sId!),
                                   );
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
+                                    SnackBar(
                                       content: Text(
-                                        "Order ID copied to clipboard",
+                                        "messages.order_id_copied".tr(),
                                       ),
                                     ),
                                   );
@@ -129,6 +131,7 @@ class _TrackCarCardState extends State<TrackCarCard> {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
                         const Icon(Icons.location_on_outlined, size: 20),
@@ -142,7 +145,6 @@ class _TrackCarCardState extends State<TrackCarCard> {
                         ),
                       ],
                     ),
-
                   ],
                 ),
               ),
@@ -151,5 +153,16 @@ class _TrackCarCardState extends State<TrackCarCard> {
         ),
       ),
     );
+  }
+
+  String getPaymentStatusText(String status) {
+    switch (status.toLowerCase()) {
+      case 'paid':
+        return 'status.paid'.tr();
+      case 'pending':
+        return 'status.pending'.tr();
+      default:
+        return status;
+    }
   }
 }
