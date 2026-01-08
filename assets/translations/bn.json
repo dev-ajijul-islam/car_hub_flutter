@@ -212,6 +212,10 @@
   "cars_by_type": {
     "title": "গাড়ি দেখুন"
   },
+  "car_card": {
+    "year": "বছর",
+    "mileage": "মাইলেজ"
+  },
 
   "favorite_screen": {
     "title": "প্রিয় গাড়ি",

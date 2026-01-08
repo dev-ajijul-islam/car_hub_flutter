@@ -5,6 +5,7 @@ import 'package:car_hub/ui/screens/home/car_details_screen.dart';
 import 'package:car_hub/ui/widgets/loading.dart';
 import 'package:car_hub/ui/widgets/show_snackbar_message.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -176,9 +177,9 @@ class _CarCardState extends State<CarCard> {
                     const SizedBox(height: 10),
                     Row(
                       children: [
-                        Text("Year : ${car.year}"),
+                        Text("${"car_card.year".tr()} : ${car.year}"),
                         const SizedBox(width: 15),
-                        Text("Mileage : ${car.specs.mileageKm.toStringAsFixed(0)}km"),
+                        Text("${"car_card.mileage".tr()} : ${car.specs.mileageKm.toStringAsFixed(0)}km"),
                       ],
                     ),
                     const SizedBox(height: 5),
