@@ -5,6 +5,7 @@ import 'package:car_hub/ui/screens/home/delivery_info_screen.dart';
 import 'package:car_hub/ui/widgets/loading.dart';
 import 'package:car_hub/ui/widgets/show_snackbar_message.dart';
 import 'package:car_hub/utils/assets_file_paths.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -47,16 +48,16 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
           }
 
           final specs = [
-            _spec("Mileage", "${car.specs.mileageKm} km"),
-            _spec("Engine Power", "${car.specs.enginePowerHp} HP"),
-            _spec("Fuel Type", car.specs.fuelType),
-            _spec("Cylinders", car.specs.cylinders.toString()),
-            _spec("Transmission", car.specs.transmission),
-            _spec("Seats", car.specs.seats.toString()),
-            _spec("Interior Color", car.specs.interiorColor),
-            _spec("Exterior Color", car.specs.exteriorColor),
-            _spec("Shipping Cost", "\$${car.costs.shipping}"),
-            _spec("Custom Clearance", "\$${car.costs.customClearance}"),
+            _spec("car_details.mileage".tr(), "${car.specs.mileageKm} km"),
+            _spec("car_details.engine_power".tr(), "${car.specs.enginePowerHp} HP"),
+            _spec("car_details.fuel_type".tr(), car.specs.fuelType),
+            _spec("car_details.cylinders".tr(), car.specs.cylinders.toString()),
+            _spec("car_details.transmission".tr(), car.specs.transmission),
+            _spec("car_details.seats".tr(), car.specs.seats.toString()),
+            _spec("car_details.interior_color".tr(), car.specs.interiorColor),
+            _spec("car_details.exterior_color".tr(), car.specs.exteriorColor),
+            _spec("car_details.shipping_cost".tr(), "\$${car.costs.shipping}"),
+            _spec("car_details.custom_clearance".tr(), "\$${car.costs.customClearance}"),
           ];
 
           return Padding(
@@ -100,52 +101,52 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                                     onPressed: isLoading
                                         ? null
                                         : () async {
-                                            final isFav =
-                                                car.isFavorite ?? false;
-                                            final response = isFav
-                                                ? await favProvider
-                                                      .deleteFavorite(
-                                                        carId: car.sId,
-                                                      )
-                                                : await favProvider
-                                                      .createFavorite(
-                                                        carId: car.sId,
-                                                      );
+                                      final isFav =
+                                          car.isFavorite ?? false;
+                                      final response = isFav
+                                          ? await favProvider
+                                          .deleteFavorite(
+                                        carId: car.sId,
+                                      )
+                                          : await favProvider
+                                          .createFavorite(
+                                        carId: car.sId,
+                                      );
 
-                                            if (!context.mounted) return;
+                                      if (!context.mounted) return;
 
-                                            if (response.success) {
-                                              showSnackbarMessage(
-                                                context: context,
-                                                message: response.message,
-                                                color: Colors.green,
-                                              );
-                                              context
-                                                  .read<SingleCarProvider>()
-                                                  .getCarById(car.sId);
-                                            } else {
-                                              showSnackbarMessage(
-                                                context: context,
-                                                message: response.message,
-                                                color: Colors.red,
-                                              );
-                                            }
-                                          },
+                                      if (response.success) {
+                                        showSnackbarMessage(
+                                          context: context,
+                                          message: response.message,
+                                          color: Colors.green,
+                                        );
+                                        context
+                                            .read<SingleCarProvider>()
+                                            .getCarById(car.sId);
+                                      } else {
+                                        showSnackbarMessage(
+                                          context: context,
+                                          message: response.message,
+                                          color: Colors.red,
+                                        );
+                                      }
+                                    },
                                     icon: isLoading
                                         ? const SizedBox(
-                                            width: 20,
-                                            height: 20,
-                                            child: Loading(),
-                                          )
+                                      width: 20,
+                                      height: 20,
+                                      child: Loading(),
+                                    )
                                         : Icon(
-                                            car.isFavorite == true
-                                                ? Icons.favorite
-                                                : Icons
-                                                      .favorite_border_outlined,
-                                            color: Theme.of(
-                                              context,
-                                            ).colorScheme.primary,
-                                          ),
+                                      car.isFavorite == true
+                                          ? Icons.favorite
+                                          : Icons
+                                          .favorite_border_outlined,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
+                                    ),
                                   );
                                 },
                               ),
@@ -196,7 +197,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Year : ${car.year}"),
+                              Text("${"car_details.year".tr()} : ${car.year}"),
                               Row(
                                 children: [
                                   const Icon(
@@ -217,7 +218,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "Key Specification",
+                    "car_details.key_specification".tr(),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 10),
@@ -226,10 +227,10 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: specs.length,
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 2.4,
-                        ),
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 2.4,
+                    ),
                     itemBuilder: (_, i) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,7 +254,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "Details",
+                    "car_details.details".tr(),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 6),
@@ -263,7 +264,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                     width: double.infinity,
                     child: FilledButton(
                       onPressed: () => _showDeliveryDialog(context, car),
-                      child: const Text("Buy Now"),
+                      child: Text("car_details.buy_now".tr()),
                     ),
                   ),
                 ],
@@ -284,19 +285,19 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text("Delivery Options"),
+              title: Text("car_details.delivery_options".tr()),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _deliveryRadio(
-                    title: "Delivered to Luanda",
+                    title: "car_details.delivered_to_luanda".tr(),
                     value: "Luanda",
                     groupValue: deliveryOption,
                     onChanged: (val) => setState(() => deliveryOption = val),
                   ),
                   const SizedBox(height: 10),
                   _deliveryRadio(
-                    title: "Delivered to Doorstep",
+                    title: "car_details.delivered_to_doorstep".tr(),
                     value: "Doorstep",
                     groupValue: deliveryOption,
                     onChanged: (val) => setState(() => deliveryOption = val),
@@ -316,7 +317,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
                           },
                         );
                       },
-                      child: const Text("Continue"),
+                      child: Text("car_details.continue".tr()),
                     ),
                   ),
                 ],
