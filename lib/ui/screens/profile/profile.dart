@@ -143,7 +143,7 @@ class _ProfileState extends State<Profile> {
     },
     {
       "icon": Icons.language_outlined,
-      "title": "profile.language".tr(),
+      "title": "language".tr(),
       "route": LanguageSelectScreen.name,
     },
     {
